@@ -10,14 +10,16 @@
     <h:body>
         <h:form>
             <p:fieldset legend="Login" style="margin-bottom:20px">
-            <p:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
-            <table>
-            <tr><td>User ID: </td><td><p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID"/></td></tr>
-
-            <tr><td>Password: </td><td><p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
-            </p:password></td></tr>
-            </table>
-            <br/><p:commandButton id="submitID" value="Log In" action="#{accountController.logIn()}"/>
+                <p:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
+                <h:panelGrid id = "panel" columns = "2" border = "0"
+                             cellpadding = "10" cellspacing = "1">
+                    User ID:<p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID"/>
+                    Password: <p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
+                    </p:password>
+                    <h:panelGroup></h:panelGroup>
+                    <h:link value="Reset Password" outcome="forgotPassword.xhtml" />                
+                <p:commandButton id="submitID" value="Log In" action="#{accountController.logIn()}"/>
+                </h:panelGrid>
             </p:fieldset>
         </h:form>
     </h:body>

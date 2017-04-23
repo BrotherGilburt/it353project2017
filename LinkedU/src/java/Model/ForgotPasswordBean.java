@@ -13,6 +13,7 @@ public class ForgotPasswordBean {
     private String userAnsw;
     private String newPass;
     private String confNewPass;
+    private String messageType;
 
     /**
      * @return the userAnsw
@@ -54,5 +55,19 @@ public class ForgotPasswordBean {
      */
     public void setConfNewPass(String confNewPass) {
         this.confNewPass = confNewPass;
+    }
+
+    /**
+     * @return the messageType
+     */
+    public String getMessageType() {
+        return messageType;
+    }
+
+    /**
+     * @param messageType the messageType to set
+     */
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 }
