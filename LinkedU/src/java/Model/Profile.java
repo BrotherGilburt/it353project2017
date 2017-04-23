@@ -26,14 +26,19 @@ public class Profile {
      ESSAY
      MIXTAPES*/
     
-    public Profile(String userID) {
-        this.userID = userID;
+    public Profile() {
+        userID = "";
         ACT = "N/A";
         SAT = "N/A";
         PSAT_NMSQT = "N/A";
         majors = new ArrayList<String>();
         universities = new ArrayList<String>();
         image = false;
+    }
+    
+    public Profile(String userID) {
+        this();
+        this.userID = userID;
     }
 
     public String getUserID() {

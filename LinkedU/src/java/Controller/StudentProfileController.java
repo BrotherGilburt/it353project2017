@@ -6,10 +6,14 @@
 package Controller;
 
 import Model.Profile;
+import Model.Student;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.Part;
 
 /**
@@ -22,21 +26,56 @@ public class StudentProfileController implements Serializable {
 
     private Profile myProfileModel; //personal profile
     private Profile viewProfileModel; //other student profiles
+    private Student viewStudentModel;
     private Part myImage;
+    private AccountController account;
+    private SearchController search;
 
     /**
      * Creates a new instance of StudentProfileController
      */
     public StudentProfileController() {
+        if (account == null) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
+        }
         if (myProfileModel == null) {
-            myProfileModel = new Profile("pdkaufm");
+            myProfileModel = new Profile(account.getLoginModel().getUserID());
+        }
+        if (viewProfileModel == null) {
+            viewProfileModel = new Profile();
+        }
+        if (viewStudentModel == null) {
+            viewStudentModel = new Student();
+        }
+        if (search == null) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            search = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{searchController}", SearchController.class);
         }
     }
 
     public String loadMyProfile() {
         /*DATABASE ACCESS*/
-        
+
         return "myProfile.xhtml?faces-redirect=true";
+    }
+
+    public String loadProfile() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
+        String userID = params.get("userid");
+
+        ArrayList<Student> studentsList = search.getStudentsList();
+
+        for (int i = 0; i < studentsList.size(); i++) {
+            if (studentsList.get(i).getUserID().equals(userID)) {
+                viewStudentModel = studentsList.get(i);
+                break;
+            }
+        }
+
+        //TO BE ADDED database connection to get the students profile model
+        return "studentProfile.xhtml?faces-redirect=true";
     }
 
     public String gotoUpdateGeneral() {
@@ -82,6 +121,14 @@ public class StudentProfileController implements Serializable {
 
     public void setMyImage(Part myImage) {
         this.myImage = myImage;
+    }
+
+    public Student getViewStudentModel() {
+        return viewStudentModel;
+    }
+
+    public void setViewStudentModel(Student viewStudentModel) {
+        this.viewStudentModel = viewStudentModel;
     }
 
 }

@@ -8,19 +8,18 @@
         <title>LinkedU - Student Search</title>
     </h:head>
     <h:body>
-        <h2>Student Search Results</h2>
-        <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
-            <p:column headerText="First Name">
-                <p:commandLink value="#{aRow.firstName} #{aRow.lastName}" action="#{studentProfileController.loadProfile(aRow.userID)}"/>
-                <a href="./studentProfile.xhtml?userid=#{aRow.userID}"><h:outputText value="#{aRow.firstName}"/></a>
-            </p:column>
-            <p:column headerText="Last Name">
-                <h:outputText value="#{aRow.lastName}"/>
-            </p:column>
-            <p:column headerText="User ID">
-                <h:outputText value="#{aRow.userID}"/>
-            </p:column>
-        </p:dataTable>
+        <h:form>
+            <h2>Student Search Results</h2>
+            <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
+                <p:column headerText="First Name">
+                    <h:commandLink value="#{aRow.firstName} #{aRow.lastName}" action="#{studentProfileController.loadProfile()}">
+                        <f:param name="userid" value="#{aRow.userID}" /></h:commandLink>
+                </p:column>
+                <p:column headerText="User ID">
+                    <h:outputText value="#{aRow.userID}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </h:body>
 </html>
 

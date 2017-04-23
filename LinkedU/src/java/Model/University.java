@@ -11,4 +11,5 @@ package Model;
  */
 public class University {
     boolean premium; //denotes that university has payed extra to be featured on home page.
+    
 }
