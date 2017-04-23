@@ -8,52 +8,54 @@
         <title>LinkedU - Sign Up</title>
     </h:head>
     <h:body>
-        <h:form>
+        <p:fieldset legend="Sign Up" style="margin-bottom:20px">
+            <h:form>
+                Enter the following information to create an account:
+                <br/> <h:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
+                <h:panelGrid id = "panel" columns = "3">
+                    First Name: <p:inputText id="fname" value="#{accountController.userModel.firstName}" label="FirstName">
+                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                            <h:message for="fname" style="color:red"/>
 
-            <br/>Enter the following information to create an account:
-            <br/> <h:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
-            <table>
-                <tr><td>First Name: </td><td><p:inputText id="fname" value="#{accountController.userModel.firstName}" label="FirstName">
-                            <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                        <h:message for="fname" style="color:red"/></td></tr>
+                    Last Name: <p:inputText id="lname" value="#{accountController.userModel.lastName}" label="LastName">
+                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                            <h:message for="lname" style="color:red"/>
 
-                <tr><td>Last Name: </td><td><p:inputText id="lname" value="#{accountController.userModel.lastName}" label="LastName">
-                            <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                        <h:message for="lname" style="color:red"/></td></tr>
+                    User ID: <p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID">
+                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                            <h:message for="uid" style="color:red"/>
 
-                <tr><td>User ID: </td><td><p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID">
-                            <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                        <h:message for="uid" style="color:red"/></td></tr>
+                    Password: <p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
+                                <f:validateLength minimum="2" maximum="25"/></p:password>
+                            <h:message for="pwd" style="color:red"/>
 
-                <tr><td>Password: </td><td><p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
-                            <f:validateLength minimum="2" maximum="25"/></p:password>
-                        <h:message for="pwd" style="color:red"/></td></tr>
+                    Confirm Password: <p:password id="cpwd" value="#{accountController.confirm}" label="ConfirmPassword">
+                                <f:validateLength minimum="2" maximum="25"/></p:password>
+                            <h:message for="cpwd" style="color:red"/>
 
-                <tr><td>Confirm Password: </td><td><p:password id="cpwd" value="#{accountController.confirm}" label="ConfirmPassword">
-                            <f:validateLength minimum="2" maximum="25"/></p:password>
-                        <h:message for="cpwd" style="color:red"/></td></tr>
+                    Email: <p:inputText id="email" value="#{accountController.userModel.email}" label="Email">
+                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                            <h:message for="email" style="color:red"/>
 
-                <tr><td>Email: </td><td><p:inputText id="email" value="#{accountController.userModel.email}" label="Email">
-                            <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                        <h:message for="email" style="color:red"/></td></tr>
+                    Account Type: <p:selectOneMenu id="account" required="true" value="#{accountController.userModel.accountType}">
+                                <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" />
+                                <f:selectItem id="item1" itemLabel="Student" itemValue="Student" />
+                                <f:selectItem id="item2" itemLabel="University" itemValue="University" />
+                                <f:selectItem id="item3" itemLabel="Administrator" itemValue="Administrator" />
+                            </p:selectOneMenu>
+                </h:panelGrid>
+                    <h:panelGrid id = "panel2" columns = "3">
+                    Security Question: <p:inputTextarea id="sq" value="#{accountController.userModel.securityQuestion}" label="SecurityQuestion">
+                                <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
+                            <h:message for="sq" style="color:red"/>
 
-                <tr><td>Account Type: </td><td><p:selectOneMenu id="account" required="true" value="#{accountController.userModel.accountType}">
-                            <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" />
-                            <f:selectItem id="item1" itemLabel="Student" itemValue="Student" />
-                            <f:selectItem id="item2" itemLabel="University" itemValue="University" />
-                            <f:selectItem id="item3" itemLabel="Administrator" itemValue="Administrator" />
-                        </p:selectOneMenu></td></tr>
-
-                <tr><td>Security Question: </td><td><p:inputTextarea id="sq" value="#{accountController.userModel.securityQuestion}" label="SecurityQuestion">
-                            <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
-                        <h:message for="sq" style="color:red"/></td></tr>
-
-                <tr><td>Security Answer: </td><td><p:inputTextarea id="sa" value="#{accountController.userModel.securityAnswer}" label="SecurityAnswer">
-                            <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
-                        <h:message for="sa" style="color:red"/></td></tr>
-            </table>
-            <br/><p:commandButton id="submitID" value="Sign Up" action="#{accountController.signUp()}"/>
-        </h:form>
+                    Security Answer: <p:inputTextarea id="sa" value="#{accountController.userModel.securityAnswer}" label="SecurityAnswer">
+                                <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
+                            <h:message for="sa" style="color:red"/>
+                    <p:commandButton id="submitID" value="Sign Up" action="#{accountController.signUp()}"/>
+                </h:panelGrid>
+            </h:form>
+        </p:fieldset>
     </h:body>
 </html>
 
