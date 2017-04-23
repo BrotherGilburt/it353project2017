@@ -1,0 +1,100 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import Model.ForgotPasswordBean;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
+
+/**
+ *
+ * @author Keegan
+ */
+@Named(value = "forgotPasswordDAO")
+@RequestScoped
+public class ForgotPasswordDAO {
+
+    String driverName = "org.apache.derby.jdbc.ClientDriver";
+    //String connStr = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Spring2017_LinkedU;create=true";
+    String connStr = "jdbc:derby://localhost:1527/LinkedU";
+    
+    /**
+     * Creates a new instance of ForgotPasswordDAO
+     */
+    public ForgotPasswordDAO() {
+    }
+    
+    public ForgotPasswordBean lostPass(String user){
+        Connection DBConn = null;
+        ForgotPasswordBean uRes = null;
+        boolean result = false;
+        try {
+            DBHelper.loadDriver(driverName);
+            DBConn = DBHelper.connect2DB(connStr, "itkstu", "student");
+
+            // With the connection made, create a statement to talk to the DB server.
+            // Create a SQL statement to query, retrieve the rows one by one (by going to the
+            // columns), and formulate the result string to send back to the client.
+            String sqlStr = "SELECT SecurityQ, SecurityA FROM Project353.Users WHERE Username = ?";
+            PreparedStatement stmt = DBConn.prepareStatement(sqlStr);
+            stmt.setString(1, user);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                uRes = new ForgotPasswordBean(rs.getString("SecurityQ"),
+                        ""+rs.getString("SecurityA"));
+            }
+                
+            rs.close();
+            stmt.close();
+            return uRes;
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return uRes; 
+    }
+    
+    public boolean changePass(String password, String username) {
+         try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
+        int rowCount = 0;
+        try {
+            Connection DBConn = DriverManager.getConnection(connStr, "itkstu", "student");
+            String temp = "";
+            String updateString;
+            Statement stmt = DBConn.createStatement();
+            updateString = "UPDATE Project353.Users SET " 
+                    + "Password = '" + password + "' "
+                    + "WHERE Username = '" + username + "'";
+            System.out.println("updateString =" + updateString);
+            rowCount = stmt.executeUpdate(updateString);
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        // if insert is successful, rowCount will be set to 1 (1 row inserted successfully). Else, insert failed.
+        return rowCount != 0;
+    }
+}
