@@ -1,4 +1,3 @@
---drop schema Project353 restrict;
 --drop table LinkedU.LoginInfo;
 --drop table LinkedU.Users;
 --drop table LINKEDU.ApplyInfo;

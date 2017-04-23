@@ -7,7 +7,6 @@
     <h:head>
         <title>LinkedU - Update</title>
         <f:event listener="#{accountController.isLoggedOn()}" type="preRenderView" />
-        <h:outputScript library="Resources/Scripts" name="validators.js"/>
     </h:head>
     <h:body>
         <h:form>
@@ -20,7 +19,7 @@
 
                 <tr><td>User ID: </td><td><h:outputText id="uid" value="#{accountController.loginUpdateModel.userID}" /></td></tr>
 
-                <tr><td>Password: </td><td><p:password id="pwd" onkeyup="testStrength(this)" value="#{accountController.loginUpdateModel.password}" label="Password"></p:password>
+                <tr><td>Password: </td><td><p:password id="pwd" value="#{accountController.loginUpdateModel.password}" label="Password"></p:password>
                         <span id="passwordMessage"></span></td></tr>
 
                 <tr><td>Confirm Password: </td><td><p:password id="cpwd" value="#{accountController.confirm}" label="ConfirmPassword">
