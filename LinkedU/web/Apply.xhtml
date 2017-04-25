@@ -11,8 +11,10 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-
         <title>LinkedU - Application</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form   >
@@ -48,7 +50,7 @@ and open the template in the editor.
                                 <f:selectItem itemLabel="International student" itemValue="International student" />
                             </p:selectOneRadio>
 
-                            
+
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -82,7 +84,7 @@ and open the template in the editor.
 
                             <h:outputText value="Additional Info: " />
                             <p:inputText value="#{applyController.apply.info}"/>
-                           
+
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -106,9 +108,9 @@ and open the template in the editor.
 
                             <h:outputText value="Country: "/>
                             <p:inputText value="#{applyController.apply.hs_country}" required="true" label="Country"   />
-                                    </h:panelGrid>
-                 
-                       
+                        </h:panelGrid>
+
+
                     </p:panel>
                 </p:tab>
                 <p:tab id="Upload" title="Upload Documents">
@@ -117,40 +119,40 @@ and open the template in the editor.
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:form enctype="multipart/form-data"  >
 
-                               <h:outputText value="Upload Resume/CV"/>
+                                <h:outputText value="Upload Resume/CV"/>
                                 <h:inputFile value="#{applyController.file}">
                                 </h:inputFile>  
-                               <p:commandButton value="upload Resume" action="#{applyController.upload()}"></p:commandButton>
-                                                         
+                                <p:commandButton value="upload Resume" action="#{applyController.upload()}"></p:commandButton>
+
                                 <br/> <br/>
                                 <h:outputText value="Upload Transhcripts"/>
                                 <h:inputFile value="#{applyController.file1}">
                                 </h:inputFile>
-                              <p:commandButton value="Upload Transhcripts" action="#{applyController.upload()}"></p:commandButton>
-                                
-                                   <br/> <br/>
-                                
-                                   <h:outputText value="Upload Images"/>
+                                <p:commandButton value="Upload Transhcripts" action="#{applyController.upload()}"></p:commandButton>
+
+                                <br/> <br/>
+
+                                <h:outputText value="Upload Images"/>
                                 <h:inputFile value="#{applyController.file2}">
-                                    </h:inputFile>
+                                </h:inputFile>
                                 <p:commandButton value="Upload Images" action="#{applyController.upload()}"></p:commandButton>
-                                
-                                   <br/> <br/>
-                                   <h:outputText value="Upload Activity Videos (basketball moves, musical performances, etc)"/>
+
+                                <br/> <br/>
+                                <h:outputText value="Upload Activity Videos (basketball moves, musical performances, etc)"/>
                                 <h:inputFile value="#{applyController.file3}">
                                 </h:inputFile>
-                                   
+
                                 <p:commandButton value="Upload video" action="#{applyController.upload()}"></p:commandButton>
 
                             </h:form>
                         </h:panelGrid>
-                        
-                         <p:commandButton value="Submit the Application" action="#{applyController.createProfile()}"> </p:commandButton>
+
+                        <p:commandButton value="Submit the Application" action="#{applyController.createProfile()}"> </p:commandButton>
                     </p:panel>
                 </p:tab>
-                
 
-             </p:wizard>
+
+            </p:wizard>
         </h:form>
 
 

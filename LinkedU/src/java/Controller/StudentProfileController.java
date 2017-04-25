@@ -30,6 +30,7 @@ public class StudentProfileController implements Serializable {
     private Part myImage;
     private AccountController account;
     private SearchController search;
+    private String errorMessage;
 
     /**
      * Creates a new instance of StudentProfileController
@@ -91,8 +92,10 @@ public class StudentProfileController implements Serializable {
     public String uploadImage() throws IOException {
         boolean status = false;
 
+        //save image
+        
         if (status) { //successful upload
-            myProfileModel.setImage(true);
+            myProfileModel.setImage(myProfileModel.getUserID() + "_profile.jpg");
         } else { //failed/no upload
             //Error Message?
         }
@@ -129,6 +132,14 @@ public class StudentProfileController implements Serializable {
 
     public void setViewStudentModel(Student viewStudentModel) {
         this.viewStudentModel = viewStudentModel;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
 }

@@ -154,6 +154,9 @@ public class AccountController implements Serializable {
         return true;
     }
 
+    /**
+    * Redirects to home page if not logged in.
+    */
     public String isLoggedOn() {
         String navi = null;
 
@@ -174,7 +177,7 @@ public class AccountController implements Serializable {
         if (!loggedIn) {
             FacesContext fc = FacesContext.getCurrentInstance();
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
-            nav.performNavigation("login.xhtml?faces-redirect=true");
+            nav.performNavigation("index.xhtml?faces-redirect=true");
             errorMessage = "Error. Must log in to update account information.";
         }
 

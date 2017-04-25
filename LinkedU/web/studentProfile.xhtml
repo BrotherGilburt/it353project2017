@@ -6,11 +6,14 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>LinkedU - Profile</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form>
             <p:fieldset legend="Picture" style="margin-bottom:20px">
-                <h1>((to be added))</h1>
+                <p:graphicImage value="#{studentProfileController.viewProfileModel.image}" />
             </p:fieldset>
 
             <p:fieldset legend="General Information" style="margin-bottom:20px">

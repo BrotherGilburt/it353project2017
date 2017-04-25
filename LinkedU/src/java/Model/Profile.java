@@ -12,14 +12,17 @@ import java.util.ArrayList;
  * @author IT353S710
  */
 public class Profile {
-
+    private final String defaultImage = "./Resources/default_student.png";
+    
     private String userID;
     private String ACT;
     private String SAT;
     private String PSAT_NMSQT;
     private ArrayList<String> majors;
     private ArrayList<String> universities;
-    private boolean image;
+    private String image;
+    private String mixtape;
+    private String essay;
 
     /* TO BE ADDED
      IMAGE
@@ -33,7 +36,9 @@ public class Profile {
         PSAT_NMSQT = "N/A";
         majors = new ArrayList<String>();
         universities = new ArrayList<String>();
-        image = false;
+        image = defaultImage;
+        mixtape = null;
+        essay = null;
     }
     
     public Profile(String userID) {
@@ -89,12 +94,28 @@ public class Profile {
         this.universities = Universities;
     }
 
-    public boolean getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(boolean image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getMixtape() {
+        return mixtape;
+    }
+
+    public void setMixtape(String mixtape) {
+        this.mixtape = mixtape;
+    }
+
+    public String getEssay() {
+        return essay;
+    }
+
+    public void setEssay(String essay) {
+        this.essay = essay;
     }
 
 }

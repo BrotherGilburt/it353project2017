@@ -6,6 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>LinkedU - Home</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form>
@@ -17,11 +20,11 @@
                 <f:selectItem id="item0" itemLabel="Students" itemValue="student" />
                 <f:selectItem id="item1" itemLabel="Universities" itemValue="university" />
             </p:selectOneMenu>
-            
+
             <br/>
-            
+
             <p:commandLink action="Grad.xhtml">Apply...</p:commandLink>
-            
+
             <h1>((Featured University))</h1>
         </h:form>
     </h:body>
