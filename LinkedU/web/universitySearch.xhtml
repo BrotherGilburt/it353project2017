@@ -6,6 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>LinkedU - University Search</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h2>University Search Results</h2>

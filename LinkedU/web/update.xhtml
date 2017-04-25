@@ -6,7 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>LinkedU - Update</title>
-        <f:event listener="#{accountController.isLoggedOn()}" type="preRenderView" />
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form>
@@ -23,18 +25,18 @@
                         <span id="passwordMessage"></span></td></tr>
 
                 <tr><td>Confirm Password: </td><td><p:password id="cpwd" value="#{accountController.confirm}" label="ConfirmPassword">
-                            </p:password></td></tr>
+                        </p:password></td></tr>
 
                 <tr><td>Email: </td><td><p:inputText id="email" value="#{accountController.userUpdateModel.email}" label="Email">
-                            </p:inputText></td></tr>
+                        </p:inputText></td></tr>
 
                 <tr><td>Account Type: </td><td><h:outputText id="account" value="#{accountController.userUpdateModel.accountType}" /></td></tr>
 
                 <tr><td>Security Question: </td><td><p:inputTextarea id="sq" value="#{accountController.userUpdateModel.securityQuestion}" label="SecurityQuestion">
-                            </p:inputTextarea></td></tr>
+                        </p:inputTextarea></td></tr>
 
                 <tr><td>Security Answer: </td><td><p:inputTextarea id="sa" value="#{accountController.userUpdateModel.securityAnswer}" label="SecurityAnswer">
-                            </p:inputTextarea></td></tr>
+                        </p:inputTextarea></td></tr>
             </table>
             <br/><p:commandButton id="submitID" value="Update" action="#{accountController.update()}"/> 
             <p:commandButton id="logoutID" value="Log Out" action="#{accountController.logOut()}"/>

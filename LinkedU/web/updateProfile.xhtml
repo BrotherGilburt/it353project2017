@@ -6,6 +6,9 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>LinkedU - Update Profile</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h:form>
@@ -13,7 +16,7 @@
             <p:wizard>
 
                 <p:growl id="grow1" sticky="true" showDetail="true"/>
-                
+
                 <p:tab id="scores" title="Tests">
                     <p:panel header="Test Scores">
                         <h:panelGrid columns="2" columnClasses="label, value">
@@ -52,7 +55,7 @@
                         <p:commandButton value="Submit" action="#{studentProfileController.updateFinished}" />
                     </p:panel>
                 </p:tab>
-                
+
             </p:wizard>
         </h:form>
     </h:body>
