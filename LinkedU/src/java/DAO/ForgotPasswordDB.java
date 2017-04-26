@@ -43,15 +43,15 @@ public class ForgotPasswordDB {
             // With the connection made, create a statement to talk to the DB server.
             // Create a SQL statement to query, retrieve the rows one by one (by going to the
             // columns), and formulate the result string to send back to the client.
-            String sqlStr = "SELECT SecurityQ, SecurityA FROM LinkedU.loginInfo WHERE Username = ?";
+            String sqlStr = "SELECT SecurityQuestion, SecurityAnswer FROM LinkedU.users WHERE UserID = ?";
             PreparedStatement stmt = DBConn.prepareStatement(sqlStr);
             stmt.setString(1, user);
             
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-                uRes = new ForgotPasswordBean(rs.getString("SecurityQ"),
-                        ""+rs.getString("SecurityA"));
+                uRes = new ForgotPasswordBean(rs.getString("Email"), rs.getString("SecurityQuestion"),
+                        ""+rs.getString("SecurityAnswer"));
             }
                 
             rs.close();
@@ -85,7 +85,7 @@ public class ForgotPasswordDB {
             Statement stmt = DBConn.createStatement();
             updateString = "UPDATE LinkedU.loginInfo SET " 
                     + "Password = '" + password + "' "
-                    + "WHERE Username = '" + username + "'";
+                    + "WHERE UserID = '" + username + "'";
             System.out.println("updateString =" + updateString);
             rowCount = stmt.executeUpdate(updateString);
             DBConn.close();

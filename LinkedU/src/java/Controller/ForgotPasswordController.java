@@ -36,6 +36,7 @@ public class ForgotPasswordController implements Serializable {
      * Creates a new instance of ForgotPasswordController
      */
     public ForgotPasswordController() {
+        theModel = new ForgotPasswordBean();
     }
 
     public void sendEmail() {
@@ -54,12 +55,12 @@ public class ForgotPasswordController implements Serializable {
                 return new PasswordAuthentication(username, password);
             }
         });
-
+        
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("linkeduapp@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(email + "@gmail.com"));
+                    InternetAddress.parse("keegan94@gmail.com"));
             message.setSubject("LinkedU - Password Reset");
             message.setText("Click the link to reset your password.\n\n" +
                     "<a href=\"http://localhost:8080/LinkedU/faces/forgotPassword.xhtml?userid=" + userName + "\">Reset Password</a>");
@@ -67,7 +68,7 @@ public class ForgotPasswordController implements Serializable {
             Transport.send(message);
 
             System.out.println("Done");
-
+            errorMessage = "Email send!";
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -120,11 +121,12 @@ public class ForgotPasswordController implements Serializable {
         theModel = forgotPassword.lostPass(userName);        
 
         if (theModel != null) {
-            return "questions.xhtml";
+            sendEmail();
+            return "forgotPassword.xhtml";
         }                     
         else {
             errorMessage = "Account does not exist!";
-            return "";
+            return "forgotPassword.xhtml";
         }
     }
     
@@ -138,8 +140,7 @@ public class ForgotPasswordController implements Serializable {
             errorMessage = "New passwords do not match!";
             return "";
         }
-        forgotPassword.changePass(theModel.getNewPass(), userName);
-        
+        forgotPassword.changePass(theModel.getNewPass(), userName);        
         
         return "index.xhtml"; 
     }

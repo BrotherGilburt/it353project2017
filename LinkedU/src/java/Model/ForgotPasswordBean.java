@@ -10,6 +10,7 @@ package Model;
  * @author Keegan
  */
 public class ForgotPasswordBean {
+    private String email;
     private String question;
     private String answer;
     private String userAnsw;
@@ -17,13 +18,11 @@ public class ForgotPasswordBean {
     private String confNewPass;
     private String messageType;
 
-    
-    /**
-     * Creates a new instance of ForgotPassBean
-     * @param question
-     * @param answer
-     */
-    public ForgotPasswordBean(String question, String answer) {
+    public ForgotPasswordBean() {
+        
+    }
+    public ForgotPasswordBean(String email, String question, String answer) {
+        this.email = email;
         this.question = question;
         this.answer = answer;
     }
@@ -110,5 +109,19 @@ public class ForgotPasswordBean {
      */
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
