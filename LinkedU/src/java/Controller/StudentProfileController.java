@@ -93,7 +93,7 @@ public class StudentProfileController implements Serializable {
     public String updateFinished() {
         /*DATA VALIDATION*/
         
-        
+        StudentProfileDAO.setProfile(myProfileModel);
         
         return "myProfile.xhtml?faces-redirect=true";
     }

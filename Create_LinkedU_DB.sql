@@ -75,3 +75,13 @@ Image			varchar(50) not null,
 Mixtape			varchar(50) not null,
 Essay			varchar(50) not null
 );
+
+--Student Accounts
+insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('pdkaufm', 19, 999, 999, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('kssuth1', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('stiwar1', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('asriren', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
