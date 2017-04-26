@@ -47,6 +47,47 @@ public class Profile {
         this();
         this.userID = userID;
     }
+    
+    public String getACTString() {
+        if (ACT < 0) return "N/A";
+        return Integer.toString(ACT);
+    }
+    
+    public String getSATString() {
+        if (SAT < 0) return "N/A";
+        return Integer.toString(SAT);
+    }
+    
+    public String getPSAT_NMSQTString() {
+        if (PSAT_NMSQT < 0) return "N/A";
+        return Integer.toString(PSAT_NMSQT);
+    }
+    
+    public String getUniversitiesString()
+    {
+        if (universities.isEmpty()) return "N/A";
+        
+        StringBuilder list = new StringBuilder();
+        
+        for(int i = 0; i < universities.size(); i++) {
+            list.append(universities.get(i));
+            if (i != universities.size()-1) list.append(", ");
+        }
+        return list.toString();
+    }
+    
+        public String getMajorsString()
+    {
+        if (majors.isEmpty()) return "N/A";
+        
+        StringBuilder list = new StringBuilder();
+        
+        for(int i = 0; i < majors.size(); i++) {
+            list.append(majors.get(i));
+            if (i != majors.size()-1) list.append(", ");
+        }
+        return list.toString();
+    }
 
     public String getUserID() {
         return userID;

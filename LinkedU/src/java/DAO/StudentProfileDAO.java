@@ -90,12 +90,23 @@ public class StudentProfileDAO {
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.StudentProfile WHERE userID='" + userID + "'");
 
             if (rs.next()) {
-                profile.setUserID("userid");
+                profile.setUserID(rs.getString("userid"));
                 profile.setACT(rs.getInt("ACT"));
                 profile.setSAT(rs.getInt("SAT"));
                 profile.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
-                profile.setUniversities(new ArrayList<String>(Arrays.asList(rs.getString("Universities").split(";"))));
-                profile.setMajors(new ArrayList<String>(Arrays.asList(rs.getString("Majors").split(";"))));
+                
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals(""))
+                    profile.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
+                else
+                    profile.setUniversities(new ArrayList<String>());
+                
+                String majList = rs.getString("Majors");
+                if (!majList.equals(""))
+                    profile.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
+                else
+                    profile.setMajors(new ArrayList<String>());
+                
                 profile.setImage(rs.getString("Image"));
                 profile.setMixtape(rs.getString("Mixtape"));
                 profile.setEssay(rs.getString("Essay"));

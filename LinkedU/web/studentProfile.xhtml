@@ -12,29 +12,30 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:fieldset legend="Picture" style="margin-bottom:20px">
-                <p:graphicImage value="#{studentProfileController.viewProfileModel.image}" />
-            </p:fieldset>
+            <p:fieldset legend="#{studentProfileController.viewStudentModel.firstName} #{studentProfileController.viewStudentModel.lastName}" style="margin-bottom:20px">
+                <p:graphicImage value="#{studentProfileController.viewProfileModel.image}"  style="max-width: 200px; max-height: 200px;"/>
 
-            <p:fieldset legend="General Information" style="margin-bottom:20px">
+                <h3>General Information</h3>
                 <h:panelGrid columns="2" columnClasses="label, label" cellpadding="5">
                     <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewStudentModel.firstName} #{studentProfileController.viewStudentModel.lastName}" />
                     <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewStudentModel.userID}" />
 
-                    <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.ACT}" />
-                    <h:panelGroup><b><h:outputText value="SAT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.SAT}" />
-                    <h:panelGroup><b><h:outputText value="PSAT/NMSQT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.PSAT_NMSQT}" />
+                    <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.getACTString()}" />
+                    <h:panelGroup><b><h:outputText value="SAT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.getSATString()}" />
+                    <h:panelGroup><b><h:outputText value="PSAT/NMSQT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.getPSAT_NMSQTString()}" />
 
-                    <h:panelGroup><b><h:outputText value="Desired Universities:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.universities}"/>
+                    <h:panelGroup><b><h:outputText value="Desired Universities:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.getUniversitiesString()}"/>
 
-                    <h:panelGroup><b><h:outputText value="Desired Majors:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.majors}" />
+                    <h:panelGroup><b><h:outputText value="Desired Majors:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.viewProfileModel.getMajorsString()}" />
                 </h:panelGrid>
-            </p:fieldset>
-            <p:fieldset legend="Mixtapes" style="margin-bottom:20px">
-                ((to be added))
-            </p:fieldset>
-            <p:fieldset legend="Essay" style="margin-bottom:20px">
-                ((to be added))
+
+                <br/>
+                <h3>Mixtape</h3>
+                ((Mixtape to be added))
+            
+                <br/>
+                <h3>Essay</h3>
+                ((Essay to be added))
             </p:fieldset>
         </h:form>
     </h:body>

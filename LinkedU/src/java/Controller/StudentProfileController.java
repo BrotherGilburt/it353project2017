@@ -89,6 +89,18 @@ public class StudentProfileController implements Serializable {
 
         return "updateProfile.xhtml?faces-redirect=true";
     }
+    
+    public String gotoUpdateImage() {
+        return "myProfile.xhtml?faces-redirect=true";
+    }
+    
+    public String gotoUpdateMixtape() {
+        return "myProfile.xhtml?faces-redirect=true";
+    }
+    
+    public String gotoUpdateEssay() {
+        return "myProfile.xhtml?faces-redirect=true";
+    }
 
     public String updateFinished() {
         /*DATA VALIDATION*/
