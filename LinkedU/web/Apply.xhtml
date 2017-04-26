@@ -13,6 +13,7 @@ and open the template in the editor.
     <h:head>
         <title>LinkedU - Application</title>
         <f:metadata>
+           
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
@@ -34,9 +35,9 @@ and open the template in the editor.
                             <p:inputText value="#{applyController.apply.lastname}" required="true" label="Lastname"/>
 
                             <h:outputText value="Age: " />
-                            <p:inputText value="#{applyController.apply.age}" />
-
-
+                            <p:inputText value="#{applyController.apply.age}" validatorMessage="Not a valid age">
+                            <f:validateLength minimum="2" maximum="2"/>
+                            </p:inputText>
                             <h:outputText value="Sex: " />
                             <p:selectOneRadio id="sex" value="#{applyController.apply.sex}" required="true">
                                 <f:selectItem itemLabel="Female" itemValue="Female" />
@@ -63,8 +64,9 @@ and open the template in the editor.
                             <p:inputText value="#{applyController.apply.street}" />
 
                             <h:outputText value="Postal Code: " />
-                            <p:inputText value="#{applyController.apply.postalCode}" />
-
+                            <p:inputText value="#{applyController.apply.postalCode}" validatorMessage="Not a valid US zip code" >
+                            <f:validateRegex pattern="^[0-9]{5}(?:-[0-9]{4})?$"/>
+                            </p:inputText>
                             <h:outputText value="City: " />
                             <p:inputText value="#{applyController.apply.city}" />
 
@@ -77,10 +79,13 @@ and open the template in the editor.
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Email: *" />
-                            <p:inputText value="#{applyController.apply.email}" required="true" label="Email"/>
-
+                            <p:inputText id="email" value="#{applyController.apply.email}" required="true" label="Email" validatorMessage="Email is not in the right form">
+                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                            </p:inputText>
                             <h:outputText value="Phone: " />
-                            <p:inputText value="#{applyController.apply.phone}"/>
+                            <p:inputText value="#{applyController.apply.phone}" validatorMessage="Phone number not in valid format">
+                                 <f:validateRegex pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*" />
+                            </p:inputText>
 
                             <h:outputText value="Additional Info: " />
                             <p:inputText value="#{applyController.apply.info}"/>
@@ -154,7 +159,5 @@ and open the template in the editor.
 
             </p:wizard>
         </h:form>
-
-
     </h:body>
 </html>
