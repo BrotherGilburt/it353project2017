@@ -21,7 +21,7 @@ import javax.enterprise.context.RequestScoped;
  */
 @Named(value = "forgotPasswordDAO")
 @RequestScoped
-public class ForgotPasswordDAO {
+public class ForgotPasswordDB {
 
     String driverName = "org.apache.derby.jdbc.ClientDriver";
     //String connStr = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Spring2017_LinkedU;create=true";
@@ -30,13 +30,12 @@ public class ForgotPasswordDAO {
     /**
      * Creates a new instance of ForgotPasswordDAO
      */
-    public ForgotPasswordDAO() {
+    public ForgotPasswordDB() {
     }
     
     public ForgotPasswordBean lostPass(String user){
         Connection DBConn = null;
         ForgotPasswordBean uRes = null;
-        boolean result = false;
         try {
             DBHelper.loadDriver(driverName);
             DBConn = DBHelper.connect2DB(connStr, "itkstu", "student");
@@ -44,7 +43,7 @@ public class ForgotPasswordDAO {
             // With the connection made, create a statement to talk to the DB server.
             // Create a SQL statement to query, retrieve the rows one by one (by going to the
             // columns), and formulate the result string to send back to the client.
-            String sqlStr = "SELECT SecurityQ, SecurityA FROM Project353.Users WHERE Username = ?";
+            String sqlStr = "SELECT SecurityQ, SecurityA FROM LinkedU.loginInfo WHERE Username = ?";
             PreparedStatement stmt = DBConn.prepareStatement(sqlStr);
             stmt.setString(1, user);
             
@@ -84,7 +83,7 @@ public class ForgotPasswordDAO {
             String temp = "";
             String updateString;
             Statement stmt = DBConn.createStatement();
-            updateString = "UPDATE Project353.Users SET " 
+            updateString = "UPDATE LinkedU.loginInfo SET " 
                     + "Password = '" + password + "' "
                     + "WHERE Username = '" + username + "'";
             System.out.println("updateString =" + updateString);

@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import DAO.ForgotPasswordDAO;
+import DAO.ForgotPasswordDB;
 import Model.ForgotPasswordBean;
 import java.io.Serializable;
 import java.util.Properties;
@@ -29,6 +29,7 @@ public class ForgotPasswordController implements Serializable {
 
     private ForgotPasswordBean theModel;
     private String userName;
+    private String email;
     private String errorMessage;
 
     /**
@@ -55,11 +56,10 @@ public class ForgotPasswordController implements Serializable {
         });
 
         try {
-
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from-email@gmail.com"));
+            message.setFrom(new InternetAddress("linkeduapp@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("to-email@gmail.com"));
+                    InternetAddress.parse(email + "@gmail.com"));
             message.setSubject("LinkedU - Password Reset");
             message.setText("Click the link to reset your password.\n\n" +
                     "<a href=\"http://localhost:8080/LinkedU/faces/forgotPassword.xhtml?userid=" + userName + "\">Reset Password</a>");
@@ -116,12 +116,11 @@ public class ForgotPasswordController implements Serializable {
     }
     
     public String accountByUsername() {
-        ForgotPasswordDAO forgotPassword = new ForgotPasswordDAO();
-        theModel = forgotPassword.lostPass(userName);
-        
+        ForgotPasswordDB forgotPassword = new ForgotPasswordDB();
+        theModel = forgotPassword.lostPass(userName);        
 
-        if (theModel != null) {          
-            return "questions.xhtml"; 
+        if (theModel != null) {
+            return "questions.xhtml";
         }                     
         else {
             errorMessage = "Account does not exist!";
@@ -130,7 +129,7 @@ public class ForgotPasswordController implements Serializable {
     }
     
     public String changePass() {
-        ForgotPasswordDAO forgotPassword = new ForgotPasswordDAO(); 
+        ForgotPasswordDB forgotPassword = new ForgotPasswordDB(); 
         if (!theModel.getAnswer().equals(theModel.getUserAnsw())){
            errorMessage = "Incorrect answer!";
            return "";
@@ -143,5 +142,19 @@ public class ForgotPasswordController implements Serializable {
         
         
         return "index.xhtml"; 
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
