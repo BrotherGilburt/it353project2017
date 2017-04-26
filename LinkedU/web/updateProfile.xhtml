@@ -48,7 +48,7 @@
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Majors:" />
                             <p:selectCheckboxMenu id="mselection" label="Majors" value="#{studentProfileController.myProfileModel.majors}" filter="false">
-                                <f:selectItems value="N/A" />
+                                <f:selectItems value="#{universalDataController.majors}" />
                             </p:selectCheckboxMenu>
                         </h:panelGrid>
                         <br/>
