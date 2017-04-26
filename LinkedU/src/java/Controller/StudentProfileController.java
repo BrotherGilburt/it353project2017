@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAO.StudentProfileDAO;
 import Model.Profile;
 import Model.Student;
 import java.io.IOException;
@@ -58,6 +59,9 @@ public class StudentProfileController implements Serializable {
     public String loadMyProfile() {
         /*DATABASE ACCESS*/
 
+        myProfileModel = StudentProfileDAO.getProfile(account.getLoginModel().getUserID());
+        if (myProfileModel == null) myProfileModel = new Profile(account.getLoginModel().getUserID());
+        
         return "myProfile.xhtml?faces-redirect=true";
     }
 
@@ -75,7 +79,9 @@ public class StudentProfileController implements Serializable {
             }
         }
 
-        //TO BE ADDED database connection to get the students profile model
+        viewProfileModel = StudentProfileDAO.getProfile(userID);
+        if (viewProfileModel == null) viewProfileModel = new Profile(userID);
+        
         return "studentProfile.xhtml?faces-redirect=true";
     }
 
@@ -86,6 +92,9 @@ public class StudentProfileController implements Serializable {
 
     public String updateFinished() {
         /*DATA VALIDATION*/
+        
+        
+        
         return "myProfile.xhtml?faces-redirect=true";
     }
 

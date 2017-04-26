@@ -1,7 +1,7 @@
---drop table LinkedU.LoginInfo;
---drop table LinkedU.Users;
---drop table LINKEDU.ApplyInfo;
---drop table LinkedU.StudentProfile;
+drop table LinkedU.LoginInfo;
+drop table LinkedU.Users;
+drop table LINKEDU.ApplyInfo;
+drop table LinkedU.StudentProfile;
 create table LinkedU.LoginInfo (
   UserID                    VARCHAR(25) NOT NULL,
   Password                  VARCHAR(50) NOT NULL
@@ -61,11 +61,17 @@ Exam varchar(50) NOT NULL,
 Score varchar(35) NOT NULL, 
 High_school varchar(100) NOT NULL, 
 High_School_Address varchar(50) NOT NULL,
-High_School_Country varchar(50) NOT NULL);
+High_School_Country varchar(50) NOT NULL
+);
 
 create table LinkedU.StudentProfile(
-ACT				float(32) not null,
-SAT				float(32) not null,
-PSAT_NMSQT		float(32) not null,
+UserID			varchar(25) not null,
+ACT				integer not null,
+SAT				integer not null,
+PSAT_NMSQT		integer not null,
 Universities	varchar(200) not null,
-Majors			varchar(200) not null);
+Majors			varchar(200) not null,
+Image			varchar(50) not null,
+Mixtape			varchar(50) not null,
+Essay			varchar(50) not null
+);

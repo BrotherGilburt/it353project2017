@@ -12,12 +12,15 @@ import java.util.ArrayList;
  * @author IT353S710
  */
 public class Profile {
+
     private final String defaultImage = "./Resources/default_student.png";
-    
+    private final String defaultMixtape = "none";
+    private final String defaultEssay = "none";
+
     private String userID;
-    private String ACT;
-    private String SAT;
-    private String PSAT_NMSQT;
+    private int ACT;
+    private int SAT;
+    private int PSAT_NMSQT;
     private ArrayList<String> majors;
     private ArrayList<String> universities;
     private String image;
@@ -28,19 +31,18 @@ public class Profile {
      IMAGE
      ESSAY
      MIXTAPES*/
-    
     public Profile() {
         userID = "";
-        ACT = "N/A";
-        SAT = "N/A";
-        PSAT_NMSQT = "N/A";
+        ACT = -1;
+        SAT = -1;
+        PSAT_NMSQT = -1;
         majors = new ArrayList<String>();
         universities = new ArrayList<String>();
         image = defaultImage;
-        mixtape = null;
-        essay = null;
+        mixtape = defaultMixtape;
+        essay = defaultEssay;
     }
-    
+
     public Profile(String userID) {
         this();
         this.userID = userID;
@@ -54,27 +56,27 @@ public class Profile {
         this.userID = userID;
     }
 
-    public String getACT() {
+    public int getACT() {
         return ACT;
     }
 
-    public void setACT(String ACT) {
+    public void setACT(int ACT) {
         this.ACT = ACT;
     }
 
-    public String getSAT() {
+    public int getSAT() {
         return SAT;
     }
 
-    public void setSAT(String SAT) {
+    public void setSAT(int SAT) {
         this.SAT = SAT;
     }
 
-    public String getPSAT_NMSQT() {
+    public int getPSAT_NMSQT() {
         return PSAT_NMSQT;
     }
 
-    public void setPSAT_NMSQT(String PSAT_NMSQT) {
+    public void setPSAT_NMSQT(int PSAT_NMSQT) {
         this.PSAT_NMSQT = PSAT_NMSQT;
     }
 
