@@ -12,7 +12,8 @@ and open the template in the editor.
     <h:head>
         <title>LinkedU - Application</title>
         <f:metadata>
-            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn()}"/>
+            <f:event type="preRenderView" listener="#{applyController.setUp()}"/>
         </f:metadata>
     </h:head>
     <h:body>
@@ -29,13 +30,13 @@ and open the template in the editor.
                     <p:selectOneMenu id="University" value="#{applyController.apply.university}" style="width:150px" required="true">
                         <p:ajax listener="#{applyController.onUniversityChange()}" update="Majors" />
                         <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{applyController.universities}" />
+                        <f:selectItems value="#{universityController.getAllUniversityNames()}" />
                     </p:selectOneMenu>
 
                     <p:outputLabel for="Majors" value="Major: " />
                     <p:selectOneMenu id="Majors" value="#{applyController.apply.major}" style="width:150px" required="true">
                         <f:selectItem itemLabel="Select Majors" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{applyController.majors}" />
+                        <f:selectItems value="#{applyController.majorsList}" />
                     </p:selectOneMenu>
                 </h:panelGrid>
 

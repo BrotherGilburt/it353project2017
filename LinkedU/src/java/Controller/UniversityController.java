@@ -29,10 +29,10 @@ public class UniversityController implements Serializable {
     }
     
     /**
-     * Called upon updating or creating a university for an account.
+     * Called upon updating or creating a university for an account in the Database.
      * @return the address of the university profile.
      */
-    public String updateUniversity() {
+    public String setUniversity() {
         //Call DAO to create/update a university
         
         UniversityDAO.setUniversity(myUniversityModel);
@@ -40,7 +40,15 @@ public class UniversityController implements Serializable {
         return ""; //address of university profile.
     }
     
-    public ArrayList<String> getAllUniversities() {
+    public static ArrayList<University> getAllUniversities() {
+        return UniversityDAO.getAllUniversities();
+    }
+    
+    /**
+     * Returns a list of all University names.
+     * @return ArrayList of names.
+     */
+    public static ArrayList<String> getAllUniversityNames() {
         ArrayList<String> stringList = new ArrayList();
 
         ArrayList<University> list = UniversityDAO.getAllUniversities();
@@ -55,7 +63,11 @@ public class UniversityController implements Serializable {
         return stringList;
     }
     
-    public ArrayList<String> getAllMajors() {
+    /**
+     * Returns a list of all majors.
+     * @return ArrayList of majors.
+     */
+    public static ArrayList<String> getAllMajors() {
         ArrayList<String> stringList = new ArrayList();
         
         ArrayList<University> list = UniversityDAO.getAllUniversities();
@@ -69,6 +81,19 @@ public class UniversityController implements Serializable {
         Collections.sort(stringList);
         
         return stringList;
+    }
+    
+    /**
+     * Returns a list of all majors for a particular university.
+     * @param name
+     * @return 
+     */
+    public static ArrayList<String> getUniversityMajors(String name) {
+        ArrayList<String> list = UniversityDAO.getUniversityByName(name).getMajors();
+        
+        Collections.sort(list);       
+        
+        return list;
     }
     
 }
