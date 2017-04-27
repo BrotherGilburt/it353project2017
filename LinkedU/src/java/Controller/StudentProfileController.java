@@ -7,7 +7,6 @@ package Controller;
 
 import DAO.StudentProfileDAO;
 import Model.Profile;
-import Model.Student;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,9 +24,8 @@ import javax.mail.Part;
 @SessionScoped
 public class StudentProfileController implements Serializable {
 
-    private Profile myProfileModel; //personal profile
-    private Profile viewProfileModel; //other student profiles
-    private Student viewStudentModel;
+    private Profile myProfileModel; //The user.
+    private Profile viewStudentModel; //Other Student
     private Part myImage;
     private AccountController account;
     private SearchController search;
@@ -44,11 +42,8 @@ public class StudentProfileController implements Serializable {
         if (myProfileModel == null) {
             myProfileModel = new Profile(account.getLoginModel().getUserID());
         }
-        if (viewProfileModel == null) {
-            viewProfileModel = new Profile();
-        }
         if (viewStudentModel == null) {
-            viewStudentModel = new Student();
+            viewStudentModel = new Profile();
         }
         if (search == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -70,7 +65,7 @@ public class StudentProfileController implements Serializable {
         Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         String userID = params.get("userid");
 
-        ArrayList<Student> studentsList = search.getStudentsList();
+        ArrayList<Profile> studentsList = search.getStudentsList();
 
         for (int i = 0; i < studentsList.size(); i++) {
             if (studentsList.get(i).getUserID().equals(userID)) {
@@ -78,9 +73,6 @@ public class StudentProfileController implements Serializable {
                 break;
             }
         }
-
-        viewProfileModel = StudentProfileDAO.getProfile(userID);
-        if (viewProfileModel == null) viewProfileModel = new Profile(userID);
         
         return "studentProfile.xhtml?faces-redirect=true";
     }
@@ -131,14 +123,6 @@ public class StudentProfileController implements Serializable {
         this.myProfileModel = myProfileModel;
     }
 
-    public Profile getViewProfileModel() {
-        return viewProfileModel;
-    }
-
-    public void setViewProfileModel(Profile viewProfileModel) {
-        this.viewProfileModel = viewProfileModel;
-    }
-
     public Part getMyImage() {
         return myImage;
     }
@@ -147,11 +131,11 @@ public class StudentProfileController implements Serializable {
         this.myImage = myImage;
     }
 
-    public Student getViewStudentModel() {
+    public Profile getViewStudentModel() {
         return viewStudentModel;
     }
 
-    public void setViewStudentModel(Student viewStudentModel) {
+    public void setViewStudentModel(Profile viewStudentModel) {
         this.viewStudentModel = viewStudentModel;
     }
 

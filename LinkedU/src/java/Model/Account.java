@@ -9,12 +9,12 @@ package Model;
  *
  * @author IT353S710
  */
-public class User {
+public class Account {
 
     private String accountType;
     private String userID;
-    private String firstName;
-    private String lastName;
+    /*private String firstName;
+    private String lastName;*/
     private String email;
     private String securityQuestion;
     private String securityAnswer;
@@ -35,7 +35,7 @@ public class User {
         this.accountType = accountType;
     }
 
-    public String getFirstName() {
+    /*public String getFirstName() {
         return firstName;
     }
 
@@ -49,7 +49,7 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
+    }*/
 
     public String getEmail() {
         return email;

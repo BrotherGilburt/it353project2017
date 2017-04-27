@@ -7,7 +7,7 @@ package Controller;
 
 import DAO.AccountDB;
 import Model.Login;
-import Model.User;
+import Model.Account;
 import java.io.Serializable;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -37,10 +37,10 @@ import javax.mail.internet.MimeMultipart;
 public class AccountController implements Serializable {
 
     private Login loginModel;
-    private User userModel;
+    private Account userModel;
 
     private Login loginUpdateModel;
-    private User userUpdateModel;
+    private Account userUpdateModel;
 
     private String errorMessage;
     private int attempts;
@@ -54,13 +54,13 @@ public class AccountController implements Serializable {
             loginModel = new Login();
         }
         if (userModel == null) {
-            userModel = new User();
+            userModel = new Account();
         }
         if (loginUpdateModel == null) {
             loginUpdateModel = new Login();
         }
         if (userUpdateModel == null) {
-            userUpdateModel = new User();
+            userUpdateModel = new Account();
         }
         errorMessage = " ";
         if (attempts <= 0) {
@@ -71,7 +71,7 @@ public class AccountController implements Serializable {
 
     public void reset() {
         loginModel = new Login();
-        userModel = new User();
+        userModel = new Account();
         errorMessage = "";
         confirm = "";
     }
@@ -89,12 +89,12 @@ public class AccountController implements Serializable {
     public String gotoUpdate() {
 
         loginUpdateModel = new Login();
-        userUpdateModel = new User();
+        userUpdateModel = new Account();
         loginUpdateModel.setUserID(loginModel.getUserID());
         loginUpdateModel.setPassword("");
         userUpdateModel.setAccountType(userModel.getAccountType());
-        userUpdateModel.setFirstName(userModel.getFirstName());
-        userUpdateModel.setLastName(userModel.getLastName());
+        /*userUpdateModel.setFirstName(userModel.getFirstName());
+        userUpdateModel.setLastName(userModel.getLastName());*/
         userUpdateModel.setEmail(userModel.getEmail());
         userUpdateModel.setSecurityQuestion(userModel.getSecurityQuestion());
         userUpdateModel.setSecurityAnswer(userModel.getSecurityAnswer());
@@ -121,7 +121,7 @@ public class AccountController implements Serializable {
         //Get user information.
         userModel = AccountDB.getUser(loginModel.getUserID());
 
-        return "loginGood.xhtml?faces-redirect=true";
+        return "home.xhtml?faces-redirect=true";
     }
 
     /**
@@ -227,12 +227,12 @@ public class AccountController implements Serializable {
         if (!loginUpdateModel.getPassword().equals("") && !loginUpdateModel.getPassword().equals(loginModel.getPassword())) {
             loginModel.setPassword(loginUpdateModel.saltPassword());
         }
-        if (!userUpdateModel.getFirstName().equals("") && !userUpdateModel.getFirstName().equals(userModel.getFirstName())) {
+        /*if (!userUpdateModel.getFirstName().equals("") && !userUpdateModel.getFirstName().equals(userModel.getFirstName())) {
             userModel.setFirstName(userUpdateModel.getFirstName());
         }
         if (!userUpdateModel.getLastName().equals("") && !userUpdateModel.getLastName().equals(userModel.getLastName())) {
             userModel.setLastName(userUpdateModel.getLastName());
-        }
+        }*/
         if (!userUpdateModel.getEmail().equals("") && !userUpdateModel.getEmail().equals(userModel.getEmail())) {
             userModel.setEmail(userUpdateModel.getEmail());
         }
@@ -324,13 +324,13 @@ public class AccountController implements Serializable {
     }
 
     public String getEcho() {
-        return "<h3>Thanks " + userModel.getFirstName() + "! Your account has been created/updated successfully.</h3>" + getList();
+        return "<h3>Thanks "/* + userModel.getFirstName()*/ + "! Your account has been created/updated successfully.</h3>" + getList();
     }
 
     public String getList() {
-        return "<b>Firstname:</b> " + userModel.getFirstName()
+        return /*"<b>Firstname:</b> " + userModel.getFirstName()
                 + "<br/><b>Lastname:</b> " + userModel.getLastName()
-                + "<br/><b>UserID:</b> " + loginModel.getUserID()
+                + */"<br/><b>UserID:</b> " + loginModel.getUserID()
                 + "<br/><b>Email:</b> " + userModel.getEmail()
                 + "<br/><b>Account Type:</b> " + userModel.getAccountType()
                 + "<br/><b>Security Question:</b> " + userModel.getSecurityQuestion()
@@ -345,11 +345,11 @@ public class AccountController implements Serializable {
         this.loginModel = loginModel;
     }
 
-    public User getUserModel() {
+    public Account getUserModel() {
         return userModel;
     }
 
-    public void setUserModel(User userModel) {
+    public void setUserModel(Account userModel) {
         this.userModel = userModel;
     }
 
@@ -389,11 +389,11 @@ public class AccountController implements Serializable {
         this.loginUpdateModel = loginUpdateModel;
     }
 
-    public User getUserUpdateModel() {
+    public Account getUserUpdateModel() {
         return userUpdateModel;
     }
 
-    public void setUserUpdateModel(User userUpdateModel) {
+    public void setUserUpdateModel(Account userUpdateModel) {
         this.userUpdateModel = userUpdateModel;
     }
 

@@ -2,6 +2,8 @@ drop table LinkedU.LoginInfo;
 drop table LinkedU.Users;
 drop table LINKEDU.ApplyInfo;
 drop table LinkedU.StudentProfile;
+drop table LinkedU.Students;
+drop table LinkedU.Universities;
 create table LinkedU.LoginInfo (
   UserID                    VARCHAR(25) NOT NULL,
   Password                  VARCHAR(50) NOT NULL
@@ -22,8 +24,6 @@ insert into LinkedU.LoginInfo (UserID, Password) values
 
 create table LinkedU.Users (
   UserID                    VARCHAR(25) NOT NULL,
-  FirstName                 VARCHAR(25) NOT NULL,
-  LastName                  VARCHAR(25) NOT NULL,
   Email                     VARCHAR(50) NOT NULL,
   AccountType               VARCHAR(13) NOT NULL,
   SecurityQuestion          VARCHAR(50) NOT NULL,
@@ -31,14 +31,14 @@ create table LinkedU.Users (
 );
 
 --Student Accounts
-insert into LinkedU.Users(UserID, FirstName, LastName, Email, AccountType, SecurityQuestion, SecurityAnswer) values
-('pdkaufm','Perry','Kaufman','pdkaufm@ilstu.edu','Student','Q?','A');
-insert into LinkedU.Users(UserID, FirstName, LastName, Email, AccountType, SecurityQuestion, SecurityAnswer) values
-('kssuth1','Keegan','Sutherland','kssuth1@ilstu.edu','Student','Q?','A');
-insert into LinkedU.Users(UserID, FirstName, LastName, Email, AccountType, SecurityQuestion, SecurityAnswer) values
-('stiwar1','Shivangi','Tiwari','stiwar1@ilstu.edu','Student','Q?','A');
-insert into LinkedU.Users(UserID, FirstName, LastName, Email, AccountType, SecurityQuestion, SecurityAnswer) values
-('asriren','Anusha','Srirenganathan Malarvizhi','asriren@ilstu.edu','Student','Q?','A');
+insert into LinkedU.Users(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
+('pdkaufm','pdkaufm@ilstu.edu','Student','Q?','A');
+insert into LinkedU.Users(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
+('kssuth1','kssuth1@ilstu.edu','Student','Q?','A');
+insert into LinkedU.Users(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
+('stiwar1','stiwar1@ilstu.edu','Student','Q?','A');
+insert into LinkedU.Users(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
+('asriren','asriren@ilstu.edu','Student','Q?','A');
 
 --University Accounts
 --to be added
@@ -64,8 +64,10 @@ High_School_Address varchar(50) NOT NULL,
 High_School_Country varchar(50) NOT NULL
 );
 
-create table LinkedU.StudentProfile(
+create table LinkedU.Students(
 UserID			varchar(25) not null,
+FirstName       varchar(25) not null,
+LastName        varchar(25) not null,
 ACT				integer not null,
 SAT				integer not null,
 PSAT_NMSQT		integer not null,
@@ -77,23 +79,23 @@ Essay			varchar(50) not null
 );
 
 --Student Accounts
-insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('pdkaufm', 19, 999, 999, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
-insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('kssuth1', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
-insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('stiwar1', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
-insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('asriren', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('pdkaufm', 'Perry','Kaufman', 19, 999, 999, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.Students(UserID, FirstName, LastName,  ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('kssuth1','Keegan','Sutherland', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('stiwar1','Shivangi','Tiwari', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
+('asriren','Anusha','Srirenganathan Malarvizhi', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
 
 create table LinkedU.Universities(
 UserID			varchar(25) not null,
-premium			bit not null,
-universityName	varchar(50),
-majors			varchar(500),
-street			varchar(100),
-city			varchar(30),
-state			varchar(20),
-zip				varchar(15),
-imageLocation	varchar(50)
+Premium			boolean not null,
+UniversityName          varchar(50) not null,
+Majors			varchar(500) not null,
+Street			varchar(100) not null,
+City			varchar(30) not null,
+State			varchar(20) not null,
+Zip			varchar(15) not null,
+ImageLocation           varchar(50) not null
 );

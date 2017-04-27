@@ -18,6 +18,8 @@ public class Profile {
     private final String defaultEssay = "none";
 
     private String userID;
+    private String firstName;
+    private String lastName;
     private int ACT;
     private int SAT;
     private int PSAT_NMSQT;
@@ -159,6 +161,22 @@ public class Profile {
 
     public void setEssay(String essay) {
         this.essay = essay;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 }
