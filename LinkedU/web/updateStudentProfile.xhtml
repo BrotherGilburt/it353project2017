@@ -48,7 +48,7 @@
                     <p:panel header="Universities of Interest">
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Make a selection:" />
-                            <p:selectCheckboxMenu id="uselection" label="Universities" value="#{studentController.myProfileModel.universities}" style="width:250px">
+                            <p:selectCheckboxMenu id="uselection" label="Universities" value="#{studentController.myProfileModel.universities}" style="width:300px">
                                 <f:selectItems value="#{universityController.getAllUniversities()}"/>
                             </p:selectCheckboxMenu>
                         </h:panelGrid>
@@ -59,7 +59,7 @@
                     <p:panel header="Majors of Interest">
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Majors:" />
-                            <p:selectCheckboxMenu id="mselection" label="Majors" value="#{studentController.myProfileModel.majors}" >
+                            <p:selectCheckboxMenu id="mselection" label="Majors" value="#{studentController.myProfileModel.majors}" style="width:300px">
                                 <f:selectItems value="#{universityController.getAllMajors()}" />
                             </p:selectCheckboxMenu>
                         </h:panelGrid>

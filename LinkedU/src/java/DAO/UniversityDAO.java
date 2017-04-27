@@ -133,7 +133,7 @@ public class UniversityDAO {
             Statement stmt = DBConn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Universities");
 
-            if (rs.next()) {
+            while (rs.next()) {
                 University record = new University();
                 recordsList.add(record);
                 record.setUserID(rs.getString("userid"));

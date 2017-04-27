@@ -27,6 +27,8 @@ insert into LinkedU.LoginInfo (UserID, Password) values
 --University Accounts
 insert into LinkedU.LoginInfo (UserID, Password) values
 ('blim', '40bf696d25dd56ed44c864e05f75d33a4cface91');
+insert into LinkedU.LoginInfo (UserID, Password) values
+('test', '40bf696d25dd56ed44c864e05f75d33a4cface91');
 
 create table LinkedU.Accounts (
   UserID                    VARCHAR(25) NOT NULL,
@@ -49,6 +51,8 @@ insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, Secur
 --University Accounts
 insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
 ('blim','pdkaufm@ilstu.edu','University','Q?','A');
+insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
+('test','pdkaufm@ilstu.edu','University','Q?','A');
 
 CREATE TABLE LINKEDU.ApplyInfo(
 University				varchar(50) NOT NULL,
@@ -108,4 +112,6 @@ Image           	varchar(50) not null
 );
 
 insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, State, Zip, Image) values
-('blim', TRUE, 'University of Illinois', 'Computer Science;English;Biology;Chemistry;Music;Physics;Psychology;Mathematics', '100 N University St', 'Normal', 'IL', '61761', './Resources/default_university.png');
+('blim', TRUE, 'Illinois State University', 'Computer Science;English;Biology;Chemistry;Music;Physics;Psychology;Mathematics', '100 N University St', 'Normal', 'IL', '61761', './Resources/default_university.png');
+insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, State, Zip, Image) values
+('test', FALSE, 'University of Illinois', 'Dance;Computer Science;English;Biology;Chemistry;Music;Astronomy;Physics;Psychology;Art;Mathematics', '1337 Example St', 'Champaign', 'IL', '61820', './Resources/default_university.png');
