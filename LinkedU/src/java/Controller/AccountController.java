@@ -37,7 +37,7 @@ import javax.mail.internet.MimeMultipart;
 public class AccountController implements Serializable {
 
     private Login loginModel;
-    private Account userModel;
+    private Account accountModel;
 
     private Login loginUpdateModel;
     private Account userUpdateModel;
@@ -53,8 +53,8 @@ public class AccountController implements Serializable {
         if (loginModel == null) {
             loginModel = new Login();
         }
-        if (userModel == null) {
-            userModel = new Account();
+        if (accountModel == null) {
+            accountModel = new Account();
         }
         if (loginUpdateModel == null) {
             loginUpdateModel = new Login();
@@ -71,7 +71,7 @@ public class AccountController implements Serializable {
 
     public void reset() {
         loginModel = new Login();
-        userModel = new Account();
+        accountModel = new Account();
         errorMessage = "";
         confirm = "";
     }
@@ -92,12 +92,10 @@ public class AccountController implements Serializable {
         userUpdateModel = new Account();
         loginUpdateModel.setUserID(loginModel.getUserID());
         loginUpdateModel.setPassword("");
-        userUpdateModel.setAccountType(userModel.getAccountType());
-        /*userUpdateModel.setFirstName(userModel.getFirstName());
-        userUpdateModel.setLastName(userModel.getLastName());*/
-        userUpdateModel.setEmail(userModel.getEmail());
-        userUpdateModel.setSecurityQuestion(userModel.getSecurityQuestion());
-        userUpdateModel.setSecurityAnswer(userModel.getSecurityAnswer());
+        userUpdateModel.setAccountType(accountModel.getAccountType());
+        userUpdateModel.setEmail(accountModel.getEmail());
+        userUpdateModel.setSecurityQuestion(accountModel.getSecurityQuestion());
+        userUpdateModel.setSecurityAnswer(accountModel.getSecurityAnswer());
 
         return "update.xhtml?faces-redirect=true";
     }
@@ -119,7 +117,7 @@ public class AccountController implements Serializable {
         }
 
         //Get user information.
-        userModel = AccountDB.getUser(loginModel.getUserID());
+        accountModel = AccountDB.getUser(loginModel.getUserID());
 
         return "home.xhtml?faces-redirect=true";
     }
@@ -202,10 +200,10 @@ public class AccountController implements Serializable {
         loginModel.saltPassword();
 
         //Insert information into database.
-        AccountDB.createUser(userModel, loginModel);
+        AccountDB.createUser(accountModel, loginModel);
 
         //Send confirmation Email.
-        confirmationEmail(userModel.getEmail());
+        confirmationEmail(accountModel.getEmail());
 
         return "account.xhtml?faces-redirect=true";
     }
@@ -227,23 +225,17 @@ public class AccountController implements Serializable {
         if (!loginUpdateModel.getPassword().equals("") && !loginUpdateModel.getPassword().equals(loginModel.getPassword())) {
             loginModel.setPassword(loginUpdateModel.saltPassword());
         }
-        /*if (!userUpdateModel.getFirstName().equals("") && !userUpdateModel.getFirstName().equals(userModel.getFirstName())) {
-            userModel.setFirstName(userUpdateModel.getFirstName());
+        if (!userUpdateModel.getEmail().equals("") && !userUpdateModel.getEmail().equals(accountModel.getEmail())) {
+            accountModel.setEmail(userUpdateModel.getEmail());
         }
-        if (!userUpdateModel.getLastName().equals("") && !userUpdateModel.getLastName().equals(userModel.getLastName())) {
-            userModel.setLastName(userUpdateModel.getLastName());
-        }*/
-        if (!userUpdateModel.getEmail().equals("") && !userUpdateModel.getEmail().equals(userModel.getEmail())) {
-            userModel.setEmail(userUpdateModel.getEmail());
+        if (!userUpdateModel.getSecurityQuestion().equals("") && !userUpdateModel.getSecurityQuestion().equals(accountModel.getSecurityQuestion())) {
+            accountModel.setSecurityQuestion(userUpdateModel.getSecurityQuestion());
         }
-        if (!userUpdateModel.getSecurityQuestion().equals("") && !userUpdateModel.getSecurityQuestion().equals(userModel.getSecurityQuestion())) {
-            userModel.setSecurityQuestion(userUpdateModel.getSecurityQuestion());
-        }
-        if (!userUpdateModel.getSecurityAnswer().equals("") && !userUpdateModel.getSecurityAnswer().equals(userModel.getSecurityAnswer())) {
-            userModel.setSecurityAnswer(userUpdateModel.getSecurityAnswer());
+        if (!userUpdateModel.getSecurityAnswer().equals("") && !userUpdateModel.getSecurityAnswer().equals(accountModel.getSecurityAnswer())) {
+            accountModel.setSecurityAnswer(userUpdateModel.getSecurityAnswer());
         }
         
-        if (!AccountDB.updateUser(userModel, loginModel)) {
+        if (!AccountDB.updateUser(accountModel, loginModel)) {
             errorMessage = "Error. Record could not be updated. Please try again.";
             return "update.xhtml?faces-redirect=true";
         }
@@ -324,17 +316,15 @@ public class AccountController implements Serializable {
     }
 
     public String getEcho() {
-        return "<h3>Thanks "/* + userModel.getFirstName()*/ + "! Your account has been created/updated successfully.</h3>" + getList();
+        return "<h3>Thanks " + "! Your account has been created/updated successfully.</h3>" + getList();
     }
 
     public String getList() {
-        return /*"<b>Firstname:</b> " + userModel.getFirstName()
-                + "<br/><b>Lastname:</b> " + userModel.getLastName()
-                + */"<br/><b>UserID:</b> " + loginModel.getUserID()
-                + "<br/><b>Email:</b> " + userModel.getEmail()
-                + "<br/><b>Account Type:</b> " + userModel.getAccountType()
-                + "<br/><b>Security Question:</b> " + userModel.getSecurityQuestion()
-                + "<br/><b>Security Answer:</b> " + userModel.getSecurityAnswer();
+        return "<br/><b>UserID:</b> " + loginModel.getUserID()
+                + "<br/><b>Email:</b> " + accountModel.getEmail()
+                + "<br/><b>Account Type:</b> " + accountModel.getAccountType()
+                + "<br/><b>Security Question:</b> " + accountModel.getSecurityQuestion()
+                + "<br/><b>Security Answer:</b> " + accountModel.getSecurityAnswer();
     }
 
     public Login getLoginModel() {
@@ -345,12 +335,12 @@ public class AccountController implements Serializable {
         this.loginModel = loginModel;
     }
 
-    public Account getUserModel() {
-        return userModel;
+    public Account getAccountModel() {
+        return accountModel;
     }
 
-    public void setUserModel(Account userModel) {
-        this.userModel = userModel;
+    public void setAccountModel(Account accountModel) {
+        this.accountModel = accountModel;
     }
 
     public String getErrorMessage() {

@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import DAO.StudentProfileDAO;
-import Model.Profile;
+import DAO.StudentDAO;
+import Model.Student;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ import javax.mail.Part;
 @SessionScoped
 public class StudentProfileController implements Serializable {
 
-    private Profile myProfileModel; //The user.
-    private Profile viewStudentModel; //Other Student
+    private Student myProfileModel; //The user.
+    private Student viewStudentModel; //Other Student
     private Part myImage;
     private AccountController account;
     private SearchController search;
@@ -40,10 +40,10 @@ public class StudentProfileController implements Serializable {
             account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
         }
         if (myProfileModel == null) {
-            myProfileModel = new Profile(account.getLoginModel().getUserID());
+            myProfileModel = new Student(account.getLoginModel().getUserID());
         }
         if (viewStudentModel == null) {
-            viewStudentModel = new Profile();
+            viewStudentModel = new Student();
         }
         if (search == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -54,8 +54,8 @@ public class StudentProfileController implements Serializable {
     public String loadMyProfile() {
         /*DATABASE ACCESS*/
 
-        myProfileModel = StudentProfileDAO.getProfile(account.getLoginModel().getUserID());
-        if (myProfileModel == null) myProfileModel = new Profile(account.getLoginModel().getUserID());
+        myProfileModel = StudentDAO.getProfile(account.getLoginModel().getUserID());
+        if (myProfileModel == null) myProfileModel = new Student(account.getLoginModel().getUserID());
         
         return "myProfile.xhtml?faces-redirect=true";
     }
@@ -65,7 +65,7 @@ public class StudentProfileController implements Serializable {
         Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         String userID = params.get("userid");
 
-        ArrayList<Profile> studentsList = search.getStudentsList();
+        ArrayList<Student> studentsList = search.getStudentsList();
 
         for (int i = 0; i < studentsList.size(); i++) {
             if (studentsList.get(i).getUserID().equals(userID)) {
@@ -97,7 +97,7 @@ public class StudentProfileController implements Serializable {
     public String updateFinished() {
         /*DATA VALIDATION*/
         
-        StudentProfileDAO.setProfile(myProfileModel);
+        StudentDAO.setProfile(myProfileModel);
         
         return "myProfile.xhtml?faces-redirect=true";
     }
@@ -115,11 +115,11 @@ public class StudentProfileController implements Serializable {
         return null;
     }
 
-    public Profile getMyProfileModel() {
+    public Student getMyProfileModel() {
         return myProfileModel;
     }
 
-    public void setMyProfileModel(Profile myProfileModel) {
+    public void setMyProfileModel(Student myProfileModel) {
         this.myProfileModel = myProfileModel;
     }
 
@@ -131,11 +131,11 @@ public class StudentProfileController implements Serializable {
         this.myImage = myImage;
     }
 
-    public Profile getViewStudentModel() {
+    public Student getViewStudentModel() {
         return viewStudentModel;
     }
 
-    public void setViewStudentModel(Profile viewStudentModel) {
+    public void setViewStudentModel(Student viewStudentModel) {
         this.viewStudentModel = viewStudentModel;
     }
 

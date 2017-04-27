@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Model.Profile;
+import Model.Student;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,15 +22,15 @@ import javax.faces.bean.RequestScoped;
  */
 @Named(value = "studentProfileDAO")
 @RequestScoped
-public class StudentProfileDAO {
+public class StudentDAO {
 
     /**
      * Creates a new instance of StudentProfileDAO
      */
-    public StudentProfileDAO() {
+    public StudentDAO() {
     }
 
-    public static int setProfile(Profile record) {
+    public static int setProfile(Student record) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -81,8 +81,8 @@ public class StudentProfileDAO {
         return rowCount;
     }
     
-    public static Profile getProfile(String userID) {
-        Profile record = new Profile();
+    public static Student getProfile(String userID) {
+        Student record = new Student();
                 DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
@@ -94,7 +94,7 @@ public class StudentProfileDAO {
             if (rs.next()) {
                 record.setUserID(rs.getString("userid"));
                 record.setFirstName(rs.getString("FirstName"));
-                record.setFirstName(rs.getString("LastName"));
+                record.setLastName(rs.getString("LastName"));
                 record.setACT(rs.getInt("ACT"));
                 record.setSAT(rs.getInt("SAT"));
                 record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
@@ -134,8 +134,8 @@ public class StudentProfileDAO {
     
     public static ArrayList getStudentsByName(String searchText) {
         searchText = searchText.toUpperCase();
-        Profile record = null;
-        ArrayList<Profile> recordsList = null;
+        Student record = null;
+        ArrayList<Student> recordsList = null;
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
@@ -152,7 +152,7 @@ public class StudentProfileDAO {
 
             while (rs.next()) {
                 if (recordsList == null) recordsList = new ArrayList();
-                record = new Profile();
+                record = new Student();
                 recordsList.add(record);
                 record.setUserID(rs.getString("userid"));
                 record.setFirstName(rs.getString("firstname"));

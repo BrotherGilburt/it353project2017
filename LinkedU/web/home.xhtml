@@ -12,7 +12,7 @@
     </h:head>
     <h:body>
         <h:form>
-            Hello <p:commandLink id="accountPage" action="account.xhtml">#{accountController.userModel.userID}</p:commandLink>. <p:commandLink action="#{studentProfileController.loadMyProfile()}">Your profile</p:commandLink>
+            Hello <p:commandLink id="accountPage" action="account.xhtml">#{accountController.accountModel.userID}</p:commandLink>. <p:commandLink action="#{studentProfileController.loadMyProfile()}">Your profile</p:commandLink>
 
             <br/><br/><p:inputText id = "searchtextid" value="#{searchController.searchText}" />
             &nbsp;<p:commandButton id="search" value="Search" action="#{searchController.search()}"/>

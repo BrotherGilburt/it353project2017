@@ -70,8 +70,6 @@ public class AccountDB {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-
-        StudentDB.createStudent(login.getUserID());
         
         return rowCount;
     }
@@ -125,7 +123,7 @@ public class AccountDB {
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Users WHERE userID='" + userID + "'");
 
             if (rs.next()) {
-                record.setUserID("userid");
+                record.setUserID(rs.getString("userid"));
                 /*record.setFirstName(rs.getString("firstname"));
                 record.setLastName(rs.getString("lastname"));*/
                 record.setEmail(rs.getString("email"));

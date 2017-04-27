@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author IT353S710
  */
-public class Profile {
+public class Student {
 
     private final String defaultImage = "./Resources/default_student.png";
     private final String defaultMixtape = "none";
@@ -33,7 +33,7 @@ public class Profile {
      IMAGE
      ESSAY
      MIXTAPES*/
-    public Profile() {
+    public Student() {
         userID = "";
         ACT = -1;
         SAT = -1;
@@ -45,7 +45,7 @@ public class Profile {
         essay = defaultEssay;
     }
 
-    public Profile(String userID) {
+    public Student(String userID) {
         this();
         this.userID = userID;
     }

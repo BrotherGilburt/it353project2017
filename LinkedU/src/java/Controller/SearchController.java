@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import DAO.StudentProfileDAO;
-import Model.Profile;
+import DAO.StudentDAO;
+import Model.Student;
 import Model.University;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
@@ -20,16 +20,16 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class SearchController {
 
-    ArrayList<Profile> studentsList;
+    ArrayList<Student> studentsList;
     ArrayList<University> universitiesList;
     String searchMode;
     String searchText;
 
-    public ArrayList<Profile> getStudentsList() {
+    public ArrayList<Student> getStudentsList() {
         return studentsList;
     }
 
-    public void setStudentsList(ArrayList<Profile> studentsList) {
+    public void setStudentsList(ArrayList<Student> studentsList) {
         this.studentsList = studentsList;
     }
 
@@ -62,7 +62,7 @@ public class SearchController {
      */
     public SearchController() {
         if (studentsList == null) {
-            studentsList = new ArrayList<Profile>();
+            studentsList = new ArrayList<Student>();
         }
         if (universitiesList == null) {
             universitiesList = new ArrayList<University>();
@@ -81,7 +81,7 @@ public class SearchController {
     }
 
     public String studentSearch() {
-        studentsList = StudentProfileDAO.getStudentsByName(searchText);
+        studentsList = StudentDAO.getStudentsByName(searchText);
         return "studentSearch.xhtml";
     }
 
