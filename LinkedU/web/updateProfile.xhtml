@@ -17,6 +17,18 @@
 
                 <p:growl id="grow1" sticky="true" showDetail="true"/>
 
+                <p:tab id="name" title="Name">
+                    <p:panel header="Your Name">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="First Name: " />
+                            <p:inputText value="#{studentProfileController.myProfileModel.firstName}" />
+
+                            <h:outputText value="Last Name: " />
+                            <p:inputText value="#{studentProfileController.myProfileModel.lastName}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
                 <p:tab id="scores" title="Tests">
                     <p:panel header="Test Scores">
                         <h:panelGrid columns="2" columnClasses="label, value">

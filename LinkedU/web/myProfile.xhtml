@@ -12,7 +12,7 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:fieldset legend="#{accountController.userModel.firstName} #{accountController.userModel.lastName}" style="margin-bottom:20px">
+            <p:fieldset legend="#{studentProfileController.myProfileModel.firstName} #{studentProfileController.myProfileModel.lastName}" style="margin-bottom:20px">
                 <h:panelGrid columns="1" cellpadding="5">
                     <p:commandButton value="Update Image" action="#{studentProfileController.gotoUpdateImage()}" />
                     <p:graphicImage value="#{studentProfileController.myProfileModel.image}" style="max-width: 200px; max-height: 200px;"/>
@@ -22,7 +22,7 @@
                 <h3>General Information</h3> <p:commandButton value="Update" action="#{studentProfileController.gotoUpdateGeneral()}" />
                 </h:panelGrid>
                 <h:panelGrid columns="2" columnClasses="label, label" cellpadding="5">
-                    <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{accountController.userModel.firstName} #{accountController.userModel.lastName}" />
+                    <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.firstName} #{studentProfileController.myProfileModel.lastName}" />
                     <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.userID}" />
 
                     <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.getACTString()}" />

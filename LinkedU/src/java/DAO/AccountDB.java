@@ -6,7 +6,7 @@
 package DAO;
 
 import Model.Login;
-import Model.User;
+import Model.Account;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class AccountDB {
     public AccountDB() {
     }
 
-    public static int createUser(User user, Login login) {
+    public static int createUser(Account user, Login login) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -56,8 +56,8 @@ public class AccountDB {
 
             insertString = "INSERT INTO LinkedU.Users VALUES ('"
                     + login.getUserID()
-                    + "','" + user.getFirstName()
-                    + "','" + user.getLastName()
+                    /*+ "','" + user.getFirstName()
+                    + "','" + user.getLastName()*/
                     + "','" + user.getEmail()
                     + "','" + user.getAccountType()
                     + "','" + user.getSecurityQuestion()
@@ -110,8 +110,8 @@ public class AccountDB {
         return record;
     }
 
-    public static User getUser(String userID) {
-        User record = new User();
+    public static Account getUser(String userID) {
+        Account record = new Account();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
@@ -126,8 +126,8 @@ public class AccountDB {
 
             if (rs.next()) {
                 record.setUserID("userid");
-                record.setFirstName(rs.getString("firstname"));
-                record.setLastName(rs.getString("lastname"));
+                /*record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));*/
                 record.setEmail(rs.getString("email"));
                 record.setAccountType(rs.getString("accounttype"));
                 record.setSecurityQuestion(rs.getString("securityquestion"));
@@ -150,7 +150,7 @@ public class AccountDB {
 
     }
 
-    public static boolean updateUser(User user, Login login) {
+    public static boolean updateUser(Account user, Login login) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -176,8 +176,8 @@ public class AccountDB {
 
             updateString = "UPDATE LinkedU.Users SET "
                     //+ " userid = '" + login.getUserID() + "'"
-                    + "firstname = '" + user.getFirstName() + "', "
-                    + "lastname = '" + user.getLastName() + "', "
+                    /*+ "firstname = '" + user.getFirstName() + "', "
+                    + "lastname = '" + user.getLastName() + "', "*/
                     + "email = '" + user.getEmail() + "', "
                     + "securityquestion = '" + user.getSecurityQuestion() + "', "
                     + "securityanswer = '" + user.getSecurityAnswer() + "'"

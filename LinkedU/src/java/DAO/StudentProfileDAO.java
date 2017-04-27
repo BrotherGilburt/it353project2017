@@ -30,7 +30,7 @@ public class StudentProfileDAO {
     public StudentProfileDAO() {
     }
 
-    public static int setProfile(Profile profile) {
+    public static int setProfile(Profile record) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -43,13 +43,13 @@ public class StudentProfileDAO {
             String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
-            ArrayList<String> uniList = profile.getUniversities();
+            ArrayList<String> uniList = record.getUniversities();
             StringBuilder universities = new StringBuilder();
             for (int i = 0; i < uniList.size(); i++) {
                 universities.append(uniList.get(i) + ";");
             }
 
-            ArrayList<String> majList = profile.getMajors();
+            ArrayList<String> majList = record.getMajors();
             StringBuilder majors = new StringBuilder();
             for (int i = 0; i < majList.size(); i++) {
                 majors.append(majList.get(i) + ";");
@@ -58,16 +58,18 @@ public class StudentProfileDAO {
             String insertString;
             Statement stmt = DBConn.createStatement();
 
-            insertString = "INSERT INTO LinkedU.StudentProfile VALUES ('"
-                    + profile.getUserID() + "',"
-                    + profile.getACT() + ","
-                    + profile.getSAT() + ","
-                    + profile.getPSAT_NMSQT() + ",'"
+            insertString = "INSERT INTO LinkedU.Students VALUES ('"
+                    + record.getUserID() + "',"
+                    + record.getFirstName() + "',"
+                    + record.getLastName() + "',"
+                    + record.getACT() + ","
+                    + record.getSAT() + ","
+                    + record.getPSAT_NMSQT() + ",'"
                     + universities.toString() + "','"
                     + majors.toString() + "','"
-                    + profile.getImage() + "','"
-                    + profile.getMixtape() + "','"
-                    + profile.getEssay() + "')";
+                    + record.getImage() + "','"
+                    + record.getMixtape() + "','"
+                    + record.getEssay() + "')";
 
             rowCount += stmt.executeUpdate(insertString);
             System.out.println("insert string =" + insertString);
@@ -80,38 +82,40 @@ public class StudentProfileDAO {
     }
     
     public static Profile getProfile(String userID) {
-        Profile profile = new Profile();
+        Profile record = new Profile();
                 DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
         
         try {
             Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.StudentProfile WHERE userID='" + userID + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Students WHERE userID='" + userID + "'");
 
             if (rs.next()) {
-                profile.setUserID(rs.getString("userid"));
-                profile.setACT(rs.getInt("ACT"));
-                profile.setSAT(rs.getInt("SAT"));
-                profile.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("FirstName"));
+                record.setFirstName(rs.getString("LastName"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
                 
                 String uniList = rs.getString("Universities");
                 if (!uniList.equals(""))
-                    profile.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
+                    record.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
                 else
-                    profile.setUniversities(new ArrayList<String>());
+                    record.setUniversities(new ArrayList<String>());
                 
                 String majList = rs.getString("Majors");
                 if (!majList.equals(""))
-                    profile.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
+                    record.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
                 else
-                    profile.setMajors(new ArrayList<String>());
+                    record.setMajors(new ArrayList<String>());
                 
-                profile.setImage(rs.getString("Image"));
-                profile.setMixtape(rs.getString("Mixtape"));
-                profile.setEssay(rs.getString("Essay"));
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
             } else {
-                profile = null;
+                record = null;
             }
             rs.close();
             stmt.close();
@@ -125,6 +129,65 @@ public class StudentProfileDAO {
             System.err.println(e.getMessage());
         }
         
-        return profile;
+        return record;
+    }
+    
+    public static ArrayList getStudentsByName(String searchText) {
+        searchText = searchText.toUpperCase();
+        Profile record = null;
+        ArrayList<Profile> recordsList = null;
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+
+            // With the connection made, create a statement to talk to the DB server.
+            // Create a SQL statement to query, retrieve the rows one by one (by going to the
+            // columns), and formulate the result string to send back to the client.
+            Statement stmt = DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Students "
+                    + "WHERE upper(firstname) LIKE '%" + searchText
+                    + "%' OR upper(lastname) LIKE '%" + searchText + "%'");
+
+            while (rs.next()) {
+                if (recordsList == null) recordsList = new ArrayList();
+                record = new Profile();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+                
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals(""))
+                    record.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
+                else
+                    record.setUniversities(new ArrayList<String>());
+                
+                String majList = rs.getString("Majors");
+                if (!majList.equals(""))
+                    record.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
+                else
+                    record.setMajors(new ArrayList<String>());
+                
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
     }
 }
