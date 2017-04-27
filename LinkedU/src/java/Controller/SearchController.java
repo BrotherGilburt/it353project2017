@@ -23,8 +23,48 @@ public class SearchController {
     ArrayList<Student> studentsList;
     ArrayList<University> universitiesList;
     String searchMode;
+    String subSearchMode;
     String searchText;
 
+     /**
+     * Creates a new instance of SearchController
+     */
+    public SearchController() {
+        if (studentsList == null) {
+            studentsList = new ArrayList<Student>();
+        }
+        if (universitiesList == null) {
+            universitiesList = new ArrayList<University>();
+        }
+        String searchMode = "none";
+        String subSearchMode = "none";
+        String searchText = "";
+    }
+
+    public String search() {
+
+        if (searchMode.equals("student")) {
+            return studentSearch();
+        } else {
+            return universitySearch();
+        }
+    }
+
+    public String studentSearch() {
+        studentsList = StudentDAO.getStudentsByName(searchText);
+        return "studentSearch.xhtml";
+    }
+
+    public String universitySearch() {
+        //db stuff..
+        return "universitySearch.xhtml";
+    }
+    
+    public String getRowLabel() {
+        
+        return "";
+    }
+    
     public ArrayList<Student> getStudentsList() {
         return studentsList;
     }
@@ -55,38 +95,5 @@ public class SearchController {
 
     public void setSearchText(String searchText) {
         this.searchText = searchText;
-    }
-    
-    /**
-     * Creates a new instance of SearchController
-     */
-    public SearchController() {
-        if (studentsList == null) {
-            studentsList = new ArrayList<Student>();
-        }
-        if (universitiesList == null) {
-            universitiesList = new ArrayList<University>();
-        }
-        String searchMode = "none";
-        String searchText = "";
-    }
-
-    public String search() {
-
-        if (searchMode.equals("student")) {
-            return studentSearch();
-        } else {
-            return universitySearch();
-        }
-    }
-
-    public String studentSearch() {
-        studentsList = StudentDAO.getStudentsByName(searchText);
-        return "studentSearch.xhtml";
-    }
-
-    public String universitySearch() {
-        //db stuff..
-        return "universitySearch.xhtml";
     }
 }

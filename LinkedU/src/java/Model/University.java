@@ -14,14 +14,54 @@ import java.util.ArrayList;
 public class University {
     String userID;
     boolean premium; //denotes that university has payed extra to be featured on home page.
-    String universityName;
+    String name;
     ArrayList<String> majors;
     String street;
     String city;
     String state;
     String zip;
-    String imageLocation;
+    String image;
 
+    public University() {
+        this.userID = "";
+        this.premium = false;
+        this.name = "N/A";
+        this.majors = new ArrayList<String>();
+        this.street = "N/A";
+        this.city = "N/A";
+        this.state = "N/A";
+        this.zip = "N/A";
+        this.image = "Resources/default_university.png";
+    }
+    
+    public University(String userID) {
+        this();
+        this.userID = userID;
+    }
+    
+    /**
+     * Formats the address into a single string.
+     * @return formatted address
+     */
+    public String getFullAddress() {
+        if (street.equals("N/A") || city.equals("N/A") || state.equals("N/A") || zip.equals("N/A"))
+            return "Not Provided";
+        return street + ", " + city + ", " + state + " " + zip;
+    }
+    
+    public String getMajorsString() {
+        if (majors.isEmpty()) return "N/A";
+        
+        StringBuilder list = new StringBuilder();
+        
+        for (int i = 0; i < majors.size(); i++) {
+            list.append(majors.get(i));
+            if (i + 1 < majors.size()) list.append(", ");
+        }
+        
+        return list.toString();
+    }
+    
     public String getUserID() {
         return userID;
     }
@@ -38,12 +78,12 @@ public class University {
         this.premium = premium;
     }
 
-    public String getUniversityName() {
-        return universityName;
+    public String getName() {
+        return name;
     }
 
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<String> getMajors() {
@@ -86,12 +126,12 @@ public class University {
         this.zip = zip;
     }
 
-    public String getImageLocation() {
-        return imageLocation;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageLocation(String imageLocation) {
-        this.imageLocation = imageLocation;
+    public void setImage(String image) {
+        this.image = image;
     }
     
 }

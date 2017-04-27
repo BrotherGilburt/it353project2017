@@ -97,7 +97,7 @@ public class AccountController implements Serializable {
         userUpdateModel.setSecurityQuestion(accountModel.getSecurityQuestion());
         userUpdateModel.setSecurityAnswer(accountModel.getSecurityAnswer());
 
-        return "update.xhtml?faces-redirect=true";
+        return "updateAccount.xhtml?faces-redirect=true";
     }
 
     public String gotoLoginGood() {
@@ -117,7 +117,7 @@ public class AccountController implements Serializable {
         }
 
         //Get user information.
-        accountModel = AccountDB.getUser(loginModel.getUserID());
+        accountModel = AccountDB.getAccount(loginModel.getUserID());
 
         return "home.xhtml?faces-redirect=true";
     }
@@ -200,7 +200,7 @@ public class AccountController implements Serializable {
         loginModel.saltPassword();
 
         //Insert information into database.
-        AccountDB.createUser(accountModel, loginModel);
+        AccountDB.createAccount(accountModel, loginModel);
 
         //Send confirmation Email.
         confirmationEmail(accountModel.getEmail());
@@ -214,12 +214,12 @@ public class AccountController implements Serializable {
         //Check password matches confirm.
         if (!(loginUpdateModel.getPassword().equals(confirm))) {
             errorMessage = "Error. Passwords do not match. Please confirm password.";
-            return "update.xhtml?faces-redirect=true";
+            return "updateAccount.xhtml?faces-redirect=true";
         }
         
         if (loginUpdateModel.getPassword().length() != 0 && (loginUpdateModel.getPassword().length() < 2 || loginUpdateModel.getPassword().length() > 24)) {
             errorMessage = "Error. Password must be 2-24 characters in length.";
-            return "update.xhtml?faces-redirect=true";
+            return "updateAccount.xhtml?faces-redirect=true";
         }
         
         if (!loginUpdateModel.getPassword().equals("") && !loginUpdateModel.getPassword().equals(loginModel.getPassword())) {
@@ -237,7 +237,7 @@ public class AccountController implements Serializable {
         
         if (!AccountDB.updateUser(accountModel, loginModel)) {
             errorMessage = "Error. Record could not be updated. Please try again.";
-            return "update.xhtml?faces-redirect=true";
+            return "updateAccount.xhtml?faces-redirect=true";
         }
 
         return "account.xhtml?faces-redirect=true";

@@ -12,39 +12,35 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:fieldset legend="#{studentProfileController.myProfileModel.firstName} #{studentProfileController.myProfileModel.lastName}" style="margin-bottom:20px">
+            <p:fieldset legend="#{studentController.myProfileModel.getFullName()}" style="margin-bottom:20px">
                 <h:panelGrid columns="1" cellpadding="5">
-                    <p:commandButton value="Update Image" action="#{studentProfileController.gotoUpdateImage()}" />
-                    <p:graphicImage value="#{studentProfileController.myProfileModel.image}" style="max-width: 200px; max-height: 200px;"/>
+                    <p:commandButton value="Update Image" action="#{studentController.gotoUpdateImage()}" />
+                    <p:graphicImage value="#{studentController.myProfileModel.image}" style="max-width: 200px; max-height: 200px;"/>
                 </h:panelGrid>
 
                 <h:panelGrid columns="2">
-                <h3>General Information</h3> <p:commandButton value="Update" action="#{studentProfileController.gotoUpdateGeneral()}" />
+                    <h3>General Information</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateGeneral()}" />
                 </h:panelGrid>
                 <h:panelGrid columns="2" columnClasses="label, label" cellpadding="5">
-                    <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.firstName} #{studentProfileController.myProfileModel.lastName}" />
-                    <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.userID}" />
-
-                    <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.getACTString()}" />
-                    <h:panelGroup><b><h:outputText value="SAT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.getSATString()}" />
-                    <h:panelGroup><b><h:outputText value="PSAT/NMSQT Score:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.getPSAT_NMSQTString()}" />
-
-                    <h:panelGroup><b><h:outputText value="Desired Universities:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.getUniversitiesString()}"/>
-
-                    <h:panelGroup><b><h:outputText value="Desired Majors:"/></b></h:panelGroup> <h:outputText value="#{studentProfileController.myProfileModel.getMajorsString()}" />
+                    <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getFullName()}" />
+                    <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getUserID()}" />
+                    <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getACTString()}" />
+                    <h:panelGroup><b><h:outputText value="SAT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getSATString()}" />
+                    <h:panelGroup><b><h:outputText value="PSAT/NMSQT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getPSAT_NMSQTString()}" />
+                    <h:panelGroup><b><h:outputText value="Desired Universities:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getUniversitiesString()}" />
+                    <h:panelGroup><b><h:outputText value="Desired Majors:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getMajorsString()}" />
                 </h:panelGrid>
-
                 <br/>
                 <h:panelGrid columns="2">
-                <h3>Mixtape</h3> <p:commandButton value="Update" action="#{studentProfileController.gotoUpdateMixtape()}" />
+                <h3>Mixtape</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateMixtape()}" />
                 </h:panelGrid>
                 ((to be added))    
 
                 <br/>
                 <h:panelGrid columns="2">
-                <h3>Essay</h3> <p:commandButton value="Update" action="#{studentProfileController.gotoUpdateEssay()}" />
+                <h3>Essay</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateEssay()}" />
                 </h:panelGrid>
-                ((to be added))    
+                ((to be added))   
             </p:fieldset>
         </h:form>
     </h:body>

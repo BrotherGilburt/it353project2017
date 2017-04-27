@@ -12,10 +12,20 @@
     </h:head>
     <h:body>
         <h:form>
-            <h:outputText escape="false" value="#{accountController.getEcho()}"/>
-            <br/><p:commandButton id="continue" value="Home" action="home.xhtml" />
-            <p:commandButton id="submitID" value="Update" action="#{accountController.gotoUpdate()}"/>
-            <p:commandButton id="logoutID" value="Log Out" action="#{accountController.logOut()}"/>
+            <p:fieldset legend="#{studentController.myProfileModel.getFullName()}" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGroup><b><h:outputText value="Account Type:"/></b></h:panelGroup>            <h:outputText value="#{accountController.accountModel.accountType}"/>
+                    <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup>                <h:outputText value="#{accountController.accountModel.userID}"/>
+                    <h:panelGroup><b><h:outputText value="Email:"/></b></h:panelGroup>                  <h:outputText value="#{accountController.accountModel.email}"/>
+                    <h:panelGroup><b><h:outputText value="Security Questions:"/></b></h:panelGroup>     <h:outputText value="#{accountController.accountModel.securityQuestion}"/>
+                    <h:panelGroup><b><h:outputText value="Security Answer:"/></b></h:panelGroup>        <h:outputText value="#{accountController.accountModel.securityAnswer}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:commandButton id="home" value="Home" action="home.xhtml" />
+                    <p:commandButton id="update" value="Update" action="#{accountController.gotoUpdate()}"/>
+                    <p:commandButton id="logout" value="Log Out" action="#{accountController.logOut()}"/>
+                </h:panelGrid>
+            </p:fieldset>
         </h:form>
     </h:body>
 </html>

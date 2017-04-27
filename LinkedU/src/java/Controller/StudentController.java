@@ -22,7 +22,7 @@ import javax.mail.Part;
  */
 @ManagedBean
 @SessionScoped
-public class StudentProfileController implements Serializable {
+public class StudentController implements Serializable {
 
     private Student myProfileModel; //The user.
     private Student viewStudentModel; //Other Student
@@ -34,7 +34,7 @@ public class StudentProfileController implements Serializable {
     /**
      * Creates a new instance of StudentProfileController
      */
-    public StudentProfileController() {
+    public StudentController() {
         if (account == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
@@ -79,7 +79,7 @@ public class StudentProfileController implements Serializable {
 
     public String gotoUpdateGeneral() {
 
-        return "updateProfile.xhtml?faces-redirect=true";
+        return "updateStudentProfile.xhtml?faces-redirect=true";
     }
     
     public String gotoUpdateImage() {

@@ -21,10 +21,10 @@
                     <p:panel header="Your Name">
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="First Name: " />
-                            <p:inputText value="#{studentProfileController.myProfileModel.firstName}" />
+                            <p:inputText value="#{studentController.myProfileModel.firstName}" />
 
                             <h:outputText value="Last Name: " />
-                            <p:inputText value="#{studentProfileController.myProfileModel.lastName}" />
+                            <p:inputText value="#{studentController.myProfileModel.lastName}" />
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -33,13 +33,13 @@
                     <p:panel header="Test Scores">
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="ACT Score: " />
-                            <p:inputText value="#{studentProfileController.myProfileModel.ACT}" />
+                            <p:inputText value="#{studentController.myProfileModel.ACT}" />
 
                             <h:outputText value="SAT Score: " />
-                            <p:inputText value="#{studentProfileController.myProfileModel.SAT}" />
+                            <p:inputText value="#{studentController.myProfileModel.SAT}" />
 
                             <h:outputText value="PSAT/NMSQT Score: " />
-                            <p:inputText value="#{studentProfileController.myProfileModel.PSAT_NMSQT}" />
+                            <p:inputText value="#{studentController.myProfileModel.PSAT_NMSQT}" />
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -48,8 +48,8 @@
                     <p:panel header="Universities of Interest">
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Make a selection:" />
-                            <p:selectCheckboxMenu id="uselection" label="Universities" value="#{studentProfileController.myProfileModel.universities}" panelStyle="width:250px">
-                                <f:selectItems value="#{universalDataController.universities}"/>
+                            <p:selectCheckboxMenu id="uselection" label="Universities" value="#{studentController.myProfileModel.universities}" style="width:250px">
+                                <f:selectItems value="#{universityController.getAllUniversities()}"/>
                             </p:selectCheckboxMenu>
                         </h:panelGrid>
                     </p:panel>
@@ -59,12 +59,12 @@
                     <p:panel header="Majors of Interest">
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Majors:" />
-                            <p:selectCheckboxMenu id="mselection" label="Majors" value="#{studentProfileController.myProfileModel.majors}" filter="false">
-                                <f:selectItems value="#{universalDataController.majors}" />
+                            <p:selectCheckboxMenu id="mselection" label="Majors" value="#{studentController.myProfileModel.majors}" >
+                                <f:selectItems value="#{universityController.getAllMajors()}" />
                             </p:selectCheckboxMenu>
                         </h:panelGrid>
                         <br/>
-                        <p:commandButton value="Submit" action="#{studentProfileController.updateFinished}" />
+                        <p:commandButton value="Submit" action="#{studentController.updateFinished()}" />
                     </p:panel>
                 </p:tab>
 

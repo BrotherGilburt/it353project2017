@@ -29,7 +29,7 @@ public class AccountDB {
     public AccountDB() {
     }
 
-    public static int createUser(Account user, Login login) {
+    public static int createAccount(Account user, Login login) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -45,7 +45,7 @@ public class AccountDB {
             String insertString;
             Statement stmt = DBConn.createStatement();
 
-            insertString = "INSERT INTO LinkedU.loginInfo VALUES ('"
+            insertString = "INSERT INTO LinkedU.LoginInfo VALUES ('"
                     + login.getUserID()
                     + "','" + login.getPassword()
                     + "')";
@@ -54,10 +54,8 @@ public class AccountDB {
 
             stmt = DBConn.createStatement();
 
-            insertString = "INSERT INTO LinkedU.Users VALUES ('"
+            insertString = "INSERT INTO LinkedU.Accounts VALUES ('"
                     + login.getUserID()
-                    /*+ "','" + user.getFirstName()
-                    + "','" + user.getLastName()*/
                     + "','" + user.getEmail()
                     + "','" + user.getAccountType()
                     + "','" + user.getSecurityQuestion()
@@ -108,7 +106,7 @@ public class AccountDB {
         return record;
     }
 
-    public static Account getUser(String userID) {
+    public static Account getAccount(String userID) {
         Account record = new Account();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
@@ -120,7 +118,7 @@ public class AccountDB {
             // Create a SQL statement to query, retrieve the rows one by one (by going to the
             // columns), and formulate the result string to send back to the client.
             Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Users WHERE userID='" + userID + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE userID='" + userID + "'");
 
             if (rs.next()) {
                 record.setUserID(rs.getString("userid"));
@@ -164,7 +162,7 @@ public class AccountDB {
             String updateString;
             Statement stmt = DBConn.createStatement();
 
-            updateString = "UPDATE LinkedU.loginInfo SET "
+            updateString = "UPDATE LinkedU.LoginInfo SET "
                     + "password ='" + login.getPassword() + "'"
                     + "WHERE userid = '" + login.getUserID() + "'";
 
@@ -172,7 +170,7 @@ public class AccountDB {
 
             stmt = DBConn.createStatement();
 
-            updateString = "UPDATE LinkedU.Users SET "
+            updateString = "UPDATE LinkedU.Accounts SET "
                     //+ " userid = '" + login.getUserID() + "'"
                     /*+ "firstname = '" + user.getFirstName() + "', "
                     + "lastname = '" + user.getLastName() + "', "*/

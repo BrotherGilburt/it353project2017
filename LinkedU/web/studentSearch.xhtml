@@ -15,7 +15,7 @@
             <h2>Student Search Results</h2>
             <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
                 <p:column headerText="First Name">
-                    <h:commandLink value="#{aRow.firstName} #{aRow.lastName}" action="#{studentProfileController.loadProfile()}">
+                    <h:commandLink value="#{aRow.getFullName()}" action="#{studentController.loadProfile()}">
                         <f:param name="userid" value="#{aRow.userID}" /></h:commandLink>
                 </p:column>
                 <p:column headerText="User ID">

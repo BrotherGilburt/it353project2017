@@ -35,6 +35,8 @@ public class Student {
      MIXTAPES*/
     public Student() {
         userID = "";
+        firstName = "";
+        lastName = "";
         ACT = -1;
         SAT = -1;
         PSAT_NMSQT = -1;
@@ -49,44 +51,62 @@ public class Student {
         this();
         this.userID = userID;
     }
-    
+
+    public String getFullName() {
+        if (firstName.equals("")&&lastName.equals(""))
+            return "Name Not Provided";
+        return firstName + " " + lastName;
+    }
+
     public String getACTString() {
-        if (ACT < 0) return "N/A";
+        if (ACT < 0) {
+            return "N/A";
+        }
         return Integer.toString(ACT);
     }
-    
+
     public String getSATString() {
-        if (SAT < 0) return "N/A";
+        if (SAT < 0) {
+            return "N/A";
+        }
         return Integer.toString(SAT);
     }
-    
+
     public String getPSAT_NMSQTString() {
-        if (PSAT_NMSQT < 0) return "N/A";
+        if (PSAT_NMSQT < 0) {
+            return "N/A";
+        }
         return Integer.toString(PSAT_NMSQT);
     }
-    
-    public String getUniversitiesString()
-    {
-        if (universities.isEmpty()) return "N/A";
-        
+
+    public String getUniversitiesString() {
+        if (universities.isEmpty()) {
+            return "N/A";
+        }
+
         StringBuilder list = new StringBuilder();
-        
-        for(int i = 0; i < universities.size(); i++) {
+
+        for (int i = 0; i < universities.size(); i++) {
             list.append(universities.get(i));
-            if (i != universities.size()-1) list.append(", ");
+            if (i != universities.size() - 1) {
+                list.append(", ");
+            }
         }
         return list.toString();
     }
-    
-        public String getMajorsString()
-    {
-        if (majors.isEmpty()) return "N/A";
-        
+
+    public String getMajorsString() {
+        if (majors.isEmpty()) {
+            return "N/A";
+        }
+
         StringBuilder list = new StringBuilder();
-        
-        for(int i = 0; i < majors.size(); i++) {
+
+        for (int i = 0; i < majors.size(); i++) {
             list.append(majors.get(i));
-            if (i != majors.size()-1) list.append(", ");
+            if (i != majors.size() - 1) {
+                list.append(", ");
+            }
         }
         return list.toString();
     }
