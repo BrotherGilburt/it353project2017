@@ -18,7 +18,7 @@ create table LinkedU.LoginInfo (
 insert into LinkedU.LoginInfo (UserID, Password) values
 ('pdkaufm', '40bf696d25dd56ed44c864e05f75d33a4cface91');
 insert into LinkedU.LoginInfo (UserID, Password) values
-('ksuth1', '40bf696d25dd56ed44c864e05f75d33a4cface91');
+('kssuth1', '40bf696d25dd56ed44c864e05f75d33a4cface91');
 insert into LinkedU.LoginInfo (UserID, Password) values
 ('stiwar1', '40bf696d25dd56ed44c864e05f75d33a4cface91');
 insert into LinkedU.LoginInfo (UserID, Password) values

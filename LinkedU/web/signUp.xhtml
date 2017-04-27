@@ -52,7 +52,7 @@
                     Security Answer: <p:inputTextarea id="sa" value="#{accountController.userModel.securityAnswer}" label="SecurityAnswer">
                                 <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
                             <h:message for="sa" style="color:red"/>
-                    <p:commandButton id="submitID" value="Sign Up" action="#{accountController.signUp()}"/>
+                    <h:commandButton id="submitID" value="Sign Up" action="#{accountController.signUp()}"/>
                 </h:panelGrid>
             </h:form>
         </p:fieldset>
