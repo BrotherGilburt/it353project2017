@@ -11,10 +11,10 @@ package Model;
  */
 public class User {
 
+    private String accountType;
     private String userID;
     private String firstName;
     private String lastName;
-    private String accountType;
     private String email;
     private String securityQuestion;
     private String securityAnswer;
@@ -26,7 +26,7 @@ public class User {
     public void setUserID(String userID) {
         this.userID = userID;
     }
-    
+
     public String getAccountType() {
         return accountType;
     }

@@ -85,3 +85,15 @@ insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, M
 ('stiwar1', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
 insert into LinkedU.StudentProfile(UserID, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
 ('asriren', 36, 1337, 1337, 'University of Illinois;', '', './Resources/default_student.png', 'none', 'none');
+
+create table LinkedU.Universities(
+UserID			varchar(25) not null,
+premium			bit not null,
+universityName	varchar(50),
+majors			varchar(500),
+street			varchar(100),
+city			varchar(30),
+state			varchar(20),
+zip				varchar(15),
+imageLocation	varchar(50)
+);
