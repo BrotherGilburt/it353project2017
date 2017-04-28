@@ -69,6 +69,26 @@ public class AccountController implements Serializable {
         confirm = "";
     }
 
+    /**
+     * Checks if the user's account is of type Student.
+     * USE TO RENDER ITEMS ON PAAGE FOR STUDENT ACCOUNTS.
+     * 
+     * @return True if Student, false otherwise.
+     */
+    public boolean isStudent() {
+        return accountModel.getAccountType().equals("Student");
+    }
+    
+    /**
+     * Checks if the user's account is of type University.
+     * USE TO RENDER ITEMS ON PAGE FOR UNIVERSITY ACCOUNTS.
+     * 
+     * @return  True if University, false otherwise. 
+     */
+    public boolean isUniversity() {
+        return accountModel.getAccountType().equals("University");
+    }
+    
     public void reset() {
         loginModel = new Login();
         accountModel = new Account();

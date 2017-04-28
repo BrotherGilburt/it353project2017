@@ -132,7 +132,7 @@ public class StudentDAO {
         return record;
     }
     
-    public static ArrayList getStudentsByName(String searchText) {
+    public static ArrayList getStudentsByNameContaining(String searchText) {
         searchText = searchText.toUpperCase();
         Student record = null;
         ArrayList<Student> recordsList = null;

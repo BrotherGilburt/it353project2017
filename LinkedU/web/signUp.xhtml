@@ -13,14 +13,6 @@
                 Enter the following information to create an account:
                 <br/> <h:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
                 <h:panelGrid id = "panel" columns = "3">
-                    <!--First Name: <p:inputText id="fname" value="#{accountController.userModel.firstName}" label="FirstName">
-                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                            <h:message for="fname" style="color:red"/>
-
-                    Last Name: <p:inputText id="lname" value="#{accountController.userModel.lastName}" label="LastName">
-                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                            <h:message for="lname" style="color:red"/>-->
-
                     User ID: <p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID">
                                 <f:validateLength minimum="2" maximum="25"/></p:inputText>
                             <h:message for="uid" style="color:red"/>

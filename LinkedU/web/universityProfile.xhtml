@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>LinkedU - University Profile</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:fieldset legend="#{universityController.viewUniversityModel.name}">
+                <p:graphicImage value="#{universityController.viewUniversityModel.image}"  style="max-width: 200px; max-height: 200px;"/>
+
+                <h3>General Information</h3>
+                <h:panelGrid  columns="2" cellpadding="5">
+                    <h:panelGroup><b><p:outputLabel value="Name" for="name" /></b></h:panelGroup> <h:outputText id="name" value="#{universityController.viewUniversityModel.name}"/>
+                    <h:panelGroup><b><p:outputLabel value="Address" for="address" /></b></h:panelGroup> <h:outputText id="address" value="#{universityController.viewUniversityModel.fullAddress}"/>
+                    <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.viewUniversityModel.majorsString}"/> 
+                </h:panelGrid>
+
+                <h3>Apply for Admission</h3>
+                <h:panelGrid columns="2" cellpadding="5">
+                    ((MAJOR SELECT TO BE ADDED))
+                    <p:commandButton value="Apply!" action="#{applyController.loadApplicationFromProfile()}" rendered="#{accountController.isStudent()}">
+                        <!--PASS PARAMETERS TO METHOD IN CONTROLLER OR OTHERWISE SET MAJOR/UNIVERSITY IN APPLICATION-->
+                    </p:commandButton>
+                </h:panelGrid>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+

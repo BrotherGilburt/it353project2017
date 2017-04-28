@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.StudentDAO;
+import DAO.UniversityDAO;
 import Model.Student;
 import Model.University;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class SearchController {
 
         modeOptions = new ArrayList();
         modeOptions.add("students");
-        modeOptions.add("universisties");
+        modeOptions.add("universities");
 
         filterOptions = new ArrayList();
 
@@ -87,17 +88,17 @@ public class SearchController {
      */
     public String studentSearch() {
         if (searchFilter.equals("name containing")) {
-            studentsList = StudentDAO.getStudentsByName(searchText);
+            studentsList = StudentDAO.getStudentsByNameContaining(searchText);
         } else if (searchFilter.equals("ACT score >")) {
-            studentsList = StudentDAO.getStudentsByName(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
         } else if (searchFilter.equals("SAT score >")) {
-            studentsList = StudentDAO.getStudentsByName(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
         } else if (searchFilter.equals("PSAT/NMSQT score >")) {
-            studentsList = StudentDAO.getStudentsByName(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
         } else if (searchFilter.equals("desired university")) {
-            studentsList = StudentDAO.getStudentsByName(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
         } else if (searchFilter.equals("desired major")) {
-            studentsList = StudentDAO.getStudentsByName(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
         }
 
         return "studentSearch.xhtml";
@@ -110,7 +111,7 @@ public class SearchController {
      */
     public String universitySearch() {
         if (searchFilter.equals("name containing")) {
-            ; //database call
+            universitiesList = UniversityDAO.getUniversitiesByNameContaining(searchText); //database call
         } else if (searchFilter.equals("available major")) {
             ; //database call
         }

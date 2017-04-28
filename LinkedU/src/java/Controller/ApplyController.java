@@ -47,6 +47,17 @@ public class ApplyController implements Serializable {
         }
     }
     
+    /**
+     * Used to apply for a university from its profile.
+     * @return application page name
+     */
+    public String loadApplicationFromProfile() {
+        
+        //TO BE COMPLETED.
+        
+        return "error.xhtml";
+    }
+    
     public ArrayList<String> getMajorsList() {
         return majorsList;
     }

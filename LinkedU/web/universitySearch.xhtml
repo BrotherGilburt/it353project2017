@@ -11,17 +11,20 @@
         </f:metadata>
     </h:head>
     <h:body>
-        <h2>University Search Results</h2>
-        <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
-            <!--<p:column headerText="xxx">
-                <h:outputText value="#{aRow.xxx}"/>
-            </p:column>
-            <p:column headerText="xxx">
-                <h:outputText value="#{aRow.xxx}"/>
-            </p:column>
-            <p:column headerText="xxx">
-                <h:outputText value="#{aRow.xxx}"/>
-            </p:column>-->
-        </p:dataTable>
+        <h:form>
+            <p:fieldset legend="University Search Results" style="margin-bottom:20px">
+                <h:outputText value="#{searchController.tableDescription()}" />
+                <p:dataTable id="empTableID" value="#{searchController.universitiesList}" var="aRow">
+                    <p:column headerText="University">
+                        <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">
+                            <f:param name="name" value="#{aRow.name}" />
+                        </h:commandLink>
+                    </p:column>
+                    <p:column headerText="Majors">
+                        <h:outputText value="#{aRow.majorsString}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
     </h:body>
 </html>

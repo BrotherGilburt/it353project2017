@@ -8,6 +8,7 @@ package DAO;
 import Model.University;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -176,8 +177,8 @@ public class UniversityDAO {
         }
         return record;
     }
-
-    /**
+    
+        /**
      * Finds all universities in the database.
      * @return 
      */
@@ -213,6 +214,58 @@ public class UniversityDAO {
             }
             rs.close();
             stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+
+    /**
+     * Finds all universities in the database.
+     * @param searchText
+     * @return 
+     */
+    public static ArrayList<University> getUniversitiesByNameContaining(String searchText) {
+        ArrayList<University> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Universities WHERE upper(name) LIKE ?");
+            
+            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
+            
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                University record = new University();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setPremium(rs.getBoolean("premium"));
+                record.setName(rs.getString("name"));
+
+                String majorsList = rs.getString("majors");
+                if (!majorsList.equals("")) {
+                    record.setMajors(new ArrayList<String>(Arrays.asList(majorsList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList<String>());
+                }
+
+                record.setStreet(rs.getString("street"));
+                record.setCity(rs.getString("city"));
+                record.setState(rs.getString("state"));
+                record.setZip(rs.getString("zip"));
+                record.setImage(rs.getString("image"));
+            }
+            rs.close();
+            pstmt.close();
         } catch (Exception e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
