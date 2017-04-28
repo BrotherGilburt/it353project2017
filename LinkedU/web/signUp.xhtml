@@ -25,11 +25,11 @@
                                 <f:validateLength minimum="2" maximum="25"/></p:password>
                             <h:message for="cpwd" style="color:red"/>
 
-                    Email: <p:inputText id="email" value="#{accountController.userModel.email}" label="Email">
+                    Email: <p:inputText id="email" value="#{accountController.accountModel.email}" label="Email">
                                 <f:validateLength minimum="2" maximum="25"/></p:inputText>
                             <h:message for="email" style="color:red"/>
 
-                    Account Type: <p:selectOneMenu id="account" required="true" value="#{accountController.userModel.accountType}">
+                    Account Type: <p:selectOneMenu id="account" required="true" value="#{accountController.accountModel.accountType}">
                                 <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" />
                                 <f:selectItem id="item1" itemLabel="Student" itemValue="Student" />
                                 <f:selectItem id="item2" itemLabel="University" itemValue="University" />
@@ -37,11 +37,11 @@
                             </p:selectOneMenu>
                 </h:panelGrid>
                     <h:panelGrid id = "panel2" columns = "3">
-                    Security Question: <p:inputTextarea id="sq" value="#{accountController.userModel.securityQuestion}" label="SecurityQuestion">
+                    Security Question: <p:inputTextarea id="sq" value="#{accountController.accountModel.securityQuestion}" label="SecurityQuestion">
                                 <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
                             <h:message for="sq" style="color:red"/>
 
-                    Security Answer: <p:inputTextarea id="sa" value="#{accountController.userModel.securityAnswer}" label="SecurityAnswer">
+                    Security Answer: <p:inputTextarea id="sa" value="#{accountController.accountModel.securityAnswer}" label="SecurityAnswer">
                                 <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
                             <h:message for="sa" style="color:red"/>
                     <h:commandButton id="submitID" value="Sign Up" action="#{accountController.signUp()}"/>

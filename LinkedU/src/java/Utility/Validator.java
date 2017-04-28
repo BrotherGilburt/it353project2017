@@ -24,4 +24,37 @@ public class Validator {
         }
         return true;
     }
+    
+    /**
+     * Confirms a passed in integer is within a specified range (inclusive).
+     * @param num
+     * @param min
+     * @param max
+     * @return 
+     */
+    public static boolean isInRange(int num, int min, int max) {
+        return (num >= min) && (num <= max);
+    }
+    
+    /**
+     * Confirms the length of a passed in String is within a specified range (inclusive).
+     * @param text
+     * @param min
+     * @param max
+     * @return 
+     */
+    public static boolean isInRange(String text, int min, int max) {
+        return (text.length() >= min) && (text.length() <= max);
+    }
+    
+    /**
+     * Confirms that passed in text is formatted properly as an email.
+     * @param text
+     * @return 
+     */
+    public static boolean isEmail(String text) {
+        //To be added.
+        
+        return false;
+    }
 }
