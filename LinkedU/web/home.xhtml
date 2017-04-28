@@ -13,20 +13,43 @@
     <h:body>
         <h:form>
             Hello <p:commandLink id="accountPage" action="account.xhtml">#{accountController.accountModel.userID}</p:commandLink>. <p:commandLink action="#{studentController.loadMyProfile()}">Your profile</p:commandLink>
+        </h:form>
+        <br/>
+        <h:form>
+            <h:panelGrid columns="6" cellpadding="5">
+                <p:outputLabel for="mode" value="Search" />
+                <p:selectOneMenu id="mode" required="true" value="#{searchController.searchMode}">
+                    <p:ajax listener="#{searchController.selectFilter()}" update="filter" />
+                    <f:selectItem id="default1" itemLabel="select mode" itemValue="none" />
+                    <f:selectItems id="modeList" value="#{searchController.modeOptions}" />
+                </p:selectOneMenu>
+                <p:outputLabel for="filter" value="by" />
+                <p:selectOneMenu id="filter" required="true" value="#{searchController.searchFilter}">
+                    <f:selectItem id="default2" itemLabel="select filter" itemValue="none" noSelectionOption="true"/>
+                    <f:selectItems id="filterList" value="#{searchController.filterOptions}" />
+                </p:selectOneMenu>
+                <p:inputText id = "searchText" value="#{searchController.searchText}" />
+                <p:commandButton value="Search" action="#{searchController.search()}" />
+            </h:panelGrid>
+            
+        </h:form>
+        <br/>
+        <h:form>
+            <p:commandLink action="Grad.xhtml">Apply...</p:commandLink>
 
+            <h1>Featured University</h1>
+            <!--Call method(s) in university controller-->
+
+        </h:form>
+    </h:body>
+</html>
+
+
+<!-- OLD CODE
             <br/><br/><p:inputText id = "searchtextid" value="#{searchController.searchText}" />
             &nbsp;<p:commandButton id="search" value="Search" action="#{searchController.search()}"/>
             &nbsp;<p:selectOneMenu id="account" required="true" value="#{searchController.searchMode}">
                 <f:selectItem id="item0" itemLabel="Students" itemValue="student" />
                 <f:selectItem id="item1" itemLabel="Universities" itemValue="university" />
             </p:selectOneMenu>
-
-            <br/>
-
-            <p:commandLink action="Grad.xhtml">Apply...</p:commandLink>
-
-            <h1>((Featured University))</h1>
-        </h:form>
-    </h:body>
-</html>
-
+-->

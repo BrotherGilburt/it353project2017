@@ -12,16 +12,30 @@
     </h:head>
     <h:body>
         <h:form>
-            <h2>Student Search Results</h2>
-            <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
-                <p:column headerText="First Name">
-                    <h:commandLink value="#{aRow.getFullName()}" action="#{studentController.loadProfile()}">
-                        <f:param name="userid" value="#{aRow.userID}" /></h:commandLink>
-                </p:column>
-                <p:column headerText="User ID">
-                    <h:outputText value="#{aRow.userID}"/>
-                </p:column>
-            </p:dataTable>
+            <p:fieldset legend="Student Search Results" style="margin-bottom:20px">
+                <h:outputText value="#{searchController.tableDescription()}" />
+                <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
+                    <p:column headerText="ACT Score" rendered="#{searchController.isACTFilter()}">
+                        <h:outputText value="#{aRow.ACTString}"/>
+                    </p:column>
+
+                    <p:column headerText="SAT Score" rendered="#{searchController.isSATFilter()}">
+                        <h:outputText value="#{aRow.SATString}"/>
+                    </p:column>
+
+                    <p:column headerText="PSAT/NMSQT Score" rendered="#{searchController.isPSAT_NMSQTFilter()}">
+                        <h:outputText value="#{aRow.PSAT_NMSQTString}"/>
+                    </p:column>
+
+                    <p:column headerText="Name">
+                        <h:commandLink value="#{aRow.getFullName()}" action="#{studentController.loadProfile()}">
+                            <f:param name="userid" value="#{aRow.userID}" /></h:commandLink>
+                    </p:column>
+                    <p:column headerText="User ID">
+                        <h:outputText value="#{aRow.userID}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
         </h:form>
     </h:body>
 </html>
