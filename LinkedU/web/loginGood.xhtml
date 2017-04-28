@@ -12,7 +12,7 @@
     </h:head>
     <h:body>
         <h:form>
-            Welcome <h:outputText value="#{accountController.userModel.getFirstName()}"/>!
+            Welcome <h:outputText value="#{accountController.accountModel.getUserID()}"/>!
             <br/><b>Account Information:</b>
             <br/><h:outputText escape="false" value="#{accountController.getList()}"/>
             <br/><p:commandButton id="continue" value="Home" action="home.xhtml" />
