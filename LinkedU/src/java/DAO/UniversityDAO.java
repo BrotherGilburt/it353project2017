@@ -201,9 +201,9 @@ public class UniversityDAO {
 
                 String majorsList = rs.getString("majors");
                 if (!majorsList.equals("")) {
-                    record.setMajors(new ArrayList<String>(Arrays.asList(majorsList.split(";"))));
+                    record.setMajors(new ArrayList(Arrays.asList(majorsList.split(";"))));
                 } else {
-                    record.setMajors(new ArrayList<String>());
+                    record.setMajors(new ArrayList());
                 }
 
                 record.setStreet(rs.getString("street"));
@@ -253,9 +253,56 @@ public class UniversityDAO {
 
                 String majorsList = rs.getString("majors");
                 if (!majorsList.equals("")) {
-                    record.setMajors(new ArrayList<String>(Arrays.asList(majorsList.split(";"))));
+                    record.setMajors(new ArrayList(Arrays.asList(majorsList.split(";"))));
                 } else {
-                    record.setMajors(new ArrayList<String>());
+                    record.setMajors(new ArrayList());
+                }
+
+                record.setStreet(rs.getString("street"));
+                record.setCity(rs.getString("city"));
+                record.setState(rs.getString("state"));
+                record.setZip(rs.getString("zip"));
+                record.setImage(rs.getString("image"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+    
+        public static ArrayList<University> getUniversitiesByMajor(String searchText) {
+        ArrayList<University> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Universities WHERE upper(majors) LIKE ?");
+            
+            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
+            
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                University record = new University();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setPremium(rs.getBoolean("premium"));
+                record.setName(rs.getString("name"));
+
+                String majorsList = rs.getString("majors");
+                if (!majorsList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majorsList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
                 }
 
                 record.setStreet(rs.getString("street"));

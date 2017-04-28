@@ -8,6 +8,7 @@ package DAO;
 import Model.Student;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,13 +81,13 @@ public class StudentDAO {
 
         return rowCount;
     }
-    
+
     public static Student getProfile(String userID) {
         Student record = new Student();
-                DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
-        
+
         try {
             Statement stmt = DBConn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Students WHERE userID='" + userID + "'");
@@ -98,19 +99,21 @@ public class StudentDAO {
                 record.setACT(rs.getInt("ACT"));
                 record.setSAT(rs.getInt("SAT"));
                 record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
-                
+
                 String uniList = rs.getString("Universities");
-                if (!uniList.equals(""))
+                if (!uniList.equals("")) {
                     record.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
-                else
+                } else {
                     record.setUniversities(new ArrayList<String>());
-                
+                }
+
                 String majList = rs.getString("Majors");
-                if (!majList.equals(""))
+                if (!majList.equals("")) {
                     record.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
-                else
+                } else {
                     record.setMajors(new ArrayList<String>());
-                
+                }
+
                 record.setImage(rs.getString("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
@@ -128,10 +131,10 @@ public class StudentDAO {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return record;
     }
-    
+
     public static ArrayList getStudentsByNameContaining(String searchText) {
         searchText = searchText.toUpperCase();
         Student record = null;
@@ -141,17 +144,15 @@ public class StudentDAO {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-
-            // With the connection made, create a statement to talk to the DB server.
-            // Create a SQL statement to query, retrieve the rows one by one (by going to the
-            // columns), and formulate the result string to send back to the client.
             Statement stmt = DBConn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Students "
                     + "WHERE upper(firstname) LIKE '%" + searchText
                     + "%' OR upper(lastname) LIKE '%" + searchText + "%'");
 
             while (rs.next()) {
-                if (recordsList == null) recordsList = new ArrayList();
+                if (recordsList == null) {
+                    recordsList = new ArrayList();
+                }
                 record = new Student();
                 recordsList.add(record);
                 record.setUserID(rs.getString("userid"));
@@ -160,25 +161,302 @@ public class StudentDAO {
                 record.setACT(rs.getInt("ACT"));
                 record.setSAT(rs.getInt("SAT"));
                 record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
-                
+
                 String uniList = rs.getString("Universities");
-                if (!uniList.equals(""))
-                    record.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
-                else
-                    record.setUniversities(new ArrayList<String>());
-                
+                if (!uniList.equals("")) {
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
+                } else {
+                    record.setUniversities(new ArrayList());
+                }
+
                 String majList = rs.getString("Majors");
-                if (!majList.equals(""))
+                if (!majList.equals("")) {
                     record.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
-                else
+                } else {
                     record.setMajors(new ArrayList<String>());
-                
+                }
+
                 record.setImage(rs.getString("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }
             rs.close();
             stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+
+    public static ArrayList getStudentsByACTScoreGreaterThan(int searchInt) {
+        ArrayList<Student> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE ACT > ?");
+            
+            pstmt.setInt(1, searchInt);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Student record = new Student();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals("")) {
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
+                } else {
+                    record.setUniversities(new ArrayList());
+                }
+
+                String majList = rs.getString("Majors");
+                if (!majList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
+                }
+
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+
+    public static ArrayList getStudentsBySATScoreGreaterThan(int searchInt) {
+        ArrayList<Student> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE SAT > ?");
+            
+            pstmt.setInt(1, searchInt);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Student record = new Student();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals("")) {
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
+                } else {
+                    record.setUniversities(new ArrayList());
+                }
+
+                String majList = rs.getString("Majors");
+                if (!majList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
+                }
+
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+
+    public static ArrayList getStudentsByPSAT_NMSQTScoreGreaterThan(int searchInt) {
+        ArrayList<Student> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE PSAT_NMSQT > ?");
+            
+            pstmt.setInt(1, searchInt);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Student record = new Student();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals("")) {
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
+                } else {
+                    record.setUniversities(new ArrayList());
+                }
+
+                String majList = rs.getString("Majors");
+                if (!majList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
+                }
+
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+
+    public static ArrayList getStudentsByUniversity(String searchText) {
+        ArrayList<Student> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE UPPER(Universities) LIKE ?");
+            
+            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Student record = new Student();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals("")) {
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
+                } else {
+                    record.setUniversities(new ArrayList());
+                }
+
+                String majList = rs.getString("Majors");
+                if (!majList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
+                }
+
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return recordsList;
+    }
+
+    public static ArrayList getStudentsByMajor(String searchText) {
+        ArrayList<Student> recordsList = new ArrayList();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE UPPER(Majors) LIKE ?");
+            
+            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Student record = new Student();
+                recordsList.add(record);
+                record.setUserID(rs.getString("userid"));
+                record.setFirstName(rs.getString("firstname"));
+                record.setLastName(rs.getString("lastname"));
+                record.setACT(rs.getInt("ACT"));
+                record.setSAT(rs.getInt("SAT"));
+                record.setPSAT_NMSQT(rs.getInt("PSAT_NMSQT"));
+
+                String uniList = rs.getString("Universities");
+                if (!uniList.equals("")) {
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
+                } else {
+                    record.setUniversities(new ArrayList());
+                }
+
+                String majList = rs.getString("Majors");
+                if (!majList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
+                }
+
+                record.setImage(rs.getString("Image"));
+                record.setMixtape(rs.getString("Mixtape"));
+                record.setEssay(rs.getString("Essay"));
+            }
+            rs.close();
+            pstmt.close();
         } catch (Exception e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();

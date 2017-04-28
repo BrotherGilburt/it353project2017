@@ -9,6 +9,7 @@ import DAO.StudentDAO;
 import DAO.UniversityDAO;
 import Model.Student;
 import Model.University;
+import Utility.Validator;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -36,10 +37,10 @@ public class SearchController {
      */
     public SearchController() {
         if (studentsList == null) {
-            studentsList = new ArrayList<Student>();
+            studentsList = new ArrayList();
         }
         if (universitiesList == null) {
-            universitiesList = new ArrayList<University>();
+            universitiesList = new ArrayList();
         }
         this.searchMode = "none";
         this.searchFilter = "none";
@@ -89,16 +90,31 @@ public class SearchController {
     public String studentSearch() {
         if (searchFilter.equals("name containing")) {
             studentsList = StudentDAO.getStudentsByNameContaining(searchText);
-        } else if (searchFilter.equals("ACT score >")) {
-            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
-        } else if (searchFilter.equals("SAT score >")) {
-            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
+        } else if (searchFilter.equals("ACT score >")) { //VALIDATION
+            if (!Validator.isPositiveInteger(searchText)) {
+                return "home.xhtml?faces-redirect=true";
+                //Set error message?
+            }
+            int searchInt = Integer.parseInt(searchText);
+            studentsList = StudentDAO.getStudentsByACTScoreGreaterThan(searchInt);
+        } else if (searchFilter.equals("SAT score >")) { //VALIDATION
+            if (!Validator.isPositiveInteger(searchText)) {
+                return "home.xhtml?faces-redirect=true";
+                //Set error message?
+            }
+            int searchInt = Integer.parseInt(searchText);
+            studentsList = StudentDAO.getStudentsBySATScoreGreaterThan(searchInt);
         } else if (searchFilter.equals("PSAT/NMSQT score >")) {
-            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
+            if (!Validator.isPositiveInteger(searchText)) { //VALIDATION
+                return "home.xhtml?faces-redirect=true";
+                //Set error message?
+            }
+            int searchInt = Integer.parseInt(searchText);
+            studentsList = StudentDAO.getStudentsByPSAT_NMSQTScoreGreaterThan(searchInt);
         } else if (searchFilter.equals("desired university")) {
-            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByUniversity(searchText);
         } else if (searchFilter.equals("desired major")) {
-            studentsList = StudentDAO.getStudentsByNameContaining(searchText); //CHANGE THIS
+            studentsList = StudentDAO.getStudentsByMajor(searchText);
         }
 
         return "studentSearch.xhtml";
@@ -113,7 +129,7 @@ public class SearchController {
         if (searchFilter.equals("name containing")) {
             universitiesList = UniversityDAO.getUniversitiesByNameContaining(searchText); //database call
         } else if (searchFilter.equals("available major")) {
-            ; //database call
+            universitiesList = UniversityDAO.getUniversitiesByMajor(searchText);
         }
         return "universitySearch.xhtml";
     }
