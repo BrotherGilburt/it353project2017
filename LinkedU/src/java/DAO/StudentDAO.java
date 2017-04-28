@@ -56,24 +56,24 @@ public class StudentDAO {
                 majors.append(majList.get(i) + ";");
             }
 
-            String insertString;
+            String updateString;
             Statement stmt = DBConn.createStatement();
 
-            insertString = "INSERT INTO LinkedU.Students VALUES ('"
-                    + record.getUserID() + "',"
-                    + record.getFirstName() + "',"
-                    + record.getLastName() + "',"
-                    + record.getACT() + ","
-                    + record.getSAT() + ","
-                    + record.getPSAT_NMSQT() + ",'"
-                    + universities.toString() + "','"
-                    + majors.toString() + "','"
-                    + record.getImage() + "','"
-                    + record.getMixtape() + "','"
-                    + record.getEssay() + "')";
-
-            rowCount += stmt.executeUpdate(insertString);
-            System.out.println("insert string =" + insertString);
+            updateString = "UPDATE LinkedU.Students SET FirstName='"
+                    + record.getFirstName() + "', LastName='"
+                    + record.getLastName() + "', ACT="
+                    + record.getACT() + ", SAT="
+                    + record.getSAT() + ", PSAT_NMSQT="
+                    + record.getPSAT_NMSQT() + ", Universities='"
+                    + universities.toString() + "', Majors='"
+                    + majors.toString() + "', Image='"
+                    + record.getImage() + "', Mixtape='"
+                    + record.getMixtape() + "', Essay='"
+                    + record.getEssay() + "'"
+                    + " WHERE USERID = '" + record.getUserID() + "'";
+            System.out.println("insert string =" + updateString);
+            rowCount += stmt.executeUpdate(updateString);
+            
             DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());

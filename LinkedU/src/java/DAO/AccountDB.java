@@ -7,6 +7,7 @@ package DAO;
 
 import Model.Login;
 import Model.Account;
+import Model.Student;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class AccountDB {
     }
 
     public static int createAccount(Account user, Login login) {
+        
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -63,7 +65,25 @@ public class AccountDB {
                     + "')";
 
             rowCount += stmt.executeUpdate(insertString);
+
+            stmt = DBConn.createStatement();
+            Student myProfileDB = new Student();
+            insertString = "INSERT INTO LinkedU.Students VALUES ('"
+                    + login.getUserID()
+                    + "','" + myProfileDB.getFirstName()
+                    + "','" + myProfileDB.getLastName()
+                    + "'," + myProfileDB.getACT()
+                    + "," + myProfileDB.getSAT()
+                    + "," + myProfileDB.getPSAT_NMSQT()
+                    + ",'" + myProfileDB.getUniversities()
+                    + "','" + myProfileDB.getMajors()
+                    + "','" + myProfileDB.getImage()
+                    + "','" + myProfileDB.getMixtape()
+                    + "','" + myProfileDB.getEssay()
+                    + "')";
             System.out.println("insert string =" + insertString);
+            
+            rowCount += stmt.executeUpdate(insertString);
             DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
