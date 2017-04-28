@@ -202,7 +202,7 @@ public class AccountDB {
             // Create a SQL statement to query, retrieve the rows one by one (by going to the
             // columns), and formulate the result string to send back to the client.
             Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Users WHERE userID='" + userID + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE userID='" + userID + "'");
 
             if (rs.next()) {
                 found = true;

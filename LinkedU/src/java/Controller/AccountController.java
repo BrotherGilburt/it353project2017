@@ -225,7 +225,7 @@ public class AccountController implements Serializable {
         //Send confirmation Email.
         confirmationEmail(accountModel.getEmail());
 
-        return "account.xhtml?faces-redirect=true";
+        return "home.xhtml?faces-redirect=true";
     }
 
     public String update() {
