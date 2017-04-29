@@ -97,7 +97,7 @@ public class StudentController implements Serializable {
     public String updateFinished() {
         /*DATA VALIDATION*/
         
-        StudentDAO.setProfile(myProfileModel);
+        StudentDAO.updateStudent(myProfileModel);
         
         return "myProfile.xhtml?faces-redirect=true";
     }

@@ -31,7 +31,7 @@ public class StudentDAO {
     public StudentDAO() {
     }
 
-    public static int setProfile(Student record) {
+    public static int createStudent(Student record) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -47,13 +47,63 @@ public class StudentDAO {
             ArrayList<String> uniList = record.getUniversities();
             StringBuilder universities = new StringBuilder();
             for (int i = 0; i < uniList.size(); i++) {
-                universities.append(uniList.get(i) + ";");
+                universities.append(uniList.get(i)).append(";");
             }
 
             ArrayList<String> majList = record.getMajors();
             StringBuilder majors = new StringBuilder();
             for (int i = 0; i < majList.size(); i++) {
-                majors.append(majList.get(i) + ";");
+                majors.append(majList.get(i)).append(";");
+            }
+
+            Statement stmt = DBConn.createStatement();
+            String insertString = "INSERT INTO LinkedU.Students VALUES ('"
+                    + record.getUserID()
+                    + "','" + record.getFirstName()
+                    + "','" + record.getLastName()
+                    + "'," + record.getACT()
+                    + "," + record.getSAT()
+                    + "," + record.getPSAT_NMSQT()
+                    + ",'" + record.getUniversities()
+                    + "','" + record.getMajors()
+                    + "','" + record.getImage()
+                    + "','" + record.getMixtape()
+                    + "','" + record.getEssay()
+                    + "')";
+            System.out.println("insert string =" + insertString);
+            
+            rowCount += stmt.executeUpdate(insertString);
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return rowCount;
+    }
+    
+    public static int updateStudent(Student record) {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
+        int rowCount = 0;
+        try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+
+            ArrayList<String> uniList = record.getUniversities();
+            StringBuilder universities = new StringBuilder();
+            for (int i = 0; i < uniList.size(); i++) {
+                universities.append(uniList.get(i)).append(";");
+            }
+
+            ArrayList<String> majList = record.getMajors();
+            StringBuilder majors = new StringBuilder();
+            for (int i = 0; i < majList.size(); i++) {
+                majors.append(majList.get(i)).append(";");
             }
 
             String updateString;
@@ -70,8 +120,8 @@ public class StudentDAO {
                     + record.getImage() + "', Mixtape='"
                     + record.getMixtape() + "', Essay='"
                     + record.getEssay() + "'"
-                    + " WHERE USERID = '" + record.getUserID() + "'";
-            System.out.println("insert string =" + updateString);
+                    + " WHERE userid = '" + record.getUserID() + "'";
+            System.out.println("update string =" + updateString);
             rowCount += stmt.executeUpdate(updateString);
             
             DBConn.close();

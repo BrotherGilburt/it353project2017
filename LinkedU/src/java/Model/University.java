@@ -26,12 +26,12 @@ public class University {
         this.userID = "";
         this.premium = false;
         this.name = "N/A";
-        this.majors = new ArrayList<String>();
+        this.majors = new ArrayList();
         this.street = "N/A";
         this.city = "N/A";
         this.state = "N/A";
         this.zip = "N/A";
-        this.image = "Resources/default_university.png";
+        this.image = "./Resources/default_university.png";
     }
     
     public University(String userID) {

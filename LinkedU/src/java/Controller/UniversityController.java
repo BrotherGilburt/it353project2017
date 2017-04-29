@@ -49,7 +49,7 @@ public class UniversityController implements Serializable {
     public String setUniversity() {
         //Call DAO to create/update a university
 
-        UniversityDAO.setUniversity(myUniversityModel);
+        UniversityDAO.createUniversity(myUniversityModel);
 
         return ""; //address of university profile.
     }

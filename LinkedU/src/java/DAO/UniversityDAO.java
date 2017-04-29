@@ -33,10 +33,11 @@ public class UniversityDAO {
 
     /**
      * Inserts university into database.
+     *
      * @param record - The university to be inserted.
      * @return row count
      */
-    public static int setUniversity(University record) {
+    public static int createUniversity(University record) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -80,10 +81,54 @@ public class UniversityDAO {
         return rowCount;
     }
 
+    public static int updateUniversity(University record) {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
+        int rowCount = 0;
+        try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+
+            StringBuilder majorsList = new StringBuilder();
+            for (int i = 0; i < record.getMajors().size(); i++) {
+                majorsList.append(record.getMajors().get(i)).append(";");
+            }
+
+            String insertString;
+            Statement stmt = DBConn.createStatement();
+
+            insertString = "UPDATE LinkedU.Universities SET"
+                    + "premium='" + record.isPremium()
+                    + ", name='" + record.getName()
+                    + "', majors='" + majorsList.toString()
+                    + "', street='" + record.getStreet()
+                    + "', city='" + record.getCity()
+                    + "', state='" + record.getState()
+                    + "', zip='" + record.getZip()
+                    + "', image='" + record.getImage()
+                    + "' WHERE userid='" + record.getUserID() + "'";
+
+            rowCount += stmt.executeUpdate(insertString);
+            System.out.println("update string =" + insertString);
+            DBConn.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return rowCount;
+    }
+
     /**
      * Finds a university in the database by user ID.
+     *
      * @param userID
-     * @return 
+     * @return
      */
     public static University getUniversityByID(String userID) {
         University record = new University();
@@ -128,11 +173,12 @@ public class UniversityDAO {
         }
         return record;
     }
-    
+
     /**
      * Finds a university in the database by name;
+     *
      * @param name
-     * @return 
+     * @return
      */
     public static University getUniversityByName(String name) {
         University record = new University();
@@ -177,10 +223,11 @@ public class UniversityDAO {
         }
         return record;
     }
-    
-        /**
+
+    /**
      * Finds all universities in the database.
-     * @return 
+     *
+     * @return
      */
     public static ArrayList<University> getAllUniversities() {
         ArrayList<University> recordsList = new ArrayList<University>();
@@ -228,8 +275,9 @@ public class UniversityDAO {
 
     /**
      * Finds all universities in the database.
+     *
      * @param searchText
-     * @return 
+     * @return
      */
     public static ArrayList<University> getUniversitiesByNameContaining(String searchText) {
         ArrayList<University> recordsList = new ArrayList();
@@ -239,9 +287,9 @@ public class UniversityDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Universities WHERE upper(name) LIKE ?");
-            
-            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
-            
+
+            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -277,8 +325,8 @@ public class UniversityDAO {
         }
         return recordsList;
     }
-    
-        public static ArrayList<University> getUniversitiesByMajor(String searchText) {
+
+    public static ArrayList<University> getUniversitiesByMajor(String searchText) {
         ArrayList<University> recordsList = new ArrayList();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
@@ -286,9 +334,9 @@ public class UniversityDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Universities WHERE upper(majors) LIKE ?");
-            
-            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
-            
+
+            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
