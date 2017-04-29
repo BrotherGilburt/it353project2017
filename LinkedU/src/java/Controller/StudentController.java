@@ -9,12 +9,14 @@ import DAO.StudentDAO;
 import Model.Student;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.Part;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -30,6 +32,7 @@ public class StudentController implements Serializable {
     private AccountController account;
     private SearchController search;
     private String errorMessage;
+    private UploadedFile resume;
 
     /**
      * Creates a new instance of StudentProfileController
@@ -82,7 +85,9 @@ public class StudentController implements Serializable {
         return "updateStudentProfile.xhtml?faces-redirect=true";
     }
     
-    public String gotoUpdateImage() {
+    public String gotoUpdateImage() throws SQLException, IOException {
+        UploadedFile image = getResume();
+        int update = StudentDAO.updateImage(myProfileModel, image);
         return "myProfile.xhtml?faces-redirect=true";
     }
     
@@ -145,6 +150,20 @@ public class StudentController implements Serializable {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    /**
+     * @return the resume
+     */
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+    /**
+     * @param resume the resume to set
+     */
+    public void setResume(UploadedFile resume) {
+        this.resume = resume;
     }
 
 }

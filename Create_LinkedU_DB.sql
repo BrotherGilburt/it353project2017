@@ -86,7 +86,8 @@ Universities	varchar(200) not null,
 Majors			varchar(200) not null,
 Image			varchar(50) not null,
 Mixtape			varchar(50) not null,
-Essay			varchar(50) not null
+Essay			varchar(1500) not null,
+PROFILEPIC             blob
 );
 
 --Student Accounts

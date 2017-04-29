@@ -8,13 +8,21 @@ package DAO;
 import Model.Login;
 import Model.Account;
 import Model.Student;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -30,8 +38,9 @@ public class AccountDB {
     public AccountDB() {
     }
 
-    public static int createAccount(Account user, Login login) {
-        
+    public static int createAccount(Account user, Login login) throws FileNotFoundException, URISyntaxException {
+        File file = new File("W:/Information Systems/Second Semester/IT353-Web Development Technologies/NetBeans Project/WebApplication1/web/Resources/default_student.png");
+        InputStream i = new FileInputStream(file);
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -68,7 +77,7 @@ public class AccountDB {
 
             stmt = DBConn.createStatement();
             Student myProfileDB = new Student();
-            insertString = "INSERT INTO LinkedU.Students VALUES ('"
+            /*insertString = "INSERT INTO LinkedU.Students VALUES ('"
                     + login.getUserID()
                     + "','" + myProfileDB.getFirstName()
                     + "','" + myProfileDB.getLastName()
@@ -80,15 +89,38 @@ public class AccountDB {
                     + "','" + myProfileDB.getImage()
                     + "','" + myProfileDB.getMixtape()
                     + "','" + myProfileDB.getEssay()
-                    + "')";
+                    + "'," + i
+                    + ")";*/
+            insertString = "INSERT INTO LINKEDU.STUDENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = DBConn.prepareStatement(insertString);
+            pstmt.setString(1, login.getUserID());
+            pstmt.setString(2, myProfileDB.getFirstName());
+            pstmt.setString(3, myProfileDB.getLastName());
+            pstmt.setInt(4, myProfileDB.getACT());
+            pstmt.setInt(5, myProfileDB.getSAT());
+            pstmt.setInt(6, myProfileDB.getPSAT_NMSQT());
+            String universities = "";
+            for (int j = 0; j < myProfileDB.getUniversities().size(); j++) {
+                universities += myProfileDB.getUniversities().get(j) + ";";
+            }
+            String majors = "";
+            for (int j = 0; j < myProfileDB.getMajors().size(); j++) {
+                majors += myProfileDB.getMajors().get(j) + ";";
+            }
+            pstmt.setString(7, universities);
+            pstmt.setString(8, majors);
+            pstmt.setString(9, myProfileDB.getImage());
+            pstmt.setString(10, myProfileDB.getMixtape());
+            pstmt.setString(11, myProfileDB.getEssay());
+            pstmt.setBlob(12, i);
             System.out.println("insert string =" + insertString);
-            
-            rowCount += stmt.executeUpdate(insertString);
+
+            rowCount += pstmt.executeUpdate();
             DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        
+
         return rowCount;
     }
 

@@ -6,6 +6,9 @@
 package DAO;
 
 import Model.Student;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.inject.Named;
 import javax.faces.bean.RequestScoped;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -73,7 +77,7 @@ public class StudentDAO {
                     + " WHERE USERID = '" + record.getUserID() + "'";
             System.out.println("insert string =" + updateString);
             rowCount += stmt.executeUpdate(updateString);
-            
+
             DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -202,11 +206,11 @@ public class StudentDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE ACT > ?");
-            
+
             pstmt.setInt(1, searchInt);
-            
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 Student record = new Student();
                 recordsList.add(record);
@@ -257,11 +261,11 @@ public class StudentDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE SAT > ?");
-            
+
             pstmt.setInt(1, searchInt);
-            
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 Student record = new Student();
                 recordsList.add(record);
@@ -312,11 +316,11 @@ public class StudentDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE PSAT_NMSQT > ?");
-            
+
             pstmt.setInt(1, searchInt);
-            
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 Student record = new Student();
                 recordsList.add(record);
@@ -367,11 +371,11 @@ public class StudentDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE UPPER(Universities) LIKE ?");
-            
-            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
-            
+
+            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 Student record = new Student();
                 recordsList.add(record);
@@ -422,11 +426,11 @@ public class StudentDAO {
 
         try {
             PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE UPPER(Majors) LIKE ?");
-            
-            pstmt.setString(1, "%"+searchText.toUpperCase()+"%");
-            
+
+            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next()) {
                 Student record = new Student();
                 recordsList.add(record);
@@ -467,5 +471,32 @@ public class StudentDAO {
             System.err.println(e.getMessage());
         }
         return recordsList;
+    }
+
+    public static int updateImage(Student theModel,UploadedFile image) throws SQLException, IOException {
+        InputStream i = image.getInputstream();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+        int rowCount = 0;  
+        try {
+            String updateString;
+            updateString = "UPDATE LINKEDU.STUDENTS SET "
+                    + "profilepic = ? WHERE USERID = ?";
+            PreparedStatement pstmt = DBConn.prepareStatement(updateString);
+                System.out.println(updateString + " " + i + " " + theModel.getUserID());
+                pstmt.setBinaryStream(1,i);
+                pstmt.setString(2, theModel.getUserID());
+                rowCount = pstmt.executeUpdate();
+                pstmt.close();
+            return rowCount;
+
+        } catch (Exception e) {
+            DBConn.close();
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        DBConn.close();
+return rowCount;
     }
 }

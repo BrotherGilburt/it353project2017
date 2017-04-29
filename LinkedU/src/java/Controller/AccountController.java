@@ -8,7 +8,9 @@ package Controller;
 import DAO.AccountDB;
 import Model.Login;
 import Model.Account;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -202,7 +204,7 @@ public class AccountController implements Serializable {
         return navi;
     }
 
-    public String signUp() {
+    public String signUp() throws FileNotFoundException, URISyntaxException {
         eraseErrorMessage();
 
         //Check password matches confirm.

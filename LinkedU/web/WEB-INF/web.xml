@@ -21,4 +21,14 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+            <servlet>
+        <description></description>
+        <display-name>DisplayImage</display-name>
+        <servlet-name>DisplayImage</servlet-name>
+        <servlet-class>Model.DisplayImage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisplayImage</servlet-name>
+        <url-pattern>/DisplayImage</url-pattern>
+    </servlet-mapping>
 </web-app>
