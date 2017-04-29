@@ -94,7 +94,16 @@ public class AccountController implements Serializable {
     public boolean isUniversity() {
         return accountModel.getAccountType().equals("University");
     }
-
+    public String checkAccount(){
+        String returnString="";
+        if(isStudent()){
+            returnString="studentProfile.xhtml?faces-redirect=true";
+        }
+        else if (isUniversity()){
+             returnString="universityProfile.xhtml?faces-redirect=true";
+        }
+        return returnString;
+    }
     public void reset() {
         loginModel = new Login();
         accountModel = new Account();
