@@ -6,9 +6,13 @@
 package Controller;
 
 import DAO.AccountDB;
+import DAO.StudentDAO;
+import DAO.UniversityDAO;
 import Model.Login;
 import Model.Account;
 import java.io.FileNotFoundException;
+import Model.Student;
+import Model.University;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.Properties;
@@ -72,25 +76,25 @@ public class AccountController implements Serializable {
     }
 
     /**
-     * Checks if the user's account is of type Student.
-     * USE TO RENDER ITEMS ON PAAGE FOR STUDENT ACCOUNTS.
-     * 
+     * Checks if the user's account is of type Student. USE TO RENDER ITEMS ON
+     * PAAGE FOR STUDENT ACCOUNTS.
+     *
      * @return True if Student, false otherwise.
      */
     public boolean isStudent() {
         return accountModel.getAccountType().equals("Student");
     }
-    
+
     /**
-     * Checks if the user's account is of type University.
-     * USE TO RENDER ITEMS ON PAGE FOR UNIVERSITY ACCOUNTS.
-     * 
-     * @return  True if University, false otherwise. 
+     * Checks if the user's account is of type University. USE TO RENDER ITEMS
+     * ON PAGE FOR UNIVERSITY ACCOUNTS.
+     *
+     * @return True if University, false otherwise.
      */
     public boolean isUniversity() {
         return accountModel.getAccountType().equals("University");
     }
-    
+
     public void reset() {
         loginModel = new Login();
         accountModel = new Account();
@@ -175,15 +179,16 @@ public class AccountController implements Serializable {
     }
 
     /**
-    * Redirects to home page if not logged in.
-    */
+     * Redirects to home page if not logged in.
+     * @return navi
+     */
     public String isLoggedOn() {
         String navi = null;
 
         Login check = AccountDB.getLogin(loginModel);
 
         boolean loggedIn;
-        
+
         if (check == null) {
             errorMessage = "Error. UserID not found.";
             loggedIn = false;
@@ -224,6 +229,13 @@ public class AccountController implements Serializable {
         //Insert information into database.
         AccountDB.createAccount(accountModel, loginModel);
 
+        if (this.isStudent()){
+            StudentDAO.createStudent(new Student(loginModel.getUserID()));
+        } else if (this.isUniversity()) {
+            UniversityDAO.createUniversity(new University(loginModel.getUserID()));
+        }
+        
+
         //Send confirmation Email.
         confirmationEmail(accountModel.getEmail());
 
@@ -238,12 +250,12 @@ public class AccountController implements Serializable {
             errorMessage = "Error. Passwords do not match. Please confirm password.";
             return "updateAccount.xhtml?faces-redirect=true";
         }
-        
+
         if (loginUpdateModel.getPassword().length() != 0 && (loginUpdateModel.getPassword().length() < 2 || loginUpdateModel.getPassword().length() > 24)) {
             errorMessage = "Error. Password must be 2-24 characters in length.";
             return "updateAccount.xhtml?faces-redirect=true";
         }
-        
+
         if (!loginUpdateModel.getPassword().equals("") && !loginUpdateModel.getPassword().equals(loginModel.getPassword())) {
             loginModel.setPassword(loginUpdateModel.saltPassword());
         }
@@ -256,8 +268,8 @@ public class AccountController implements Serializable {
         if (!userUpdateModel.getSecurityAnswer().equals("") && !userUpdateModel.getSecurityAnswer().equals(accountModel.getSecurityAnswer())) {
             accountModel.setSecurityAnswer(userUpdateModel.getSecurityAnswer());
         }
-        
-        if (!AccountDB.updateUser(accountModel, loginModel)) {
+
+        if (!AccountDB.updateAccount(accountModel, loginModel)) {
             errorMessage = "Error. Record could not be updated. Please try again.";
             return "updateAccount.xhtml?faces-redirect=true";
         }

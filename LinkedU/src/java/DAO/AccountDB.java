@@ -131,10 +131,6 @@ public class AccountDB {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-
-            // With the connection made, create a statement to talk to the DB server.
-            // Create a SQL statement to query, retrieve the rows one by one (by going to the
-            // columns), and formulate the result string to send back to the client.
             Statement stmt = DBConn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.LoginInfo WHERE userID='" + login.getUserID() + "'");
 
@@ -165,10 +161,6 @@ public class AccountDB {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-
-            // With the connection made, create a statement to talk to the DB server.
-            // Create a SQL statement to query, retrieve the rows one by one (by going to the
-            // columns), and formulate the result string to send back to the client.
             Statement stmt = DBConn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE userID='" + userID + "'");
 
@@ -198,7 +190,7 @@ public class AccountDB {
 
     }
 
-    public static boolean updateUser(Account user, Login login) {
+    public static boolean updateAccount(Account user, Login login) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -223,9 +215,6 @@ public class AccountDB {
             stmt = DBConn.createStatement();
 
             updateString = "UPDATE LinkedU.Accounts SET "
-                    //+ " userid = '" + login.getUserID() + "'"
-                    /*+ "firstname = '" + user.getFirstName() + "', "
-                    + "lastname = '" + user.getLastName() + "', "*/
                     + "email = '" + user.getEmail() + "', "
                     + "securityquestion = '" + user.getSecurityQuestion() + "', "
                     + "securityanswer = '" + user.getSecurityAnswer() + "'"

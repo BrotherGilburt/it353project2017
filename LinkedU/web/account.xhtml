@@ -12,7 +12,7 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:fieldset legend="#{studentController.myProfileModel.getFullName()}" style="margin-bottom:20px">
+            <p:fieldset legend="#{accountController.loginModel.userID}" style="margin-bottom:20px">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:panelGroup><b><h:outputText value="Account Type:"/></b></h:panelGroup>            <h:outputText value="#{accountController.accountModel.accountType}"/>
                     <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup>                <h:outputText value="#{accountController.accountModel.userID}"/>
