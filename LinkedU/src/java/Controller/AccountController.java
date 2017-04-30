@@ -51,6 +51,7 @@ public class AccountController implements Serializable {
     private String errorMessage;
     private int attempts;
     private String confirm;
+    private String status;
 
     /**
      * Creates a new instance of AccountController
@@ -94,16 +95,32 @@ public class AccountController implements Serializable {
     public boolean isUniversity() {
         return accountModel.getAccountType().equals("University");
     }
-    public String checkAccount(){
-        String returnString="";
-        if(isStudent()){
-            returnString="studentProfile.xhtml?faces-redirect=true";
-        }
-        else if (isUniversity()){
-             returnString="universityProfile.xhtml?faces-redirect=true";
+
+    /* check account for profile page*/
+    public String checkAccount() {
+        String returnString = "";
+        if (isStudent()) {
+
+            returnString = "myProfile.xhtml?faces-redirect=true";
+        } else if (isUniversity()) {
+
+            returnString = "universityProfile.xhtml?faces-redirect=true";
         }
         return returnString;
     }
+
+    /*Check account typpe for home page*/
+    public String homeLink() {
+        String returnString = "";
+        if (isStudent()) {
+
+            returnString = "Grad.xhtml?faces-redirect=true";
+        } else if (isUniversity()) {
+            returnString = "premium.xhtml?faces-redirect=true";
+        }
+        return returnString;
+    }
+
     public void reset() {
         loginModel = new Login();
         accountModel = new Account();
@@ -145,15 +162,12 @@ public class AccountController implements Serializable {
     }
 
     public String logIn() {
-
-        //Confirm login information correct.
+       //Confirm login information correct.
         if (!checkLogin()) {
             return "loginBad.xhtml?faces-redirect=true";
         }
-
         //Get user information.
         accountModel = AccountDB.getAccount(loginModel.getUserID());
-
         return "home.xhtml?faces-redirect=true";
     }
 
@@ -189,6 +203,7 @@ public class AccountController implements Serializable {
 
     /**
      * Redirects to home page if not logged in.
+     *
      * @return navi
      */
     public String isLoggedOn() {
@@ -238,12 +253,11 @@ public class AccountController implements Serializable {
         //Insert information into database.
         AccountDB.createAccount(accountModel, loginModel);
 
-        if (this.isStudent()){
+        if (this.isStudent()) {
             StudentDAO.createStudent(new Student(loginModel.getUserID()));
         } else if (this.isUniversity()) {
             UniversityDAO.createUniversity(new University(loginModel.getUserID()));
         }
-        
 
         //Send confirmation Email.
         confirmationEmail(accountModel.getEmail());
@@ -428,6 +442,26 @@ public class AccountController implements Serializable {
 
     public void setUserUpdateModel(Account userUpdateModel) {
         this.userUpdateModel = userUpdateModel;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        String returnStrings = "";
+        if (accountModel.getAccountType().equals("Student")) {
+            returnStrings="Students - Apply for Universities";
+        } else if (accountModel.getAccountType().equals("University")) {
+            returnStrings="Universities - Subscribe for Premium";
+        }
+        return returnStrings;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

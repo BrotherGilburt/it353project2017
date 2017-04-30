@@ -35,7 +35,7 @@
         </h:form>
         <br/>
         <h:form>
-            <p:commandLink action="Grad.xhtml">Apply...</p:commandLink>
+            <p:commandButton value="#{accountController.status}" action="#{accountController.homeLink()}"></p:commandButton>
 
             <h1>Featured University</h1>
             <!--Call method(s) in university controller-->

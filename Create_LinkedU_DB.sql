@@ -4,6 +4,7 @@ drop table LinkedU.Accounts;
 drop table LINKEDU.ApplyInfo;
 drop table LinkedU.Students;
 drop table LinkedU.Universities;
+drop table LinkedU.Premium;
 
 -- Old Tables (no longer in use)
 drop table LinkedU.Users;
@@ -116,3 +117,12 @@ insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, St
 ('blim', TRUE, 'Illinois State University', 'Computer Science;English;Biology;Chemistry;Music;Physics;Psychology;Mathematics', '100 N University St', 'Normal', 'IL', '61761', './Resources/default_university.png');
 insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, State, Zip, Image) values
 ('test', FALSE, 'University of Illinois', 'Dance;Computer Science;English;Biology;Chemistry;Music;Astronomy;Physics;Psychology;Art;Mathematics', '1337 Example St', 'Champaign', 'IL', '61820', './Resources/default_university.png');
+
+CREATE TABLE LINKEDU.PREMIUM(
+UserID varchar(25) not null,
+PremiumStatus varchar(1) not null,
+PaymentType varchar(1) not null,
+Amount decimal not null,
+Subdate DATE,
+Expdate DATE
+);
