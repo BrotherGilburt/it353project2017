@@ -10,6 +10,7 @@
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
+    
     <h:body>
         <h:form>
             Hello <p:commandLink id="accountPage" action="account.xhtml">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
