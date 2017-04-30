@@ -18,17 +18,23 @@ public class DisplayImage extends HttpServlet {
     public void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
+        String strSql="";
         Statement stmt = null;
         ResultSet rs;
         InputStream sImage;
         try {
 
             String id = request.getParameter("userid");
-            System.out.println("inside servlet–>" + id);
+            String type = request.getParameter("ptype");
+            System.out.println("inside servlet–>" + id + " " + type);
 
             Connection con = ImageDAO.getConnection();
             stmt = con.createStatement();
-            String strSql = "select profilepic from LINKEDU.STUDENTS where userid='" + id + "' ";
+            if(type.equals("U")){
+            strSql = "select profilepic from LINKEDU.UNIVERSITIES where userid='" + id + "' ";
+            }else if (type.equals("S")){
+               strSql = "select profilepic from LINKEDU.STUDENTS where userid='" + id + "' "; 
+            }
             rs = stmt.executeQuery(strSql);
             if (rs.next()) {
                 byte[] bytearray = new byte[1048576];

@@ -5,30 +5,45 @@
  */
 package Controller;
 
+import DAO.StudentDAO;
 import DAO.UniversityDAO;
+import Model.Student;
 import Model.University;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.UploadedFile;
 
 @Named(value = "universityController")
 @SessionScoped
 public class UniversityController implements Serializable {
 
     private University myUniversityModel;
+    private AccountController account;
     private University viewUniversityModel;
     private SearchController search;
+    private UploadedFile resume;
+    
+            
 
     /**
      * Creates a new instance of UniversityController
      */
     public UniversityController() {
+        if (account == null) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
+        }
+                
         if (myUniversityModel == null) {
-            myUniversityModel = new University();
+            //myUniversityModel = new University();
+            myUniversityModel = new University(account.getLoginModel().getUserID());
         }
         if (viewUniversityModel == null) {
             viewUniversityModel = new University();
@@ -46,14 +61,18 @@ public class UniversityController implements Serializable {
      *
      * @return the address of the university profile.
      */
-    public String setUniversity() {
+    public String setUniversity() throws IOException {
         //Call DAO to create/update a university
 
         UniversityDAO.createUniversity(myUniversityModel);
 
         return ""; //address of university profile.
     }
-
+  public String gotoUpdateImage() throws SQLException, IOException {
+        UploadedFile image = getResume();
+        int update = UniversityDAO.updateImage(myUniversityModel, image);
+        return "universityProfile.xhtml?faces-redirect=true";
+    }
     public String loadProfile() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
@@ -147,6 +166,20 @@ public class UniversityController implements Serializable {
 
     public void setViewUniversityModel(University viewUniversityModel) {
         this.viewUniversityModel = viewUniversityModel;
+    }
+
+    /**
+     * @return the resume
+     */
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+    /**
+     * @param resume the resume to set
+     */
+    public void setResume(UploadedFile resume) {
+        this.resume = resume;
     }
 
 }

@@ -8,31 +8,39 @@
         <title>LinkedU - University Profile</title>
     </h:head>
     <h:body>
-           <ui:composition template="./newTemplate.xhtml">
+      <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-        <h:form>
-            <p:fieldset legend="#{universityController.viewUniversityModel.name}">
-                <p:graphicImage value="#{universityController.viewUniversityModel.image}"  style="max-width: 200px; max-height: 200px;"/>
+                <h:form id="fileUpload" prependId="false"     enctype="multipart/form-data">
+                    <p:fieldset legend="#{universityController.myUniversityModel.name}">
+                        <h:panelGrid columns="1" cellpadding="5">
+                            <p:fileUpload id="profileimage"  value="#{universityController.resume}" mode="simple" skinSimple="true"/>
+                            <p:commandButton value="Submit" ajax="false" action="#{universityController.gotoUpdateImage}" />
+                            <h:outputLink value="DisplayImage?userid=#{universityController.myUniversityModel.userID}" target="_blank" >
+                                <h:graphicImage value="DisplayImage?userid=#{universityController.myUniversityModel.userID}&amp;ptype=U" width="200" height="200"></h:graphicImage>
+                            </h:outputLink>
+                        </h:panelGrid>
 
-                <h3>General Information</h3>
-                <h:panelGrid  columns="2" cellpadding="5">
-                    <h:panelGroup><b><p:outputLabel value="Name" for="name" /></b></h:panelGroup> <h:outputText id="name" value="#{universityController.viewUniversityModel.name}"/>
-                    <h:panelGroup><b><p:outputLabel value="Address" for="address" /></b></h:panelGroup> <h:outputText id="address" value="#{universityController.viewUniversityModel.fullAddress}"/>
-                    <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.viewUniversityModel.majorsString}"/> 
-                </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h3>General Information</h3> <p:commandButton value="Update" />
+                        </h:panelGrid>
+                        <h:panelGrid  columns="2" cellpadding="5">
+                            <h:panelGroup><b><p:outputLabel value="Name" for="name" /></b></h:panelGroup> <h:outputText id="name" value="#{universityController.myUniversityModel.name}"/>
+                            <h:panelGroup><b><p:outputLabel value="Address" for="address" /></b></h:panelGroup> <h:outputText id="address" value="#{universityController.myUniversityModel.fullAddress}"/>
+                            <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.myUniversityModel.majors}"/> 
+                        </h:panelGrid>
 
-                <h3>Apply for Admission</h3>
-                <h:panelGrid columns="2" cellpadding="5">
-                    ((MAJOR SELECT TO BE ADDED))
-                    <p:commandButton value="Apply!" action="#{applyController.loadApplicationFromProfile()}" rendered="#{accountController.isStudent()}">
-                        <!--PASS PARAMETERS TO METHOD IN CONTROLLER OR OTHERWISE SET MAJOR/UNIVERSITY IN APPLICATION-->
-                    </p:commandButton>
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>
-            </ui:define>
-           </ui:composition>
+                        <h3>Apply for Admission</h3>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            ((MAJOR SELECT TO BE ADDED))
+                            <p:commandButton value="Apply!" action="#{applyController.loadApplicationFromProfile()}" rendered="#{accountController.isStudent()}">
+                                <!--PASS PARAMETERS TO METHOD IN CONTROLLER OR OTHERWISE SET MAJOR/UNIVERSITY IN APPLICATION-->
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
+           </ui:define>
+         </ui:composition>
     </h:body>
 </html>
 

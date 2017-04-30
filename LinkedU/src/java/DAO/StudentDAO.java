@@ -6,9 +6,13 @@
 package DAO;
 
 import Model.Student;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -35,7 +39,7 @@ public class StudentDAO {
     public StudentDAO() {
     }
 
-    public static int createStudent(Student record) {
+    public static int createStudent(Student record) throws FileNotFoundException, MalformedURLException, IOException {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -45,38 +49,36 @@ public class StudentDAO {
 
         int rowCount = 0;
         try {
+
+            URL u = new URL("http://www.racialjusticenetwork.co.uk/wp-content/uploads/2016/12/default-profile-picture-2.png");
+            InputStream i = u.openStream();
             String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
-            ArrayList<String> uniList = record.getUniversities();
-            StringBuilder universities = new StringBuilder();
-            for (int i = 0; i < uniList.size(); i++) {
-                universities.append(uniList.get(i)).append(";");
+            String insertString = "INSERT INTO LINKEDU.STUDENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = DBConn.prepareStatement(insertString);
+            pstmt.setString(1, record.getUserID());
+            pstmt.setString(2, record.getFirstName());
+            pstmt.setString(3, record.getLastName());
+            pstmt.setInt(4, record.getACT());
+            pstmt.setInt(5, record.getSAT());
+            pstmt.setInt(6, record.getPSAT_NMSQT());
+            String universities = "";
+            for (int j = 0; j < record.getUniversities().size(); j++) {
+                universities += record.getUniversities().get(j) + ";";
             }
-
-            ArrayList<String> majList = record.getMajors();
-            StringBuilder majors = new StringBuilder();
-            for (int i = 0; i < majList.size(); i++) {
-                majors.append(majList.get(i)).append(";");
+            String majors = "";
+            for (int j = 0; j < record.getMajors().size(); j++) {
+                majors += record.getMajors().get(j) + ";";
             }
-
-            Statement stmt = DBConn.createStatement();
-            String insertString = "INSERT INTO LinkedU.Students VALUES ('"
-                    + record.getUserID()
-                    + "','" + record.getFirstName()
-                    + "','" + record.getLastName()
-                    + "'," + record.getACT()
-                    + "," + record.getSAT()
-                    + "," + record.getPSAT_NMSQT()
-                    + ",'" + record.getUniversities()
-                    + "','" + record.getMajors()
-                    + "','" + record.getImage()
-                    + "','" + record.getMixtape()
-                    + "','" + record.getEssay()
-                    + "')";
+            pstmt.setString(7, universities);
+            pstmt.setString(8, majors);
+            pstmt.setString(9, record.getImage());
+            pstmt.setString(10, record.getMixtape());
+            pstmt.setString(11, record.getEssay());
+            pstmt.setBlob(12, i);
             System.out.println("insert string =" + insertString);
-            
-            rowCount += stmt.executeUpdate(insertString);
+            rowCount += pstmt.executeUpdate();
             DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -84,8 +86,10 @@ public class StudentDAO {
 
         return rowCount;
     }
-    
-    public static int updateStudent(Student record) {
+
+    public static int updateStudent(Student record) throws SQLException {
+        Connection DBConn = null;
+        Statement stmt = null;
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -96,7 +100,7 @@ public class StudentDAO {
         int rowCount = 0;
         try {
             String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
-            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             ArrayList<String> uniList = record.getUniversities();
             StringBuilder universities = new StringBuilder();
@@ -111,7 +115,7 @@ public class StudentDAO {
             }
 
             String updateString;
-            Statement stmt = DBConn.createStatement();
+            stmt = DBConn.createStatement();
 
             updateString = "UPDATE LinkedU.Students SET FirstName='"
                     + record.getFirstName() + "', LastName='"
@@ -128,9 +132,17 @@ public class StudentDAO {
             System.out.println("update string =" + updateString);
             rowCount += stmt.executeUpdate(updateString);
 
-            DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+        } finally {
+
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (DBConn != null) {
+                DBConn.close();
+            }
         }
 
         return rowCount;
@@ -523,30 +535,33 @@ public class StudentDAO {
         return recordsList;
     }
 
-    public static int updateImage(Student theModel,UploadedFile image) throws SQLException, IOException {
+    public static int updateImage(Student theModel, UploadedFile image) throws SQLException, IOException, ClassNotFoundException {
         InputStream i = image.getInputstream();
-        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
-        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
-        int rowCount = 0;  
+        Connection DBConn = null;
+        PreparedStatement pstmt = null;
+        int rowCount = 0;
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
         try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             String updateString;
             updateString = "UPDATE LINKEDU.STUDENTS SET "
                     + "profilepic = ? WHERE USERID = ?";
-            PreparedStatement pstmt = DBConn.prepareStatement(updateString);
-                System.out.println(updateString + " " + i + " " + theModel.getUserID());
-                pstmt.setBinaryStream(1,i);
-                pstmt.setString(2, theModel.getUserID());
-                rowCount = pstmt.executeUpdate();
-                pstmt.close();
-            return rowCount;
-
+            pstmt = DBConn.prepareStatement(updateString);
+            pstmt.setBinaryStream(1, i);
+            pstmt.setString(2, theModel.getUserID());
+            rowCount += pstmt.executeUpdate();
         } catch (Exception e) {
-            DBConn.close();
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
+        } finally {
+            if (DBConn != null) {
+                DBConn.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
         }
-        DBConn.close();
-return rowCount;
+        return rowCount;
     }
 }

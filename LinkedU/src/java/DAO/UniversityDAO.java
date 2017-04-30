@@ -6,6 +6,10 @@
 package DAO;
 
 import Model.University;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +20,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -37,7 +42,7 @@ public class UniversityDAO {
      * @param record - The university to be inserted.
      * @return row count
      */
-    public static int createUniversity(University record) {
+    public static int createUniversity(University record) throws MalformedURLException, IOException {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -47,33 +52,31 @@ public class UniversityDAO {
 
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
-            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-
             StringBuilder majorsList = new StringBuilder();
             for (int i = 0; i < record.getMajors().size(); i++) {
                 majorsList.append(record.getMajors().get(i)).append(";");
             }
+            URL u = new URL("http://www.stolenimages.co.uk/components/com_easyblog/themes/wireframe/images/placeholder-image.png");
+            InputStream i = u.openStream();
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
-            String insertString;
-            Statement stmt = DBConn.createStatement();
-
-            insertString = "INSERT INTO LinkedU.Universities VALUES ('"
-                    + record.getUserID()
-                    + "'," + record.isPremium()
-                    + ",'" + record.getName()
-                    + "','" + majorsList.toString()
-                    + "','" + record.getStreet()
-                    + "','" + record.getCity()
-                    + "','" + record.getState()
-                    + "','" + record.getZip()
-                    + "','" + record.getImage()
-                    + "')";
-
-            rowCount += stmt.executeUpdate(insertString);
+            String insertString = "INSERT INTO LINKEDU.UNIVERSITIES VALUES(?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = DBConn.prepareStatement(insertString);
+            pstmt.setString(1, record.getUserID());
+            pstmt.setBoolean(2, record.isPremium());
+            pstmt.setString(3, record.getName());
+            pstmt.setString(4, majorsList.toString());
+            pstmt.setString(5, record.getStreet());
+            pstmt.setString(6, record.getCity());
+            pstmt.setString(7, record.getState());
+            pstmt.setString(8, record.getZip());
+            pstmt.setString(9, record.getImage());
+            pstmt.setBlob(10, i);
             System.out.println("insert string =" + insertString);
+
+            rowCount += pstmt.executeUpdate();
             DBConn.close();
-            stmt.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -371,5 +374,33 @@ public class UniversityDAO {
             System.err.println(e.getMessage());
         }
         return recordsList;
+    }
+
+    public static int updateImage(University theModel, UploadedFile image) throws SQLException, IOException {
+        InputStream i = image.getInputstream();
+        Connection DBConn = ImageDAO.getConnection();
+        int rowCount = 0;
+        try {
+            String updateString;
+            updateString = "UPDATE LINKEDU.UNIVERSITIES SET "
+                    + "profilepic = ? WHERE USERID = ?";
+            PreparedStatement pstmt = DBConn.prepareStatement(updateString);
+            System.out.println(updateString + " " + i + " " + theModel.getUserID());
+            pstmt.setBinaryStream(1, i);
+            pstmt.setString(2, theModel.getUserID());
+            rowCount = pstmt.executeUpdate();
+            pstmt.close();
+            return rowCount;
+
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rowCount;
     }
 }

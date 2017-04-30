@@ -16,12 +16,12 @@
 
             <ui:define name="content">
         <h:form id="fileUpload" prependId="false"     enctype="multipart/form-data">
-            <p:fieldset legend="#{studentController.myProfileModel.getFullName()}" style="margin-bottom:20px">
+            <p:fieldset legend="#{studentController.myProfileModel.firstName}" style="margin-bottom:20px">
                 <h:panelGrid columns="1" cellpadding="5">
                     <p:fileUpload id="profileimage"  value="#{studentController.resume}" mode="simple" skinSimple="true"/>
                     <p:commandButton value="Submit" ajax="false" action="#{studentController.gotoUpdateImage}" />
                     <h:outputLink value="DisplayImage?userid=#{studentController.myProfileModel.userID}" target="_blank" >
-                        <h:graphicImage value="DisplayImage?userid=#{studentController.myProfileModel.userID}" width="200" height="200"></h:graphicImage>
+                        <h:graphicImage value="DisplayImage?userid=#{studentController.myProfileModel.userID}&amp;ptype=S" width="200" height="200"></h:graphicImage>
                     </h:outputLink>
                 </h:panelGrid>
 
@@ -29,7 +29,7 @@
                     <h3>General Information</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateGeneral()}" />
                 </h:panelGrid>
                 <h:panelGrid columns="2" columnClasses="label, label" cellpadding="5">
-                    <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getFullName()}" />
+                    <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.firstName}" />
                     <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getUserID()}" />
                     <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getACTString()}" />
                     <h:panelGroup><b><h:outputText value="SAT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getSATString()}" />

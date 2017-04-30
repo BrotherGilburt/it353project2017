@@ -13,6 +13,7 @@ import Model.Account;
 import java.io.FileNotFoundException;
 import Model.Student;
 import Model.University;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.Properties;
@@ -233,7 +234,7 @@ public class AccountController implements Serializable {
         return navi;
     }
 
-    public String signUp() throws FileNotFoundException, URISyntaxException {
+    public String signUp() throws FileNotFoundException, URISyntaxException, ClassNotFoundException, IOException {
         eraseErrorMessage();
 
         //Check password matches confirm.

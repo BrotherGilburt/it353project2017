@@ -85,7 +85,7 @@ public class StudentController implements Serializable {
         return "updateStudentProfile.xhtml?faces-redirect=true";
     }
     
-    public String gotoUpdateImage() throws SQLException, IOException {
+    public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
         int update = StudentDAO.updateImage(myProfileModel, image);
         return "myProfile.xhtml?faces-redirect=true";
@@ -99,7 +99,7 @@ public class StudentController implements Serializable {
         return "myProfile.xhtml?faces-redirect=true";
     }
 
-    public String updateFinished() {
+    public String updateFinished() throws SQLException {
         /*DATA VALIDATION*/
         
         StudentDAO.updateStudent(myProfileModel);

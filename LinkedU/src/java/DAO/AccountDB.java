@@ -38,16 +38,8 @@ public class AccountDB {
     public AccountDB() {
     }
 
-    public static int createAccount(Account user, Login login) throws FileNotFoundException, URISyntaxException {
-        File file = new File("W:/Information Systems/Second Semester/IT353-Web Development Technologies/NetBeans Project/WebApplication1/web/Resources/default_student.png");
-        InputStream i = new FileInputStream(file);
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
-            System.exit(0);
-        }
-
+    public static int createAccount(Account user, Login login) throws FileNotFoundException, URISyntaxException, ClassNotFoundException {
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {
             String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
@@ -72,51 +64,10 @@ public class AccountDB {
                     + "','" + user.getSecurityQuestion()
                     + "','" + user.getSecurityAnswer()
                     + "')";
-
             rowCount += stmt.executeUpdate(insertString);
-
-            stmt = DBConn.createStatement();
-            Student myProfileDB = new Student();
-            /*insertString = "INSERT INTO LinkedU.Students VALUES ('"
-                    + login.getUserID()
-                    + "','" + myProfileDB.getFirstName()
-                    + "','" + myProfileDB.getLastName()
-                    + "'," + myProfileDB.getACT()
-                    + "," + myProfileDB.getSAT()
-                    + "," + myProfileDB.getPSAT_NMSQT()
-                    + ",'" + myProfileDB.getUniversities()
-                    + "','" + myProfileDB.getMajors()
-                    + "','" + myProfileDB.getImage()
-                    + "','" + myProfileDB.getMixtape()
-                    + "','" + myProfileDB.getEssay()
-                    + "'," + i
-                    + ")";*/
-            insertString = "INSERT INTO LINKEDU.STUDENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement pstmt = DBConn.prepareStatement(insertString);
-            pstmt.setString(1, login.getUserID());
-            pstmt.setString(2, myProfileDB.getFirstName());
-            pstmt.setString(3, myProfileDB.getLastName());
-            pstmt.setInt(4, myProfileDB.getACT());
-            pstmt.setInt(5, myProfileDB.getSAT());
-            pstmt.setInt(6, myProfileDB.getPSAT_NMSQT());
-            String universities = "";
-            for (int j = 0; j < myProfileDB.getUniversities().size(); j++) {
-                universities += myProfileDB.getUniversities().get(j) + ";";
-            }
-            String majors = "";
-            for (int j = 0; j < myProfileDB.getMajors().size(); j++) {
-                majors += myProfileDB.getMajors().get(j) + ";";
-            }
-            pstmt.setString(7, universities);
-            pstmt.setString(8, majors);
-            pstmt.setString(9, myProfileDB.getImage());
-            pstmt.setString(10, myProfileDB.getMixtape());
-            pstmt.setString(11, myProfileDB.getEssay());
-            pstmt.setBlob(12, i);
             System.out.println("insert string =" + insertString);
-
-            rowCount += pstmt.executeUpdate();
             DBConn.close();
+            stmt.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -221,7 +172,7 @@ public class AccountDB {
                     + "WHERE userid = '" + login.getUserID() + "'";
 
             rowCount += stmt.executeUpdate(updateString);
-            System.out.println("insert string =" + updateString);
+            System.out.println("update string =" + updateString);
             DBConn.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
