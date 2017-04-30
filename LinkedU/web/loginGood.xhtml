@@ -11,6 +11,9 @@
         </f:metadata>
     </h:head>
     <h:body>
+         <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
         <h:form>
             Welcome <h:outputText value="#{accountController.accountModel.getUserID()}"/>!
             <br/><b>Account Information:</b>
@@ -19,6 +22,8 @@
             <p:commandButton id="submitID" value="Update" action="#{accountController.gotoUpdate()}"/>
             <p:commandButton id="logoutID" value="Log Out" action="#{accountController.logOut()}"/>
         </h:form>
+            </ui:define>
+         </ui:composition>
     </h:body>
 </html>
 

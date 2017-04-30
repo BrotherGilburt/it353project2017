@@ -18,6 +18,9 @@ and open the template in the editor.
         </f:metadata>
     </h:head>
     <h:body>
+           <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
         <h:form   >
             <h1>Apply for Admissions</h1>
             <p:wizard flowListener="#{applyController.onFlowProcess}">
@@ -159,5 +162,7 @@ and open the template in the editor.
 
             </p:wizard>
         </h:form>
+            </ui:define>
+           </ui:composition>
     </h:body>
 </html>

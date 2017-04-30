@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>LinkedU - Student Profile</title>
         <f:metadata>
@@ -11,6 +12,9 @@
         </f:metadata>
     </h:head>
     <h:body>
+         <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
         <h:form>
             <p:fieldset legend="#{studentController.viewStudentModel.getFullName()}" style="margin-bottom:20px">
                 <p:graphicImage value="#{studentController.viewStudentModel.image}"  style="max-width: 200px; max-height: 200px;"/>
@@ -37,6 +41,8 @@
                 ((Essay to be added))
             </p:fieldset>
         </h:form>
+            </ui:define>
+         </ui:composition>
     </h:body>
 </html>
 
