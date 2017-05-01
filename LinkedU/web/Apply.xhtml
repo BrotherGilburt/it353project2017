@@ -21,7 +21,11 @@ and open the template in the editor.
            <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-        <h:form   >
+               <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+        <h:form>
             <h1>Apply for Admissions</h1>
             <p:wizard flowListener="#{applyController.onFlowProcess}">
 

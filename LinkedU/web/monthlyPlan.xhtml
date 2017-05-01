@@ -8,28 +8,32 @@
     <h:head>
         <title>Subscribe Monthly plan</title>
     </h:head>
+    <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
+    <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/>
     <h:body>
-         <ui:composition template="./newTemplate.xhtml">
+        <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-        <h:form>
-            <p:commandLink id="useridlink" action="account.xhtml">#{accountController.loginModel.userID}</p:commandLink>
-        </h:form>
-         <h:form>
-            <p:fieldset legend="You choose Weekly plan" style="margin-bottom:20px">
-                
-                <h:panelGrid id = "panel" columns = "2" border = "0"
-                             cellpadding = "10" cellspacing = "1">
-                    Please confirm your User ID : <h:inputText id="userid" value="#{premiumController.premiumModel.userId}"/>
-                    You will pay:<h:outputText id="amount" value="#{Premium.monthamount}"/>
-                    Card Number:<p:inputText id="number" value="123456789" label="cardnum"/>
-                    Month: <p:inputText id="month" value="08" label="month"/>
-                    Year: <p:inputText id="year" value="08" label="year"/>
-                    <p:commandButton id="submit" value="Pay" action="#{premiumController.premiumModel.mpay()}"/>
-                </h:panelGrid>
-            </p:fieldset>
-         </h:form>
+             <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+                <h:form>
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <p:fieldset legend="You choose Monthly plan" style="margin-bottom:20px">
+
+                        <h:panelGrid id = "panel" columns = "2" border = "0"
+                                     cellpadding = "10" cellspacing = "1">
+                            <!--Please confirm your User ID : <h:inputText id="userid" value="#{premiumController.premiumModel.userId}"/>-->
+                            You will pay:<h:outputText id="amount" value="#{Premium.monthamount}"/>
+                            Card Number:<p:inputText id="number" value="123456789" label="cardnum"/>
+                            Month: <p:inputText id="month" value="08" label="month"/>
+                            Year: <p:inputText id="year" value="08" label="year"/>
+                            <p:commandButton id="submit" value="Pay" actionListener="#{premiumController.premiumModel.mpay}" update="growl"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>

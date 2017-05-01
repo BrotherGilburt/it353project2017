@@ -23,6 +23,7 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -36,6 +37,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpSession;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -89,8 +91,8 @@ public class AccountController implements Serializable {
     public boolean isStudent() {
         return accountModel.getAccountType().equals("Student");
     }
-    
-      public boolean isAdmin() {
+
+    public boolean isAdmin() {
         return accountModel.getAccountType().equals("Administrator");
     }
 
@@ -172,22 +174,24 @@ public class AccountController implements Serializable {
     public String adminCreate() {
         return "adminsignUp.xhtml?faces-redirect=true";
     }
+
     public String logIn() {
-       //Confirm login information correct.
+        //Confirm login information correct.
         if (!checkLogin()) {
             return "loginBad.xhtml?faces-redirect=true";
         }
         //Get user information.
-        String returnString ="";
+        String returnString = "";
         accountModel = AccountDB.getAccount(loginModel.getUserID());
-        if(accountModel.getAccountType().equals("Administrator")){
+        if (accountModel.getAccountType().equals("Administrator")) {
             returnString = "adminhome.xhtml?faces-redirect=true";
-        }else{
+        } else {
             returnString = "home.xhtml?faces-redirect=true";
         }
         return returnString;
     }
-      public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
+
+    public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
         String uId = accountModel.getUserID();
         System.out.println("I am here" + uId);
@@ -281,9 +285,9 @@ public class AccountController implements Serializable {
             StudentDAO.createStudent(new Student(loginModel.getUserID()));
         } else if (this.isUniversity()) {
             UniversityDAO.createUniversity(new University(loginModel.getUserID()));
-        }else if (this.isAdmin()) {
+        } else if (this.isAdmin()) {
             //AdminDAO.createAdmin(new Admin(loginModel.getUserID()))
-            
+
         }
 
         //Send confirmation Email.
@@ -477,13 +481,12 @@ public class AccountController implements Serializable {
     public String getStatus() {
         String returnStrings = "";
         if (accountModel.getAccountType().equals("Student")) {
-            returnStrings="Students - Apply for Universities";
+            returnStrings = "Students - Apply for Universities";
         } else if (accountModel.getAccountType().equals("University")) {
-            returnStrings="Universities - Subscribe for Premium";
+            returnStrings = "Universities - Subscribe for Premium";
         }
         return returnStrings;
     }
-
 
     /**
      * @return the resume
@@ -497,6 +500,12 @@ public class AccountController implements Serializable {
      */
     public void setResume(UploadedFile resume) {
         this.resume = resume;
+    }
+
+    public String logout() {
+    loginModel.setUserID("");
+    loginModel.setPassword("");
+    return "index.xhtml";
     }
 
 }

@@ -21,6 +21,10 @@ and open the template in the editor.
          <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
+                <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
         <h:form>
             <p:panel styleClass="customTitleBar">
                 <h1>Please provide the information about your choice of university add majors </h1> 
@@ -45,7 +49,7 @@ and open the template in the editor.
                 </h:panelGrid>
 
                 <p:separator />
-                <p:commandButton value="Submit and Continue to Apply" update="msgs" icon="ui-icon-check" action="Apply.xhtml" />
+                <p:commandButton value="Submit and Continue to Apply" update="msgs" icon="ui-icon-check" action="Apply.xhtml?faces-redirect=true" />
             </p:panel>
 
         </h:form>

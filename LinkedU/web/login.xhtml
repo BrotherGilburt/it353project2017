@@ -7,22 +7,22 @@
     <h:head>
         <title>LinkedU - Login</title>
     </h:head>
-     <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
-  <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/> 
+    <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
+    <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/> 
     <h:body>
-         <div id="indexHeader">
-        
-         <img src="Resources/images/LinkedULogo.jpg" width="400" height="90" alt="LinkedULogo"/>
-       
-                          
-     </div>
-          <div id="WelcomeBanner">
-              <img src="Resources/images/login.png" width="500" height="300" alt="login"/>
+        <div id="indexHeader">
+
+            <img src="Resources/images/LinkedULogo.jpg" width="400" height="90" alt="LinkedULogo"/>
+
+
+        </div>
+        <div id="WelcomeBanner">
+            <img src="Resources/images/login.png" width="500" height="300" alt="login"/>
 
 
             <p><h1>Where Students find their dream Institution</h1><br/>
                 <h1>And..Educational Institutions find potential students</h1><br/></p>
-            
+
         </div>
         <h:form>
             <p:fieldset legend="Login" style="margin-bottom:20px">
@@ -34,7 +34,7 @@
                     </p:password>
                     <h:panelGroup></h:panelGroup>
                     <h:link value="Reset Password" outcome="forgotPassword.xhtml" />                
-                <p:commandButton id="submitID" value="Log In" action="#{accountController.logIn()}"/>
+                    <p:commandButton id="submitID" value="Log In" action="#{accountController.logIn()}"/>
                 </h:panelGrid>
             </p:fieldset>
         </h:form>

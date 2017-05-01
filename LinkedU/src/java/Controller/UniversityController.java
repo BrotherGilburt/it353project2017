@@ -10,6 +10,7 @@ import DAO.StudentDAO;
 import DAO.UniversityDAO;
 import Model.Account;
 import Model.Login;
+import Model.Premium;
 import Model.Student;
 import Model.University;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class UniversityController implements Serializable {
     private SearchController search;
     private UploadedFile resume;
     private Account accountModel;
-            
+    private ArrayList<University> featuredList;
 
     /**
      * Creates a new instance of UniversityController
@@ -203,6 +204,21 @@ public class UniversityController implements Serializable {
      */
     public void setResume(UploadedFile resume) {
         this.resume = resume;
+    }
+
+    /**
+     * @return the featuredList
+     */
+    public ArrayList<University> getFeaturedList() {
+        ArrayList featuredList = UniversityDAO.getFeature();
+        return featuredList;
+    }
+
+    /**
+     * @param featuredList the featuredList to set
+     */
+    public void setFeaturedList(ArrayList<University> featuredList) {
+        this.featuredList = featuredList;
     }
 
 

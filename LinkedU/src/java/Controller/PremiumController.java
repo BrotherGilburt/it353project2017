@@ -23,7 +23,6 @@ import java.sql.SQLException;
 @SessionScoped
 public class PremiumController implements Serializable {
     private Premium premiumModel;
-    
     /**
      * Creates a new instance of PremiumController
      */

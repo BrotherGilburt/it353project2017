@@ -11,43 +11,64 @@
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
-    
+
     <h:body>
-         <ui:composition template="./newTemplate.xhtml">
+        <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-        <h:form>
-            Hello <p:commandLink id="accountPage" action="account.xhtml">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
-        </h:form>
-        <br/>
-        <h:form>
-            <h:panelGrid columns="6" cellpadding="5">
-                <p:outputLabel for="mode" value="Search" />
-                <p:selectOneMenu id="mode" required="true" value="#{searchController.searchMode}">
-                    <p:ajax listener="#{searchController.selectFilter()}" update="filter" />
-                    <f:selectItem id="default1" itemLabel="select mode" itemValue="none" />
-                    <f:selectItems id="modeList" value="#{searchController.modeOptions}" />
-                </p:selectOneMenu>
-                <p:outputLabel for="filter" value="by" />
-                <p:selectOneMenu id="filter" required="true" value="#{searchController.searchFilter}">
-                    <f:selectItem id="default2" itemLabel="select filter" itemValue="none" noSelectionOption="true"/>
-                    <f:selectItems id="filterList" value="#{searchController.filterOptions}" />
-                </p:selectOneMenu>
-                <p:inputText id = "searchText" value="#{searchController.searchText}" />
-                <p:commandButton value="Search" action="#{searchController.search()}" />
-            </h:panelGrid>
-            
-        </h:form>
-        <br/>
-        <h:form>
-            <p:commandButton value="#{accountController.status}" action="#{accountController.homeLink()}"></p:commandButton>
+                <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+                <br/>
+                <h:form>
+                    <h:panelGrid columns="6" cellpadding="5">
+                        <p:outputLabel for="mode" value="Search" />
+                        <p:selectOneMenu id="mode" required="true" value="#{searchController.searchMode}">
+                            <p:ajax listener="#{searchController.selectFilter()}" update="filter" />
+                            <f:selectItem id="default1" itemLabel="select mode" itemValue="none" />
+                            <f:selectItems id="modeList" value="#{searchController.modeOptions}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="filter" value="by" />
+                        <p:selectOneMenu id="filter" required="true" value="#{searchController.searchFilter}">
+                            <f:selectItem id="default2" itemLabel="select filter" itemValue="none" noSelectionOption="true"/>
+                            <f:selectItems id="filterList" value="#{searchController.filterOptions}" />
+                        </p:selectOneMenu>
+                        <p:inputText id = "searchText" value="#{searchController.searchText}" />
+                        <p:commandButton value="Search" action="#{searchController.search()}" />
+                    </h:panelGrid>
 
-            <h1>Featured University</h1>
-            <!--Call method(s) in university controller-->
+                </h:form>
+                <br/>
+                <h:form>
+                    <p:commandButton value="#{accountController.status}" action="#{accountController.homeLink()}"></p:commandButton>
 
-        </h:form>
+                    <h1>Featured Universities</h1>
+                    <p:dataTable id="preTableID" value="#{universityController.featuredList}"  var="aRow" style="margin-bottom:0">
+                        <p:column headerText="University">
+                            <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">
+                                <f:param name="name" value="#{aRow.name}" />
+                            </h:commandLink>
+                        </p:column>
+                        <p:column headerText="Majors">
+                            <h:outputText value="#{aRow.majorsString}"/>
+                        </p:column>
+                        <p:column headerText="Street">
+                            <h:outputText value="#{aRow.street}"/>
+                        </p:column>
+                        <p:column headerText="City">
+                            <h:outputText value="#{aRow.city}"/>
+                        </p:column>
+                        <p:column headerText="State">
+                            <h:outputText value="#{aRow.state}"/>
+                        </p:column>
+                        <p:column headerText="Zip">
+                            <h:outputText value="#{aRow.zip}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 

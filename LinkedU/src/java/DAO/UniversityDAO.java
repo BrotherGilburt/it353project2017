@@ -5,11 +5,8 @@
  */
 package DAO;
 
+import Model.Premium;
 import Model.University;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -42,7 +39,7 @@ public class UniversityDAO {
      * @param record - The university to be inserted.
      * @return row count
      */
-    public static int createUniversity(University record)  {
+    public static int createUniversity(University record) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -373,5 +370,51 @@ public class UniversityDAO {
         return recordsList;
     }
 
+    public static ArrayList getFeature() {
+        University record = null;
+        ArrayList<University> featuredList = null;
+        Connection DBConn = null;
+        try {
+            DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+            // if doing the above in Oracle: DBHelper.loadDriver("oracle.jdbc.driver.OracleDriver");
+            String myDB = "jdbc:derby://localhost:1527/LINKEDU";
+            // if doing the above in Oracle:  String myDB = "jdbc:oracle:thin:@oracle.itk.ilstu.edu:1521:ora478";
+            DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+            Statement stmt = DBConn.createStatement();
+            String getString = "select * from LINKEDU.UNIVERSITIES WHERE PREMIUM = TRUE";
+            System.out.println(getString);
+            ResultSet rs = stmt.executeQuery(getString);
+            while (rs.next()) {
+                if (featuredList == null) {
+                    featuredList = new ArrayList();
+                }
+                record = new University();
+                featuredList.add(record);
+                record.setUserID(rs.getString("USERID"));
+                record.setName(rs.getString("NAME"));
+                String majorsList = rs.getString("majors");
+                if (!majorsList.equals("")) {
+                    record.setMajors(new ArrayList(Arrays.asList(majorsList.split(";"))));
+                } else {
+                    record.setMajors(new ArrayList());
+                }
+                record.setStreet(rs.getString("street"));
+                record.setCity(rs.getString("city"));
+                record.setState(rs.getString("state"));
+                record.setZip(rs.getString("zip"));
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return featuredList;
+    }
 
 }

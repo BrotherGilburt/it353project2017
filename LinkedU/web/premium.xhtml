@@ -8,30 +8,34 @@
         <title>Subscribe for premium</title>
     </h:head>
     <h:body>
-         <ui:composition template="./newTemplate.xhtml">
+        <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-        <h:form>
-            <p:fieldset legend="Choose your plan" style="margin-bottom:20px">
+                 <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+                <h:form>
+                    <p:fieldset legend="Choose your plan" style="margin-bottom:20px">
 
-                <h:panelGrid columns="2">
-                    <h3>Weekly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectWeek}"/>
-                </h:panelGrid>
-                <h:panelGrid  columns="2" cellpadding="5">
-                   
-                    <h:panelGroup><b><p:outputLabel value="Amount" for="weekprice" /></b></h:panelGroup> <h:outputText id="weekprice" value = "$10.00/week"/>
-                </h:panelGrid>
-                <h:panelGrid columns="2">
-                    <h3>Monthly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectMonth}"/>
-                </h:panelGrid>
-                <h:panelGrid  columns="2" cellpadding="5">
-                    
-                    <h:panelGroup><b><p:outputLabel value="Amount" for="monthprice" /></b></h:panelGroup> <h:outputText id="monthprice" value = "$25.00/month"/>
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>
+                        <h:panelGrid columns="2">
+                            <h3>Weekly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectWeek}"/>
+                        </h:panelGrid>
+                        <h:panelGrid  columns="2" cellpadding="5">
+
+                            <h:panelGroup><b><p:outputLabel value="Amount" for="weekprice" /></b></h:panelGroup> <h:outputText id="weekprice" value = "$10.00/week"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h3>Monthly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectMonth}"/>
+                        </h:panelGrid>
+                        <h:panelGrid  columns="2" cellpadding="5">
+
+                            <h:panelGroup><b><p:outputLabel value="Amount" for="monthprice" /></b></h:panelGroup> <h:outputText id="monthprice" value = "$25.00/month"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 

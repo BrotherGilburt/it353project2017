@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>LinkedU - Premium Search</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.checkAccount()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+                <h:form>
+                    <p:fieldset legend="Premium Search Results" style="margin-bottom:20px">
+                        <p:dataTable id="preTableID" value="#{adminController.premiumList}" selection="#{adminController.selectedPremium}" var="aRow" rowKey="#{aRow.userId}" style="margin-bottom:0">
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="User Id">
+                                <h:outputText value="#{aRow.userId}"/>
+                            </p:column>
+                            <p:column headerText="Premium Status">
+                                <h:outputText value="#{aRow.premiumStatus}"/>
+                            </p:column>
+                            <p:column headerText="Payment Type">
+                                <h:outputText value="#{aRow.paymentType}"/>
+                            </p:column>
+                            <p:column headerText="Amount">
+                                <h:outputText value="#{aRow.amount}"/>
+                            </p:column>
+                            <p:column headerText="Subscription Date">
+                                <h:outputText value="#{aRow.subdate}"/>
+                            </p:column>
+                            <p:column headerText="Expiry Date">
+                                <h:outputText value="#{aRow.expdate}"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:growl id="growl" showDetail="true" sticky="true" />
+                                <p:commandButton  update="growl"  value="Showcase" actionListener="#{adminController.updatePremium}"/>
+                            </f:facet>
+                        </p:dataTable>
+                        <!--<p:dialog header="Selected Premiums" widgetVar="multiCarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1000">
+                            <p:outputPanel id="multiPremiumDetail" style="text-align:center;">
+                                <ui:repeat value="#{adminController.selectedPremium}" var="aRow">
+                                    <h:outputText value="#{aRow.userId} - #{aRow.premiumStatus}" style="display:block"/>
+                                </ui:repeat>
+                            </p:outputPanel>
+                        </p:dialog>-->
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+
