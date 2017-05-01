@@ -5,101 +5,100 @@
  */
 package Controller;
 
-import DAO.ForgotPasswordDB;
-import Model.ForgotPasswordBean;
+import Model.ForgotPassword;
 import java.io.Serializable;
 import java.util.Properties;
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.annotation.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 /**
  *
  * @author Keegan
  */
-@Named(value = "forgotPasswordController")
-@Dependent
-public class ForgotPasswordController implements Serializable {
+@ManagedBean
+@SessionScoped
+public class ForgotPasswordController implements Serializable{
 
-    private ForgotPasswordBean theModel;
-    private String userName;
-    private String email;
+    private ForgotPassword forgotPasswordModel;
     private String errorMessage;
-
+    private String confirmMessage;
+    
     /**
      * Creates a new instance of ForgotPasswordController
      */
     public ForgotPasswordController() {
-        theModel = new ForgotPasswordBean();
-    }
-
-    public void sendEmail() {
-        final String username = "linkeduapp@gmail.com";
-        final String password = "student123";
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-        
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("linkeduapp@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("keegan94@gmail.com"));
-            message.setSubject("LinkedU - Password Reset");
-            message.setText("Click the link to reset your password.\n\n" +
-                    "<a href=\"http://localhost:8080/LinkedU/faces/forgotPassword.xhtml?userid=" + userName + "\">Reset Password</a>");
-
-            Transport.send(message);
-
-            System.out.println("Done");
-            errorMessage = "Email send!";
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
+        if (forgotPasswordModel == null) {
+            forgotPasswordModel = new ForgotPassword();
         }
+        
+        errorMessage = "";
+        confirmMessage = "";
+    }
+    
+    public String sendEmail() {
+        // Recipient's email ID needs to be mentioned.
+        String to = forgotPasswordModel.getEmail();
+
+        // Sender's email ID needs to be mentioned
+        String from = "kssuth1@ilstu.edu";
+
+        // Assuming you are sending email from this host
+        String host = "smtp.ilstu.edu";
+
+        // Get system properties
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.user", "kssuth1"); // if needed
+        properties.setProperty("mail.password", "230894Ksuth"); // if needed
+
+        // Get the default Session object.
+        Session session = Session.getDefaultInstance(properties);
+
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+
+            // Set Subject: header field
+            message.setSubject("LinkedU Password Reset");
+
+            // Send the actual HTML message, as big as you like
+            message.setContent("<h1>Click the link below to reset your password.</h1>",
+                    "text/html");
+
+            // Send message
+            Transport.send(message);
+            confirmMessage = "Email sent successfully!";
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+            errorMessage = "Email failed to send.";
+        }
+        return "forgotPassword.xhtml";
     }
 
     /**
-     * @return the theModel
+     * @return the forgotPasswordModel
      */
-    public ForgotPasswordBean getTheModel() {
-        return theModel;
+    public ForgotPassword getForgotPasswordModel() {
+        return forgotPasswordModel;
     }
 
     /**
-     * @param theModel the theModel to set
+     * @param forgotPasswordModel the forgotPasswordModel to set
      */
-    public void setTheModel(ForgotPasswordBean theModel) {
-        this.theModel = theModel;
-    }
-
-    /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @param userName the userName to set
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setForgotPasswordModel(ForgotPassword forgotPasswordModel) {
+        this.forgotPasswordModel = forgotPasswordModel;
     }
 
     /**
@@ -115,47 +114,19 @@ public class ForgotPasswordController implements Serializable {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    
-    public String accountByUsername() {
-        ForgotPasswordDB forgotPassword = new ForgotPasswordDB();
-        theModel = forgotPassword.lostPass(userName);        
 
-        if (theModel != null) {
-            sendEmail();
-            return "forgotPassword.xhtml";
-        }                     
-        else {
-            errorMessage = "Account does not exist!";
-            return "forgotPassword.xhtml";
-        }
-    }
-    
-    public String changePass() {
-        ForgotPasswordDB forgotPassword = new ForgotPasswordDB(); 
-        if (!theModel.getAnswer().equals(theModel.getUserAnsw())){
-           errorMessage = "Incorrect answer!";
-           return "";
-        }
-        if (!theModel.getNewPass().equals(theModel.getConfNewPass())){
-            errorMessage = "New passwords do not match!";
-            return "";
-        }
-        forgotPassword.changePass(theModel.getNewPass(), userName);        
-        
-        return "index.xhtml"; 
+    /**
+     * @return the confirmMessage
+     */
+    public String getConfirmMessage() {
+        return confirmMessage;
     }
 
     /**
-     * @return the email
+     * @param confirmMessage the confirmMessage to set
      */
-    public String getEmail() {
-        return email;
+    public void setConfirmMessage(String confirmMessage) {
+        this.confirmMessage = confirmMessage;
     }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    
 }
