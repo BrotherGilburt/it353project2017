@@ -35,6 +35,7 @@ public class UniversityController implements Serializable {
     private UploadedFile resume;
     private Account accountModel;
     private ArrayList<University> featuredList;
+    private SearchController search;
 
     /**
      * Creates a new instance of UniversityController
@@ -53,6 +54,11 @@ public class UniversityController implements Serializable {
         }
         if (viewUniversityModel == null) {
             viewUniversityModel = new University();
+        }
+
+        if (search == null) {
+            FacesContext facesContext1 = FacesContext.getCurrentInstance();
+            search = facesContext1.getApplication().evaluateExpressionGet(facesContext1, "#{searchController}", SearchController.class);
         }
     }
 
@@ -88,9 +94,6 @@ public class UniversityController implements Serializable {
     }
 
     public String loadProfile() {
-        FacesContext facesContext1 = FacesContext.getCurrentInstance();
-        SearchController search = facesContext1.getApplication().evaluateExpressionGet(facesContext1, "#{searchController}", SearchController.class);
-
         FacesContext facesContext2 = FacesContext.getCurrentInstance();
         Map<String, String> params = facesContext2.getExternalContext().getRequestParameterMap();
         String name = params.get("name");

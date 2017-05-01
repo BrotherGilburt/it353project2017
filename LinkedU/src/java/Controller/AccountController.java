@@ -115,14 +115,14 @@ public class AccountController implements Serializable {
                 student = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{studentController}", StudentController.class);
             }
             return student.loadMyProfile();
-            
+
         } else if (this.isUniversity()) {
             if (university == null) {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
                 university = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{universityController}", UniversityController.class);
             }
             return university.loadMyProfile();
-            
+
         } else {
             return "myProfile.xhtml?faces-redirect=true";
         }
@@ -342,6 +342,7 @@ public class AccountController implements Serializable {
     }
 
     private void confirmationEmail(String email) {
+        /*
         // Recipient's email ID needs to be mentioned.
         String to = email;
 
@@ -362,7 +363,7 @@ public class AccountController implements Serializable {
         // Get the default Session object.
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("pdkaufm@ilstu.edu", "Gilid1991x");
+                return new PasswordAuthentication("email", "pwd");
             }
         });
 
@@ -406,7 +407,7 @@ public class AccountController implements Serializable {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-
+         */
     }
 
     private void eraseErrorMessage() {
