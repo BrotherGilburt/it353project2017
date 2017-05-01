@@ -5,6 +5,7 @@ drop table LINKEDU.ApplyInfo;
 drop table LinkedU.Students;
 drop table LinkedU.Universities;
 drop table LinkedU.Premium;
+drop table LinkedU.USERIMAGE;
 
 -- Old Tables (no longer in use)
 drop table LinkedU.Users;
@@ -87,8 +88,7 @@ Universities	varchar(200) not null,
 Majors			varchar(200) not null,
 Image			varchar(50) not null,
 Mixtape			varchar(50) not null,
-Essay			varchar(1500) not null,
-PROFILEPIC             blob
+Essay			varchar(1500) not null
 );
 
 --Student Accounts
@@ -109,7 +109,7 @@ Majors				varchar(500) not null,
 Street				varchar(100) not null,
 City				varchar(30) not null,
 State				varchar(20) not null,
-Zip					varchar(15) not null,
+Zip				varchar(15) not null,
 Image           	varchar(50) not null
 );
 
@@ -126,3 +126,13 @@ Amount decimal not null,
 Subdate DATE,
 Expdate DATE
 );
+--Admin account (Password: 123)
+insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
+('admin','asriren@ilstu.edu','Administrator','Q?','A');
+
+insert into LinkedU.LoginInfo (UserID, Password) values
+('admin', '40bf696d25dd56ed44c864e05f75d33a4cface91');
+
+CREATE TABLE USERIMAGE(
+USERID VARCHAR(25) NOT NULL,
+PROFILEPIC BLOB);

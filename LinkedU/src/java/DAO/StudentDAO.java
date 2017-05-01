@@ -39,7 +39,7 @@ public class StudentDAO {
     public StudentDAO() {
     }
 
-    public static int createStudent(Student record) throws FileNotFoundException, MalformedURLException, IOException {
+    public static int createStudent(Student record) {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -50,12 +50,10 @@ public class StudentDAO {
         int rowCount = 0;
         try {
 
-            URL u = new URL("http://www.racialjusticenetwork.co.uk/wp-content/uploads/2016/12/default-profile-picture-2.png");
-            InputStream i = u.openStream();
             String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
-            String insertString = "INSERT INTO LINKEDU.STUDENTS VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            String insertString = "INSERT INTO LINKEDU.STUDENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstmt = DBConn.prepareStatement(insertString);
             pstmt.setString(1, record.getUserID());
             pstmt.setString(2, record.getFirstName());
@@ -76,7 +74,6 @@ public class StudentDAO {
             pstmt.setString(9, record.getImage());
             pstmt.setString(10, record.getMixtape());
             pstmt.setString(11, record.getEssay());
-            pstmt.setBlob(12, i);
             System.out.println("insert string =" + insertString);
             rowCount += pstmt.executeUpdate();
             DBConn.close();
@@ -534,34 +531,5 @@ public class StudentDAO {
         }
         return recordsList;
     }
-
-    public static int updateImage(Student theModel, UploadedFile image) throws SQLException, IOException, ClassNotFoundException {
-        InputStream i = image.getInputstream();
-        Connection DBConn = null;
-        PreparedStatement pstmt = null;
-        int rowCount = 0;
-        Class.forName("org.apache.derby.jdbc.ClientDriver");
-        try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
-            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-            String updateString;
-            updateString = "UPDATE LINKEDU.STUDENTS SET "
-                    + "profilepic = ? WHERE USERID = ?";
-            pstmt = DBConn.prepareStatement(updateString);
-            pstmt.setBinaryStream(1, i);
-            pstmt.setString(2, theModel.getUserID());
-            rowCount += pstmt.executeUpdate();
-        } catch (Exception e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
-        } finally {
-            if (DBConn != null) {
-                DBConn.close();
-            }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-        }
-        return rowCount;
-    }
+    
 }

@@ -25,16 +25,12 @@ public class DisplayImage extends HttpServlet {
         try {
 
             String id = request.getParameter("userid");
-            String type = request.getParameter("ptype");
-            System.out.println("inside servlet–>" + id + " " + type);
-
-            Connection con = ImageDAO.getConnection();
-            stmt = con.createStatement();
-            if(type.equals("U")){
-            strSql = "select profilepic from LINKEDU.UNIVERSITIES where userid='" + id + "' ";
-            }else if (type.equals("S")){
-               strSql = "select profilepic from LINKEDU.STUDENTS where userid='" + id + "' "; 
-            }
+            System.out.println("inside servlet–>" + id );
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            stmt = DBConn.createStatement();
+            strSql = "select profilepic from LINKEDU.USERIMAGE where userid='" + id + "' ";
             rs = stmt.executeQuery(strSql);
             if (rs.next()) {
                 byte[] bytearray = new byte[1048576];

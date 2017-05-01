@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.AccountDB;
+import DAO.ImageDAO;
 import DAO.StudentDAO;
 import DAO.UniversityDAO;
 import Model.Login;
@@ -16,6 +17,7 @@ import Model.University;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -34,6 +36,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -52,7 +55,7 @@ public class AccountController implements Serializable {
     private String errorMessage;
     private int attempts;
     private String confirm;
-    private String status;
+    private UploadedFile resume;
 
     /**
      * Creates a new instance of AccountController
@@ -85,6 +88,10 @@ public class AccountController implements Serializable {
      */
     public boolean isStudent() {
         return accountModel.getAccountType().equals("Student");
+    }
+    
+      public boolean isAdmin() {
+        return accountModel.getAccountType().equals("Administrator");
     }
 
     /**
@@ -162,14 +169,30 @@ public class AccountController implements Serializable {
         return "index.xhtml?faces-redirect=true";
     }
 
+    public String adminCreate() {
+        return "adminsignUp.xhtml?faces-redirect=true";
+    }
     public String logIn() {
        //Confirm login information correct.
         if (!checkLogin()) {
             return "loginBad.xhtml?faces-redirect=true";
         }
         //Get user information.
+        String returnString ="";
         accountModel = AccountDB.getAccount(loginModel.getUserID());
-        return "home.xhtml?faces-redirect=true";
+        if(accountModel.getAccountType().equals("Administrator")){
+            returnString = "adminhome.xhtml?faces-redirect=true";
+        }else{
+            returnString = "home.xhtml?faces-redirect=true";
+        }
+        return returnString;
+    }
+      public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
+        UploadedFile image = getResume();
+        String uId = accountModel.getUserID();
+        System.out.println("I am here" + uId);
+        int update = ImageDAO.updateImage(uId, image);
+        return "myProfile.xhtml?faces-redirect=true";
     }
 
     /**
@@ -258,6 +281,9 @@ public class AccountController implements Serializable {
             StudentDAO.createStudent(new Student(loginModel.getUserID()));
         } else if (this.isUniversity()) {
             UniversityDAO.createUniversity(new University(loginModel.getUserID()));
+        }else if (this.isAdmin()) {
+            //AdminDAO.createAdmin(new Admin(loginModel.getUserID()))
+            
         }
 
         //Send confirmation Email.
@@ -458,11 +484,19 @@ public class AccountController implements Serializable {
         return returnStrings;
     }
 
+
     /**
-     * @param status the status to set
+     * @return the resume
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+    /**
+     * @param resume the resume to set
+     */
+    public void setResume(UploadedFile resume) {
+        this.resume = resume;
     }
 
 }

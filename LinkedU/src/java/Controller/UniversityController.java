@@ -5,8 +5,11 @@
  */
 package Controller;
 
+import DAO.ImageDAO;
 import DAO.StudentDAO;
 import DAO.UniversityDAO;
+import Model.Account;
+import Model.Login;
 import Model.Student;
 import Model.University;
 import java.io.IOException;
@@ -17,10 +20,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.UploadedFile;
 
-@Named(value = "universityController")
+@ManagedBean
 @SessionScoped
 public class UniversityController implements Serializable {
 
@@ -29,13 +33,16 @@ public class UniversityController implements Serializable {
     private University viewUniversityModel;
     private SearchController search;
     private UploadedFile resume;
-    
+    private Account accountModel;
             
 
     /**
      * Creates a new instance of UniversityController
      */
     public UniversityController() {
+        if(accountModel == null){
+            accountModel = new Account();
+        }
         if (account == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
@@ -68,9 +75,11 @@ public class UniversityController implements Serializable {
 
         return ""; //address of university profile.
     }
-  public String gotoUpdateImage() throws SQLException, IOException {
+  public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
-        int update = UniversityDAO.updateImage(myUniversityModel, image);
+        String userid = account.getLoginModel().getUserID();
+        System.out.println(userid);
+        int update = ImageDAO.updateImage(userid, image);
         return "universityProfile.xhtml?faces-redirect=true";
     }
     public String loadProfile() {
@@ -169,6 +178,20 @@ public class UniversityController implements Serializable {
     }
 
     /**
+     * @return the accountModel
+     */
+    public Account getAccountModel() {
+        return accountModel;
+    }
+
+    /**
+     * @param accountModel the accountModel to set
+     */
+    public void setAccountModel(Account accountModel) {
+        this.accountModel = accountModel;
+    }
+
+    /**
      * @return the resume
      */
     public UploadedFile getResume() {
@@ -181,5 +204,6 @@ public class UniversityController implements Serializable {
     public void setResume(UploadedFile resume) {
         this.resume = resume;
     }
+
 
 }

@@ -11,7 +11,9 @@ import Model.Student;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
@@ -38,7 +40,7 @@ public class AccountDB {
     public AccountDB() {
     }
 
-    public static int createAccount(Account user, Login login) throws FileNotFoundException, URISyntaxException, ClassNotFoundException {
+    public static int createAccount(Account user, Login login) throws FileNotFoundException, URISyntaxException, ClassNotFoundException, MalformedURLException, IOException {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {
@@ -65,9 +67,24 @@ public class AccountDB {
                     + "','" + user.getSecurityAnswer()
                     + "')";
             rowCount += stmt.executeUpdate(insertString);
-            System.out.println("insert string =" + insertString);
+            String url="";
+
+            if(user.getAccountType().equals("Student")){
+                url = "http://www.racialjusticenetwork.co.uk/wp-content/uploads/2016/12/default-profile-picture-2.png";
+            }else if (user.getAccountType().equals("University")){
+                url = "http://www.stolenimages.co.uk/components/com_easyblog/themes/wireframe/images/placeholder-image.png";
+            }
+            System.out.println(url);
+            URL u = new URL(url);
+            InputStream i = u.openStream();
+            insertString = "INSERT INTO LinkedU.USERIMAGE VALUES(?,?)";
+            PreparedStatement pstmt = DBConn.prepareStatement(insertString);
+            pstmt.setString(1, login.getUserID());
+            pstmt.setBinaryStream(2,i);
+            rowCount += pstmt.executeUpdate();
             DBConn.close();
             stmt.close();
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

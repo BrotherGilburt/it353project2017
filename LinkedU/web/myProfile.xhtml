@@ -21,7 +21,7 @@
                     <p:fileUpload id="profileimage"  value="#{studentController.resume}" mode="simple" skinSimple="true"/>
                     <p:commandButton value="Submit" ajax="false" action="#{studentController.gotoUpdateImage}" />
                     <h:outputLink value="DisplayImage?userid=#{studentController.myProfileModel.userID}" target="_blank" >
-                        <h:graphicImage value="DisplayImage?userid=#{studentController.myProfileModel.userID}&amp;ptype=S" width="200" height="200"></h:graphicImage>
+                        <h:graphicImage value="DisplayImage?userid=#{studentController.myProfileModel.userID}" width="200" height="200"></h:graphicImage>
                     </h:outputLink>
                 </h:panelGrid>
 

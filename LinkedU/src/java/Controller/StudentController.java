@@ -5,7 +5,10 @@
  */
 package Controller;
 
+import DAO.ImageDAO;
 import DAO.StudentDAO;
+import Model.Account;
+import Model.Login;
 import Model.Student;
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,11 +36,14 @@ public class StudentController implements Serializable {
     private SearchController search;
     private String errorMessage;
     private UploadedFile resume;
-
+    private Account accountModel;
     /**
      * Creates a new instance of StudentProfileController
      */
     public StudentController() {
+        if(accountModel == null){
+            accountModel = new Account();
+        }
         if (account == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
@@ -87,7 +93,9 @@ public class StudentController implements Serializable {
     
     public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
-        int update = StudentDAO.updateImage(myProfileModel, image);
+        String userid = account.getLoginModel().getUserID();
+        System.out.println(userid);
+        int update = ImageDAO.updateImage(userid, image);
         return "myProfile.xhtml?faces-redirect=true";
     }
     
@@ -164,6 +172,20 @@ public class StudentController implements Serializable {
      */
     public void setResume(UploadedFile resume) {
         this.resume = resume;
+    }
+
+    /**
+     * @return the accountModel
+     */
+    public Account getAccountModel() {
+        return accountModel;
+    }
+
+    /**
+     * @param accountModel the accountModel to set
+     */
+    public void setAccountModel(Account accountModel) {
+        this.accountModel = accountModel;
     }
 
 }
