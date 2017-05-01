@@ -61,8 +61,6 @@ public class StudentController implements Serializable {
     }
 
     public String loadMyProfile() {
-        /*DATABASE ACCESS*/
-
         myProfileModel = StudentDAO.getProfile(account.getLoginModel().getUserID());
         if (myProfileModel == null) myProfileModel = new Student(account.getLoginModel().getUserID());
         

@@ -23,7 +23,6 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.faces.application.ConfigurableNavigationHandler;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -37,7 +36,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.servlet.http.HttpSession;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -58,6 +56,9 @@ public class AccountController implements Serializable {
     private int attempts;
     private String confirm;
     private UploadedFile resume;
+
+    private StudentController student;
+    private UniversityController university;
 
     /**
      * Creates a new instance of AccountController
@@ -107,16 +108,25 @@ public class AccountController implements Serializable {
     }
 
     /* check account for profile page*/
-    public String checkAccount() {
-        String returnString = "";
-        if (isStudent()) {
-
-            returnString = "myProfile.xhtml?faces-redirect=true";
-        } else if (isUniversity()) {
-
-            returnString = "universityProfile.xhtml?faces-redirect=true";
+    public String gotoMyProfile() {
+        if (this.isStudent()) {
+            if (student == null) {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                student = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{studentController}", StudentController.class);
+            }
+            return student.loadMyProfile();
+            
+        } else if (this.isUniversity()) {
+            if (university == null) {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                university = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{universityController}", UniversityController.class);
+            }
+            return university.loadMyProfile();
+            
+        } else {
+            return "myProfile.xhtml?faces-redirect=true";
         }
-        return returnString;
+
     }
 
     /*Check account typpe for home page*/
@@ -503,9 +513,9 @@ public class AccountController implements Serializable {
     }
 
     public String logout() {
-    loginModel.setUserID("");
-    loginModel.setPassword("");
-    return "index.xhtml";
+        loginModel.setUserID("");
+        loginModel.setPassword("");
+        return "index.xhtml";
     }
 
 }

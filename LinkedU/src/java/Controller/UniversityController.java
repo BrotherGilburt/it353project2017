@@ -32,7 +32,6 @@ public class UniversityController implements Serializable {
     private University myUniversityModel;
     private AccountController account;
     private University viewUniversityModel;
-    private SearchController search;
     private UploadedFile resume;
     private Account accountModel;
     private ArrayList<University> featuredList;
@@ -41,25 +40,19 @@ public class UniversityController implements Serializable {
      * Creates a new instance of UniversityController
      */
     public UniversityController() {
-        if(accountModel == null){
+        if (accountModel == null) {
             accountModel = new Account();
         }
         if (account == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
         }
-                
+
         if (myUniversityModel == null) {
-            //myUniversityModel = new University();
             myUniversityModel = new University(account.getLoginModel().getUserID());
         }
         if (viewUniversityModel == null) {
             viewUniversityModel = new University();
-        }
-
-        if (search == null) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            search = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{searchController}", SearchController.class);
         }
     }
 
@@ -76,27 +69,42 @@ public class UniversityController implements Serializable {
 
         return ""; //address of university profile.
     }
-  public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
+
+    public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
         String userid = account.getLoginModel().getUserID();
         System.out.println(userid);
         int update = ImageDAO.updateImage(userid, image);
         return "universityProfile.xhtml?faces-redirect=true";
     }
+
+    public String loadMyProfile() {
+        myUniversityModel = UniversityDAO.getUniversityByID(account.getLoginModel().getUserID());
+        if (myUniversityModel == null) {
+            myUniversityModel = new University(account.getLoginModel().getUserID());
+        }
+
+        return "myProfile.xhtml?faces-redirect=true";
+    }
+
     public String loadProfile() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
+        FacesContext facesContext1 = FacesContext.getCurrentInstance();
+        SearchController search = facesContext1.getApplication().evaluateExpressionGet(facesContext1, "#{searchController}", SearchController.class);
+
+        FacesContext facesContext2 = FacesContext.getCurrentInstance();
+        Map<String, String> params = facesContext2.getExternalContext().getRequestParameterMap();
         String name = params.get("name");
-        
+
         ArrayList<University> list = search.getUniversitiesList();
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getName().equals(name)) {
                 viewUniversityModel = list.get(i);
+
                 break;
             }
         }
-        
+        System.out.println(viewUniversityModel.getName());
         return "universityProfile.xhtml?faces-redirect=true";
     }
 
@@ -174,10 +182,6 @@ public class UniversityController implements Serializable {
         return viewUniversityModel;
     }
 
-    public void setViewUniversityModel(University viewUniversityModel) {
-        this.viewUniversityModel = viewUniversityModel;
-    }
-
     /**
      * @return the accountModel
      */
@@ -220,6 +224,5 @@ public class UniversityController implements Serializable {
     public void setFeaturedList(ArrayList<University> featuredList) {
         this.featuredList = featuredList;
     }
-
 
 }

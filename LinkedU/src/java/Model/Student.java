@@ -35,8 +35,8 @@ public class Student {
      MIXTAPES*/
     public Student() {
         userID = "";
-        firstName = " ";
-        lastName = " ";
+        firstName = "";
+        lastName = "";
         ACT = -1;
         SAT = -1;
         PSAT_NMSQT = -1;

@@ -10,6 +10,7 @@ drop table LinkedU.USERIMAGE;
 -- Old Tables (no longer in use)
 drop table LinkedU.Users;
 drop table LinkedU.StudentProfile;
+drop table userimage;
 
 create table LinkedU.LoginInfo (
   UserID                    VARCHAR(25) NOT NULL,
@@ -133,6 +134,6 @@ insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, Secur
 insert into LinkedU.LoginInfo (UserID, Password) values
 ('admin', '40bf696d25dd56ed44c864e05f75d33a4cface91');
 
-CREATE TABLE USERIMAGE(
+CREATE TABLE LinkedU.USERIMAGE(
 USERID VARCHAR(25) NOT NULL,
 PROFILEPIC BLOB);
