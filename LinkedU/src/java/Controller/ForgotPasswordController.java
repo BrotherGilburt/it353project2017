@@ -8,7 +8,7 @@ package Controller;
 import Model.ForgotPassword;
 import java.io.Serializable;
 import java.util.Properties;
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.mail.internet.InternetAddress;
 import javax.mail.*;
@@ -20,12 +20,12 @@ import javax.mail.internet.*;
  */
 @ManagedBean
 @SessionScoped
-public class ForgotPasswordController implements Serializable{
+public class ForgotPasswordController implements Serializable {
 
     private ForgotPassword forgotPasswordModel;
-    private String errorMessage;
-    private String confirmMessage;
-    
+    private String errorMessage = "";
+    private String confirmMessage = "";
+
     /**
      * Creates a new instance of ForgotPasswordController
      */
@@ -33,11 +33,11 @@ public class ForgotPasswordController implements Serializable{
         if (forgotPasswordModel == null) {
             forgotPasswordModel = new ForgotPassword();
         }
-        
+
         errorMessage = "";
         confirmMessage = "";
     }
-    
+
     public String sendEmail() {
         // Recipient's email ID needs to be mentioned.
         String to = forgotPasswordModel.getEmail();
@@ -46,18 +46,23 @@ public class ForgotPasswordController implements Serializable{
         String from = "kssuth1@ilstu.edu";
 
         // Assuming you are sending email from this host
-        String host = "smtp.ilstu.edu";
+        String host = "outlook.office365.com";
 
         // Get system properties
         Properties properties = System.getProperties();
 
         // Setup mail server
         properties.setProperty("mail.smtp.host", host);
-        properties.setProperty("mail.user", "kssuth1"); // if needed
-        properties.setProperty("mail.password", "230894Ksuth"); // if needed
-
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        properties.setProperty("mail.smtp.auth", "true");
+        properties.setProperty("mail.smtp.port", "587");
         // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("kssuth1@ilstu.edu", "230894Ksuth");
+            }
+        });
 
         try {
             // Create a default MimeMessage object.
@@ -71,10 +76,10 @@ public class ForgotPasswordController implements Serializable{
                     new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("LinkedU Password Reset");
+            message.setSubject("Congratulations!");
 
             // Send the actual HTML message, as big as you like
-            message.setContent("<h1>Click the link below to reset your password.</h1>",
+            message.setContent("<h1>You have received an auto-generated email!</h1>",
                     "text/html");
 
             // Send message
@@ -84,7 +89,7 @@ public class ForgotPasswordController implements Serializable{
             mex.printStackTrace();
             errorMessage = "Email failed to send.";
         }
-        return "forgotPassword.xhtml";
+        return "forgotPassword.xhtml?faces-redirect=true";
     }
 
     /**
@@ -128,5 +133,4 @@ public class ForgotPasswordController implements Serializable{
     public void setConfirmMessage(String confirmMessage) {
         this.confirmMessage = confirmMessage;
     }
-    
 }

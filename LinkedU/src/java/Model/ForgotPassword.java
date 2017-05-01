@@ -10,6 +10,7 @@ package Model;
  * @author Keegan
  */
 public class ForgotPassword {
+
     private String email;
     private String password;
     private String newPassword;

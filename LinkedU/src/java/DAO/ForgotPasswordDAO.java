@@ -21,5 +21,5 @@ public class ForgotPasswordDAO {
      */
     public ForgotPasswordDAO() {
     }
-    
+
 }
