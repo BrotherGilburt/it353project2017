@@ -7,6 +7,7 @@ drop table LinkedU.Universities;
 drop table LinkedU.Premium;
 drop table LinkedU.USERIMAGE;
 drop table LinkedU.PasswordReset;
+drop table LinkedU.USERIMAGE;
 
 -- Old Tables (no longer in use)
 drop table LinkedU.Users;
@@ -138,6 +139,10 @@ insert into LinkedU.LoginInfo (UserID, Password) values
 CREATE TABLE LinkedU.USERIMAGE(
 USERID VARCHAR(25) NOT NULL,
 PROFILEPIC BLOB);
+
+CREATE TABLE LinkedU.STUDENTDOC
+USERID VARCHAR(25) NOT NULL,
+RESUME BLOB);
 
 create table LinkedU.PasswordReset (
 Email                          VARCHAR(35) NOT NULL,
