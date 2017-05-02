@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.AccountDB;
 import DAO.ForgotPasswordDAO;
+import Model.Account;
 import Model.ForgotPassword;
 import Model.Login;
 import java.io.Serializable;
@@ -96,8 +97,9 @@ public class ForgotPasswordController implements Serializable {
     }
 
     public String sendEmail() throws ClassNotFoundException, SQLException {
-        Login loginModel = new Login();
-        Login check = AccountDB.getLogin(loginModel);
+        Account accountModel = new Account();
+        accountModel.setEmail(forgotPasswordModel.getEmail());
+        Login check = ForgotPasswordDAO.findUserID(accountModel);
 
         if (check == null) {
             errorMessage = "Email could not be found!";

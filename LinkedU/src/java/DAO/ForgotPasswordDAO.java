@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Model.Account;
 import Model.ForgotPassword;
 import Model.Login;
 import java.sql.Connection;
@@ -54,7 +55,7 @@ public class ForgotPasswordDAO {
         return rowCount;
     }
     
-    public static Login findUserID(ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
+    public static Login findUserID(Account accountModel) throws ClassNotFoundException, SQLException {
         Login record = new Login();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
@@ -62,7 +63,7 @@ public class ForgotPasswordDAO {
 
         try {
             Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.LoginInfo WHERE email='" + forgotPasswordModel.getEmail() + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE email='" + accountModel.getEmail() + "'");
 
             if (rs.next()) {
                 record.setUserID(rs.getString("userid"));
