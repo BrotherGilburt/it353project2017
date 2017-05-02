@@ -9,7 +9,6 @@ import DAO.ImageDAO;
 import DAO.StudentDAO;
 import DAO.UniversityDAO;
 import Model.Account;
-import Model.Apply;
 import Model.Login;
 import Model.Premium;
 import Model.Student;
@@ -24,7 +23,6 @@ import java.util.Collections;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
@@ -34,11 +32,10 @@ public class UniversityController implements Serializable {
     private University myUniversityModel;
     private AccountController account;
     private University viewUniversityModel;
-    private SearchController search;
     private UploadedFile resume;
     private Account accountModel;
     private ArrayList<University> featuredList;
-    private ArrayList<Apply> appliedList;
+    private SearchController search;
 
     /**
      * Creates a new instance of UniversityController
@@ -220,7 +217,7 @@ public class UniversityController implements Serializable {
      * @return the featuredList
      */
     public ArrayList<University> getFeaturedList() {
-        featuredList = UniversityDAO.getFeature();
+        ArrayList featuredList = UniversityDAO.getFeature();
         return featuredList;
     }
 
@@ -229,22 +226,6 @@ public class UniversityController implements Serializable {
      */
     public void setFeaturedList(ArrayList<University> featuredList) {
         this.featuredList = featuredList;
-    }
-
-    /**
-     * @return the appliedList
-     */
-    public ArrayList<Apply> getAppliedList() {
-        System.out.println(accountModel.getAccountType());
-           appliedList = UniversityDAO.getApply(account.getLoginModel().getUserID()); 
-        return appliedList;
-    }
-
-    /**
-     * @param appliedList the appliedList to set
-     */
-    public void setAppliedList(ArrayList<Apply> appliedList) {
-        this.appliedList = appliedList;
     }
 
 }

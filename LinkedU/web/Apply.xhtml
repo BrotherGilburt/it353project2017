@@ -1,5 +1,10 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To  change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -8,21 +13,21 @@
     <h:head>
         <title>LinkedU - Application</title>
         <f:metadata>
-
+           
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
     <h:body>
-        <ui:composition template="./newTemplate.xhtml">
+           <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form>
+               <h:form>
                     Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
                     <h:commandLink action="#{accountController.logout()}" value="Logout"/>
                 </h:form>
-                <h:form>
-                    <h1>Apply for Admissions</h1>
-                    <p:wizard flowListener="#{applyController.onFlowProcess}">
+        <h:form>
+            <h1>Apply for Admissions</h1>
+            <p:wizard flowListener="#{applyController.onFlowProcess}">
 
 
                 <p:growl id="growl" sticky="true" showDetail="true"/>
@@ -116,6 +121,44 @@
                             <h:outputText value="Country: "/>
                             <p:inputText value="#{applyController.apply.hs_country}" required="true" label="Country"   />
                         </h:panelGrid>
+
+
+                    </p:panel>
+                </p:tab>
+                <p:tab id="Upload" title="Upload Documents">
+                    <p:panel header="Upload Documents">
+                        <p:messages/>
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:form enctype="multipart/form-data"  >
+
+                                <h:outputText value="Upload Resume/CV"/>
+                                <h:inputFile value="#{applyController.file}">
+                                </h:inputFile>  
+                                <p:commandButton value="upload Resume" action="#{applyController.upload()}"></p:commandButton>
+
+                                <br/> <br/>
+                                <h:outputText value="Upload Transhcripts"/>
+                                <h:inputFile value="#{applyController.file1}">
+                                </h:inputFile>
+                                <p:commandButton value="Upload Transhcripts" action="#{applyController.upload()}"></p:commandButton>
+
+                                <br/> <br/>
+
+                                <h:outputText value="Upload Images"/>
+                                <h:inputFile value="#{applyController.file2}">
+                                </h:inputFile>
+                                <p:commandButton value="Upload Images" action="#{applyController.upload()}"></p:commandButton>
+
+                                <br/> <br/>
+                                <h:outputText value="Upload Activity Videos (basketball moves, musical performances, etc)"/>
+                                <h:inputFile value="#{applyController.file3}">
+                                </h:inputFile>
+
+                                <p:commandButton value="Upload video" action="#{applyController.upload()}"></p:commandButton>
+
+                            </h:form>
+                        </h:panelGrid>
+
                         <p:commandButton value="Submit the Application" action="#{applyController.createProfile()}"> </p:commandButton>
                     </p:panel>
                 </p:tab>
