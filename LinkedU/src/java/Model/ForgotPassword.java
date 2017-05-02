@@ -12,9 +12,10 @@ package Model;
 public class ForgotPassword {
 
     private String email;
-    private String password;
+    private String userID;
     private String newPassword;
     private String confirmNewPassword;
+    private String genString;
 
     /**
      * @return the email
@@ -31,17 +32,17 @@ public class ForgotPassword {
     }
 
     /**
-     * @return the password
+     * @return the userID
      */
-    public String getPassword() {
-        return password;
+    public String getUserID() {
+        return userID;
     }
 
     /**
-     * @param password the password to set
+     * @param userID the userID to set
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     /**
@@ -70,5 +71,19 @@ public class ForgotPassword {
      */
     public void setConfirmNewPassword(String confirmNewPassword) {
         this.confirmNewPassword = confirmNewPassword;
+    }
+
+    /**
+     * @return the genString
+     */
+    public String getGenString() {
+        return genString;
+    }
+
+    /**
+     * @param genString the genString to set
+     */
+    public void setGenString(String genString) {
+        this.genString = genString;
     }
 }

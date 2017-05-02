@@ -6,6 +6,7 @@ drop table LinkedU.Students;
 drop table LinkedU.Universities;
 drop table LinkedU.Premium;
 drop table LinkedU.USERIMAGE;
+drop table LinkedU.PasswordReset;
 
 -- Old Tables (no longer in use)
 drop table LinkedU.Users;
@@ -13,8 +14,8 @@ drop table LinkedU.StudentProfile;
 drop table userimage;
 
 create table LinkedU.LoginInfo (
-  UserID                    VARCHAR(25) NOT NULL,
-  Password                  VARCHAR(50) NOT NULL
+UserID                    VARCHAR(25) NOT NULL,
+Password                  VARCHAR(50) NOT NULL
 ); 
 
 --Student Accounts
@@ -34,11 +35,11 @@ insert into LinkedU.LoginInfo (UserID, Password) values
 ('test', '40bf696d25dd56ed44c864e05f75d33a4cface91');
 
 create table LinkedU.Accounts (
-  UserID                    VARCHAR(25) NOT NULL,
-  Email                     VARCHAR(50) NOT NULL,
-  AccountType               VARCHAR(13) NOT NULL,
-  SecurityQuestion          VARCHAR(50) NOT NULL,
-  SecurityAnswer            VARCHAR(50) NOT NULL
+UserID                    VARCHAR(25) NOT NULL,
+Email                     VARCHAR(50) NOT NULL,
+AccountType               VARCHAR(13) NOT NULL,
+SecurityQuestion          VARCHAR(50) NOT NULL,
+SecurityAnswer            VARCHAR(50) NOT NULL
 );
 
 --Student Accounts
@@ -137,3 +138,8 @@ insert into LinkedU.LoginInfo (UserID, Password) values
 CREATE TABLE LinkedU.USERIMAGE(
 USERID VARCHAR(25) NOT NULL,
 PROFILEPIC BLOB);
+
+create table LinkedU.PasswordReset (
+Email                          VARCHAR(35) NOT NULL,
+Gen_String                  VARCHAR(10) NOT NULL
+); 
