@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>LinkedU - Sign Up</title>
         <f:metadata>
@@ -11,14 +12,17 @@
         </f:metadata>
     </h:head>
     <h:body>
-        <p:fieldset legend="Sign Up" style="margin-bottom:20px">
-            <h:form>
-                Enter the following information to create an account:
-                <br/> <h:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
-                <h:panelGrid id = "panel" columns = "3">
-                    User ID: <p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID">
-                        <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                    <h:message for="uid" style="color:red"/>
+        <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
+                <p:fieldset legend="Sign Up" style="margin-bottom:20px">
+                    <h:form>
+                        Enter the following information to create an account:
+                        <br/> <h:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
+                        <h:panelGrid id = "panel" columns = "3">
+                            User ID: <p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID">
+                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                            <h:message for="uid" style="color:red"/>
 
                     Password: <p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
                         <f:validateLength minimum="2" maximum="25"/></p:password>
@@ -49,6 +53,8 @@
                 </h:panelGrid>
             </h:form>
         </p:fieldset>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

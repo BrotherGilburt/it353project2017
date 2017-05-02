@@ -76,7 +76,14 @@ public class StudentDAO {
             pstmt.setString(11, record.getEssay());
             System.out.println("insert string =" + insertString);
             rowCount += pstmt.executeUpdate();
+            
+            insertString = "INSERT INTO LinkedU.STUDENTDOC (USERID) VALUES (?)";
+            pstmt = DBConn.prepareStatement(insertString);
+            pstmt.setString(1, record.getUserID());
+            System.out.println("insert string =" + insertString);
+            rowCount += pstmt.executeUpdate();
             DBConn.close();
+            pstmt.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -530,6 +537,36 @@ public class StudentDAO {
             System.err.println(e.getMessage());
         }
         return recordsList;
+    }
+    public static int updateResume(String userid, UploadedFile resume) throws IOException, ClassNotFoundException, SQLException{
+    InputStream i = resume.getInputstream();
+        Connection DBConn = null;
+        PreparedStatement pstmt = null;
+        int rowCount = 0;
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
+        try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            String updateString;
+            updateString = "UPDATE LINKEDU.STUDENTDOC SET "
+                    + "RESUME = ? WHERE USERID = ?";
+            System.out.println(updateString + userid + i);
+            pstmt = DBConn.prepareStatement(updateString);
+            pstmt.setBinaryStream(1, i);
+            pstmt.setString(2, userid);
+            System.out.println(updateString + " " + userid + " " + i);
+            rowCount += pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+        } finally {
+            if (DBConn != null) {
+                DBConn.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        }
+        return rowCount;
     }
     
 }
