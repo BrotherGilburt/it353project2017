@@ -65,12 +65,12 @@
                         </h:panelGrid>
 
                         <h:panelGrid columns="2">
-                            <h3>General Information</h3> <p:commandButton value="Update" />
+                            <h3>General Information</h3> <p:commandButton value="Update" action="#{universityController.gotoUpdate()}"/>
                         </h:panelGrid>
                         <h:panelGrid  columns="2" cellpadding="5">
                             <h:panelGroup><b><p:outputLabel value="Name" for="name" /></b></h:panelGroup> <h:outputText id="name" value="#{universityController.myUniversityModel.name}"/>
                             <h:panelGroup><b><p:outputLabel value="Address" for="address" /></b></h:panelGroup> <h:outputText id="address" value="#{universityController.myUniversityModel.fullAddress}"/>
-                            <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.myUniversityModel.majors}"/> 
+                            <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.myUniversityModel.majorsString}"/> 
                         </h:panelGrid>
                     </p:fieldset>
                 </h:form>

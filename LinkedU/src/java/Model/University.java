@@ -135,4 +135,8 @@ public class University {
         this.image = image;
     }
     
+    public void addMajor(String major) {
+        majors.add(major);
+    }
+    
 }

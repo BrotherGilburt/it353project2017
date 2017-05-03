@@ -6,22 +6,17 @@
 package Controller;
 
 import DAO.ImageDAO;
-import DAO.StudentDAO;
 import DAO.UniversityDAO;
 import Model.Account;
-import Model.Login;
-import Model.Premium;
-import Model.Student;
 import Model.University;
 import java.io.IOException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.UploadedFile;
 
@@ -36,6 +31,7 @@ public class UniversityController implements Serializable {
     private Account accountModel;
     private ArrayList<University> featuredList;
     private SearchController search;
+    private String major;
 
     /**
      * Creates a new instance of UniversityController
@@ -113,6 +109,24 @@ public class UniversityController implements Serializable {
 
     public static ArrayList<University> getAllUniversities() {
         return UniversityDAO.getAllUniversities();
+    }
+    
+    public void addMajor() {
+        //Should check for duplicate...
+        myUniversityModel.addMajor(major);
+        
+        major = "";
+    }
+    
+    public String gotoUpdate() {
+        return "updateUniversityProfile.xhtml?faces-redirect=true";
+    }
+    
+    public String updateUniversity() {
+        
+        UniversityDAO.updateUniversity(myUniversityModel);
+        
+        return "universityProfile.xhtml?faces-redirect=true";
     }
 
     /**
@@ -228,4 +242,11 @@ public class UniversityController implements Serializable {
         this.featuredList = featuredList;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }    
 }

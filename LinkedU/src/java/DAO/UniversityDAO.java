@@ -13,8 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.primefaces.model.UploadedFile;
@@ -23,8 +21,6 @@ import org.primefaces.model.UploadedFile;
  *
  * @author Gile
  */
-@Named(value = "universityDAO")
-@RequestScoped
 public class UniversityDAO {
 
     /**
