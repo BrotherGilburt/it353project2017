@@ -265,11 +265,12 @@ public class PaymentDAO {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        if(rowCount == 1)
-        returnString="Records deleted";
-        else
-        returnString="Delete Failed";
-        
+        if (rowCount == 1) {
+            returnString = "Records deleted";
+        } else {
+            returnString = "Delete Failed";
+        }
+
         return returnString;
     }
 }

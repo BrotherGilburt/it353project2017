@@ -17,7 +17,12 @@
             <ui:define name="content">
         <h:form>
             <p:fieldset legend="#{studentController.viewStudentModel.getFullName()}" style="margin-bottom:20px">
-                <p:graphicImage value="#{studentController.viewStudentModel.image}"  style="max-width: 200px; max-height: 200px;"/>
+                <!--<p:graphicImage value="#{studentController.viewStudentModel.image}"  style="max-width: 200px; max-height: 200px;"/>-->
+                 <h:panelGrid columns="1" cellpadding="5">
+                            <h:outputLink value="DisplayImage?userid=#{studentController.viewStudentModel.userID}" target="_blank" >
+                                <h:graphicImage value="DisplayImage?userid=#{studentController.viewStudentModel.userID}" width="200" height="200"></h:graphicImage>
+                            </h:outputLink>
+                        </h:panelGrid>
 
                 <h3>General Information</h3>
                 <h:panelGrid columns="2" columnClasses="label, label" cellpadding="5">

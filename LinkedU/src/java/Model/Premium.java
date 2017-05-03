@@ -40,14 +40,6 @@ public class Premium {
         }
     }
 
-    public Premium(String userId, String premiumStatus, String paymentType, Double amount, Date subdate, Date expdate) {
-        this.userId = userId;
-        this.premiumStatus = premiumStatus;
-        this.paymentType = paymentType;
-        this.amount = amount;
-        this.subdate = subdate;
-        this.expdate = expdate;
-    }
 
     public String getPremiumStatus() {
         return premiumStatus;
