@@ -5,15 +5,10 @@
  */
 package Controller;
 
-import DAO.PaymentDAO;
-import Model.Account;
-import Model.Login;
 import Model.Premium;
-import Model.University;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.sql.SQLException;
+import javax.faces.bean.SessionScoped;
 
 /**
  *

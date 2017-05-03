@@ -13,15 +13,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Keegan
  */
 @Named(value = "forgotPasswordDAO")
-@RequestScoped
+@SessionScoped
 public class ForgotPasswordDAO {
 
     /**
