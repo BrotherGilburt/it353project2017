@@ -126,7 +126,7 @@ public class UniversityController implements Serializable {
         
         UniversityDAO.updateUniversity(myUniversityModel);
         
-        return "universityProfile.xhtml?faces-redirect=true";
+        return "myProfile.xhtml?faces-redirect=true";
     }
 
     /**
