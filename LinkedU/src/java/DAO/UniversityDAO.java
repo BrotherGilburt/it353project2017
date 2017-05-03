@@ -95,8 +95,8 @@ public class UniversityDAO {
             String insertString;
             Statement stmt = DBConn.createStatement();
 
-            insertString = "UPDATE LinkedU.Universities SET"
-                    + "premium='" + record.isPremium()
+            insertString = "UPDATE LinkedU.Universities SET "
+                    + "premium=" + record.isPremium()
                     + ", name='" + record.getName()
                     + "', majors='" + majorsList.toString()
                     + "', street='" + record.getStreet()
