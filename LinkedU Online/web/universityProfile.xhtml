@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>LinkedU - University Profile</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+                <h:form>
+                    <p:fieldset legend="#{universityController.viewUniversityModel.name}">
+                        <h:panelGrid columns="1" cellpadding="5">
+                            <h:outputLink value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" target="_blank" >
+                                <h:graphicImage value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" width="200" height="200"></h:graphicImage>
+                            </h:outputLink>
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="2">
+                            <h3>General Information</h3>
+                        </h:panelGrid>
+                        <h:panelGrid  columns="2" cellpadding="5">
+                            <h:panelGroup><b><p:outputLabel value="Name" for="name" /></b></h:panelGroup> <h:outputText id="name" value="#{universityController.viewUniversityModel.name}"/>
+                            <h:panelGroup><b><p:outputLabel value="Address" for="address" /></b></h:panelGroup> <h:outputText id="address" value="#{universityController.viewUniversityModel.fullAddress}"/>
+                            <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.viewUniversityModel.majorsString}"/> 
+                        </h:panelGrid>
+
+                     <!--   <h:panelGroup rendered="#{accountController.isStudent()}">
+                        <h3>Apply for Admission</h3>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            ((MAJOR SELECT TO BE ADDED))
+                            <p:commandButton value="Apply!" action="#{applyController.loadApplicationFromProfile()}">
+                          PASS PARAMETERS TO METHOD IN CONTROLLER OR OTHERWISE SET MAJOR/UNIVERSITY IN APPLICATION
+                        </p:commandButton>
+                        </h:panelGrid>
+                        </h:panelGroup> -->
+                            <br/><br/>
+                        <h3>Search the university using <h1> Google Maps</h1></h3>
+                        <p:commandButton id="map" action="googlemap.xhtml?faces-redirect=true" value="Click to search"/> 
+                        <br/><br/>
+
+                        <h:panelGroup rendered="#{accountController.isStudent()}">
+                            <h3>   Schedule and appointment with the advisor:              </h3>
+                            <h:panelGrid>
+                                <p:commandButton id="schedule" type="Button" value="Click to Schedule an Appointment" action="#{studentController.schedule()}" onclick="PF('dlg1').show();"/> 
+                            <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
+                                <h:outputText value="An email has been sent to schedule an appointment!" />
+                            </p:dialog>
+                            <br/><br/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+
+                     
+                        <h:panelGroup>
+                            <h:panelGrid>
+                                  <h3> Request for more information about the university by sending a an email..!!</h3>
+                                  <p:commandButton id="request" type="Button" value="Click to request more information" action="#{studentController.moreInfo()}" onclick="PF('dlg1').show();"/> 
+                        <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
+                            <h:outputText value="An email has been sent to request more information.!" />
+                        </p:dialog>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

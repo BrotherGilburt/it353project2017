@@ -164,4 +164,4 @@ Expdate DATE
 create table LinkedU.PasswordReset (
 Email                          VARCHAR(35) NOT NULL,
 Gen_String                  VARCHAR(10) NOT NULL
-); 
+);

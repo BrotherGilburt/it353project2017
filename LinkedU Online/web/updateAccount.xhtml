@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>LinkedU - Update</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+         <ui:composition template="./newTemplate.xhtml">
+
+            <ui:define name="content">
+                    <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+        <h:form>
+            <br/>Enter the following information to update your account:
+            <br/> <p:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
+            <table>
+                <tr><td>User ID: </td><td><h:outputText id="uid" value="#{accountController.loginUpdateModel.userID}" /></td></tr>
+
+                <tr><td>Password: </td><td><p:password id="pwd" value="#{accountController.loginUpdateModel.password}" label="Password"></p:password>
+                        <span id="passwordMessage"></span></td></tr>
+
+                <tr><td>Confirm Password: </td><td><p:password id="cpwd" value="#{accountController.confirm}" label="ConfirmPassword">
+                        </p:password></td></tr>
+
+                <tr><td>Email: </td><td><p:inputText id="email" value="#{accountController.userUpdateModel.email}" label="Email">
+                        </p:inputText></td></tr>
+
+                <tr><td>Account Type: </td><td><h:outputText id="account" value="#{accountController.userUpdateModel.accountType}" /></td></tr>
+
+                <tr><td>Security Question: </td><td><p:inputTextarea id="sq" value="#{accountController.userUpdateModel.securityQuestion}" label="SecurityQuestion">
+                        </p:inputTextarea></td></tr>
+
+                <tr><td>Security Answer: </td><td><p:inputTextarea id="sa" value="#{accountController.userUpdateModel.securityAnswer}" label="SecurityAnswer">
+                        </p:inputTextarea></td></tr>
+            </table>
+            <br/><p:commandButton id="submitID" value="Update" action="#{accountController.update()}"/> 
+            <p:commandButton id="logoutID" value="Log Out" action="#{accountController.logOut()}"/>
+        </h:form>
+            </ui:define>
+         </ui:composition>
+    </h:body>
+</html>
+

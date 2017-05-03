@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      
+        <title>LinkedU</title>
+    </h:head>
+    <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/>
+    <link href="Resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                 <div id="indexHeader">
+                    <img src="Resources/images/LinkedULogo.jpg" width="400" height="90" alt="LinkedULogo"  />         
+         </div>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <div id="footer">
+                       <p><b>&copy; LinkEDU Inc.</b></p>
+                </div>
+               
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>
