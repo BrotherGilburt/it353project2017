@@ -14,15 +14,15 @@ import Model.Premium;
 import Model.Student;
 import Model.University;
 import java.io.IOException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.Part;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
@@ -36,6 +36,8 @@ public class UniversityController implements Serializable {
     private Account accountModel;
     private ArrayList<University> featuredList;
     private SearchController search;
+    private String name;
+    
 
     /**
      * Creates a new instance of UniversityController
@@ -80,8 +82,8 @@ public class UniversityController implements Serializable {
         UploadedFile image = getResume();
         String userid = account.getLoginModel().getUserID();
         System.out.println(userid);
-        int update = ImageDAO.updateImage(userid, image);
-        return "universityProfile.xhtml?faces-redirect=true";
+        int update = ImageDAO.updateImage(account.getLoginModel().getUserID(), image);
+        return "myProfile.xhtml?faces-redirect=true";
     }
 
     public String loadMyProfile() {
@@ -89,21 +91,17 @@ public class UniversityController implements Serializable {
         if (myUniversityModel == null) {
             myUniversityModel = new University(account.getLoginModel().getUserID());
         }
-
         return "myProfile.xhtml?faces-redirect=true";
     }
 
     public String loadProfile() {
         FacesContext facesContext2 = FacesContext.getCurrentInstance();
         Map<String, String> params = facesContext2.getExternalContext().getRequestParameterMap();
-        String name = params.get("name");
-
+        name = params.get("name");
         ArrayList<University> list = search.getUniversitiesList();
-
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().equals(name)) {
+            if (list.get(i).getName().equals(name)) {  
                 viewUniversityModel = list.get(i);
-
                 break;
             }
         }
@@ -227,5 +225,4 @@ public class UniversityController implements Serializable {
     public void setFeaturedList(ArrayList<University> featuredList) {
         this.featuredList = featuredList;
     }
-
 }

@@ -38,6 +38,39 @@ public class StudentDAO {
      */
     public StudentDAO() {
     }
+     public String emailByID(String ID){
+        String retVal = null;
+        Student record = new Student();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            Statement stmt = DBConn.createStatement();
+            String query = "select email from LINKEDU.ACCOUNTS a join linkedu.students s  using(userid) where userid='"+ID+"'";
+
+            
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                retVal = rs.getString("email");
+                
+            } 
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return retVal;
+    }
+        
+    
 
     public static int createStudent(Student record) {
         try {

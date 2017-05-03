@@ -25,7 +25,8 @@ import java.util.List;
  * @author Sivanu Happy
  */
 public class PaymentDAO {
-     public static boolean isUserID(String userID) {
+
+    public static boolean isUserID(String userID) {
         boolean found = true;
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
@@ -265,11 +266,12 @@ public class PaymentDAO {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        if(rowCount == 1)
-        returnString="Records deleted";
-        else
-        returnString="Delete Failed";
-        
+        if (rowCount == 1) {
+            returnString = "Records deleted";
+        } else {
+            returnString = "Delete Failed";
+        }
+
         return returnString;
     }
 }

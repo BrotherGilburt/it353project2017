@@ -28,6 +28,7 @@ public class Student {
     private String image;
     private String mixtape;
     private String essay;
+    private String email;
 
     /* TO BE ADDED
      IMAGE
@@ -197,6 +198,20 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
