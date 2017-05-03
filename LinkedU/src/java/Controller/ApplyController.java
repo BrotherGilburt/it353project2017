@@ -203,7 +203,7 @@ public class ApplyController implements Serializable {
         }else{
             context.addMessage(null, new FacesMessage("Resume Upload:",  "Failed") );
         }
-        return "myProfile.xhtml?faces-redirect=true";
+        return "home.xhtml?faces-redirect=true";
     }
 
     /**

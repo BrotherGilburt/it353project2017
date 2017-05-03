@@ -7,13 +7,13 @@ package Controller;
 
 import DAO.PaymentDAO;
 import Model.Premium;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Sivanu Happy
  */
-@Named(value = "adminController")
+@ManagedBean
 @SessionScoped
 public class AdminController implements Serializable {
 private Premium premiumModel;

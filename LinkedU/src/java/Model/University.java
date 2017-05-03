@@ -79,7 +79,7 @@ public class University {
     }
 
     public String getName() {
-        System.out.println("GET: " + name);
+        System.out.println("GET:" + name);
         return name;
     }
 

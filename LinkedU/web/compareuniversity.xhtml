@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Compare Universities</title>
+        <f:metadata>      
+            <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="content">
+                <h:form>
+                     <p:commandLink id="homePage" action="home.xhtml?faces-redirect=true">Go to Home Page
+                    </p:commandLink>
+                </h:form>
+                <h:form>
+                    <h:panelGrid columns="2" cellpadding="5" style="width: 100%">
+                        <p:panel header="Select a University to compare" style="margin-bottom:10px;">
+                            <p:outputLabel for="University1" value="University1: " />
+                            <p:selectOneMenu id="University1" value="#{universityController.selectedUniv}" style="width:250px" required="true" onchange="submit()" valueChangeListener="#{universityController.localeChanged}">
+                                <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{universityController.getAllUniversityNames()}" />
+                            </p:selectOneMenu> <br/>
+                            Full Address: <h:outputText id = "fullName1" value = "#{universityController.nameUniv.fullAddress}"/><br/>
+                            Majors: <h:outputText id = "majors1" value = "#{universityController.nameUniv.majorsString}"/><br/>
+                            Premium Holder: <h:outputText id ="premium1" value = "#{universityController.nameUniv.premium}"/>
+
+                        </p:panel>
+                        <p:panel header="Select another University to compare" style="margin-bottom:10px;">
+                            <p:outputLabel for="University2" value="University2: " />
+                            <p:selectOneMenu id="University2" value="#{universityController.selectedUniv2}" style="width:250px" required="true" onchange="submit()" valueChangeListener="#{universityController.localeChanged2}">
+                                <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{universityController.getAllUniversityNames()}" />
+                            </p:selectOneMenu> <br/>
+                            Full Address: <h:outputText id = "fullName2" value = "#{universityController.nameUniv2.fullAddress}"/><br/>
+                            Majors: <h:outputText id = "majors2" value = "#{universityController.nameUniv2.majorsString}"/><br/>
+                            Premium Holder: <h:outputText id ="premium2" value = "#{universityController.nameUniv2.premium}"/>
+                        </p:panel>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

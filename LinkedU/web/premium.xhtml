@@ -19,14 +19,14 @@
                     <p:fieldset legend="Choose your plan" style="margin-bottom:20px">
 
                         <h:panelGrid columns="2">
-                            <h3>Weekly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectWeek}"/>
+                            <h3>Weekly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectWeek()}"/>
                         </h:panelGrid>
                         <h:panelGrid  columns="2" cellpadding="5">
 
                             <h:panelGroup><b><p:outputLabel value="Amount" for="weekprice" /></b></h:panelGroup> <h:outputText id="weekprice" value = "$10.00/week"/>
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <h3>Monthly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectMonth}"/>
+                            <h3>Monthly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectMonth()}"/>
                         </h:panelGrid>
                         <h:panelGrid  columns="2" cellpadding="5">
 

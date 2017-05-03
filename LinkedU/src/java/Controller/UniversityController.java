@@ -19,12 +19,27 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.mail.Part;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @SessionScoped
 public class UniversityController implements Serializable {
+
+    /**
+     * @return the nameUniv2
+     */
+    public University getNameUniv2() {
+        return nameUniv2;
+    }
+
+    /**
+     * @param nameUniv2 the nameUniv2 to set
+     */
+    public void setNameUniv2(University nameUniv2) {
+        this.nameUniv2 = nameUniv2;
+    }
 
     private University myUniversityModel;
     private AccountController account;
@@ -35,6 +50,22 @@ public class UniversityController implements Serializable {
     private SearchController search;
     private String major;
     private ArrayList<Apply> appliedList;
+    private String selectedUniv;
+    private String selectedUniv2;
+    private University nameUniv;
+    private University nameUniv2;
+
+    public UniversityController(University myUniversityModel, AccountController account, University viewUniversityModel, UploadedFile resume, Account accountModel, ArrayList<University> featuredList, SearchController search, String major, ArrayList<Apply> appliedList) {
+        this.myUniversityModel = myUniversityModel;
+        this.account = account;
+        this.viewUniversityModel = viewUniversityModel;
+        this.resume = resume;
+        this.accountModel = accountModel;
+        this.featuredList = featuredList;
+        this.search = search;
+        this.major = major;
+        this.appliedList = appliedList;
+    }
 
     /**
      * Creates a new instance of UniversityController
@@ -91,6 +122,23 @@ public class UniversityController implements Serializable {
             myUniversityModel = new University(account.getLoginModel().getUserID());
         }
         return "myProfile.xhtml?faces-redirect=true";
+    }
+    
+    public void loadMyProfile1() {
+       // myUniversityModel = UniversityDAO.getUniversityByID(account.getLoginModel().getUserID());
+        nameUniv = UniversityDAO.getUniversityByName(selectedUniv);
+        System.out.println("I am from " + nameUniv.getCity());
+        if (nameUniv == null) {
+            nameUniv = new University(selectedUniv);
+        }
+    }
+       public void loadMyProfile2() {
+       // myUniversityModel = UniversityDAO.getUniversityByID(account.getLoginModel().getUserID());
+        nameUniv2 = UniversityDAO.getUniversityByName(selectedUniv2);
+        System.out.println("I am from " + getNameUniv2().getCity());
+        if (getNameUniv2() == null) {
+            nameUniv2 = new University(selectedUniv2);
+        }
     }
 
     public String loadProfile() {
@@ -266,4 +314,68 @@ public class UniversityController implements Serializable {
     public void setMajor(String major) {
         this.major = major;
     }    
+    
+    /**
+     * @return the selecterUniv
+     */
+    public String getSelectedUniv() {  
+        return selectedUniv;
+    }
+
+    /**
+     * @param selectedUniv the selecterUniv to set
+     */
+    public void setSelectedUniv(String selectedUniv) {
+        this.selectedUniv = selectedUniv;      
+    }
+
+    /**
+     * @return the nameUniv
+     */
+    public University getNameUniv() {
+        return nameUniv;
+    }
+
+    /**
+     * @param nameUniv the nameUniv to set
+     */
+    public void setNameUniv(University nameUniv) {
+        this.nameUniv = nameUniv;
+    }
+    
+     public void localeChanged(ValueChangeEvent e) {
+         selectedUniv = e.getNewValue().toString();
+         if(selectedUniv != null){
+             System.out.println("Not empty");
+             loadMyProfile1();
+         }else{
+             System.out.println("Selection empty");
+         }
+     
+   }
+     
+          public void localeChanged2(ValueChangeEvent e) {
+         selectedUniv2 = e.getNewValue().toString();
+         if(selectedUniv2 != null){
+             System.out.println("Not empty");
+             loadMyProfile2();
+         }else{
+             System.out.println("Selection empty");
+         }
+     
+   }
+
+    /**
+     * @return the selectedUniv2
+     */
+    public String getSelectedUniv2() {
+        return selectedUniv2;
+    }
+
+    /**
+     * @param selectedUniv2 the selectedUniv2 to set
+     */
+    public void setSelectedUniv2(String selectedUniv2) {
+        this.selectedUniv2 = selectedUniv2;
+    }
 }

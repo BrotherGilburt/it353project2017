@@ -13,13 +13,14 @@ import Model.University;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
 /**
  *
  * @author Sivanu Happy
  */
-@Named(value = "premiumController")
+@ManagedBean
 @SessionScoped
 public class PremiumController implements Serializable {
     private Premium premiumModel;
