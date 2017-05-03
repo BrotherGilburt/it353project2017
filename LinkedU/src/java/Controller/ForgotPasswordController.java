@@ -13,8 +13,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.internet.InternetAddress;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -96,9 +98,11 @@ public class ForgotPasswordController implements Serializable {
     }
 
     public String sendEmail() throws ClassNotFoundException, SQLException {
+        errorMessage = "";
+        confirmMessage = "";
         Account accountModel = new Account();
         accountModel.setEmail(forgotPasswordModel.getEmail());
-        Login check = ForgotPasswordDAO.findUserID(accountModel);
+        Login check = ForgotPasswordDAO.findUserID(accountModel, forgotPasswordModel);
 
         if (check != null) {
             errorMessage = "";
@@ -173,30 +177,37 @@ public class ForgotPasswordController implements Serializable {
         confirmMessage = "";
         errorMessage = "";
         if (forgotPasswordModel.getNewPassword().equals(forgotPasswordModel.getConfirmNewPassword())) {
-            int query = ForgotPasswordDAO.changePassword(forgotPasswordModel);
-            if (query == 0) {
-                errorMessage = "Failed to change password.";
-            } else if (query != 0) {
-                confirmMessage = "Password change successful!";
+            forgotPasswordModel.setNewPassword(Login.generateHash(forgotPasswordModel.getNewPassword()));
 
-                return "login.xhtml?faces-redirect=true";
+            Account accountModel = new Account();
+            accountModel.setEmail(forgotPasswordModel.getEmail());
+            Login check = ForgotPasswordDAO.findUserID(accountModel, forgotPasswordModel);
+            if (check != null) {
+                int query = ForgotPasswordDAO.changePassword(forgotPasswordModel);
+                if (query == 0) {
+                    errorMessage = "Failed to change password.";
+                } else {
+                    confirmMessage = "Password change successful!";
+                    ForgotPasswordDAO.deleteGenString(forgotPasswordModel);
+                    return "login.xhtml?faces-redirect=true";
+                }
             } else {
-                confirmMessage = "";
-                errorMessage = "";
+                errorMessage = "Password and Confirm Password do not match!";
             }
         } else {
-            errorMessage = "Password and Confirm Password do not match!";
+            errorMessage = "Email could not be found!";
         }
         return "newPassword.xhtml?faces-redirect=true";
     }
-    
+
     public String urlOK() throws ClassNotFoundException, SQLException {
+        String navi = null;
         ForgotPassword check = ForgotPasswordDAO.findGenString(forgotPasswordModel);
-        if (check != null) {
-            //Reset password page
-        } else {
-            //Incorrect URL page
+        if (check == null) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+            nav.performNavigation("pageExpired.xhtml?faces-redirect=true");
         }
-        return "";
+        return navi;
     }
 }

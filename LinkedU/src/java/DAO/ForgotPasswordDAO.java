@@ -55,7 +55,7 @@ public class ForgotPasswordDAO {
         return rowCount;
     }
     
-    public static Login findUserID(Account accountModel) throws ClassNotFoundException, SQLException {
+    public static Login findUserID(Account accountModel, ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
         Login record = new Login();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
@@ -63,11 +63,11 @@ public class ForgotPasswordDAO {
 
         try {
             Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE email='" + accountModel.getEmail() + "'");
-
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE email='" + accountModel.getEmail() + "'");            
+            
             if (rs.next()) {
                 record.setUserID(rs.getString("userid"));
-                record.assignPassword(rs.getString("password"));
+                forgotPasswordModel.setUserID(record.getUserID());
             } else {
                 record = null;
             }
@@ -96,7 +96,7 @@ public class ForgotPasswordDAO {
             Statement stmt = DBConn.createStatement();
 
             updateString = "UPDATE LinkedU.LoginInfo SET "
-                    + "password ='" + forgotPasswordModel.getNewPassword() + "'"
+                    + "password ='" + forgotPasswordModel.getNewPassword() + "' "
                     + "WHERE userid = '" + forgotPasswordModel.getUserID() + "'";
 
             rowCount += stmt.executeUpdate(updateString);
@@ -119,7 +119,7 @@ public class ForgotPasswordDAO {
             String updateString;
             Statement stmt = DBConn.createStatement();
 
-            updateString = "DELETE FROM LinkedU.LoginInfo WHERE"
+            updateString = "DELETE FROM LinkedU.PasswordReset WHERE "
                     + "email = '" + forgotPasswordModel.getEmail() + "'";
 
             rowCount += stmt.executeUpdate(updateString);
@@ -141,7 +141,7 @@ public class ForgotPasswordDAO {
         try {
             Statement stmt = DBConn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.PasswordReset WHERE email='" +
-                    forgotPasswordModel.getEmail() + " AND gen_string='" +
+                    forgotPasswordModel.getEmail() + "' AND gen_string='" +
                     forgotPasswordModel.getGenString() + "'");
 
             if (rs.next()) {
