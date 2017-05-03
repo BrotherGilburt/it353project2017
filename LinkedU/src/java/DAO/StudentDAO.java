@@ -601,5 +601,83 @@ public class StudentDAO {
         }
         return rowCount;
     }
-    
+
+    public static int updateMixtape(String mixtape, String userid) throws SQLException {
+        Connection DBConn = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
+        int rowCount = 0;
+        try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            String updateString;
+            stmt = DBConn.createStatement();
+
+            updateString = "UPDATE LinkedU.Students SET MIXTAPE = '"
+                    + mixtape + "' WHERE USERID = '" + userid + "'";
+            System.out.println(updateString);
+            rowCount += stmt.executeUpdate(updateString);
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (DBConn != null) {
+                DBConn.close();
+            }
+        }
+
+        return rowCount;
+
+    }
+
+    public static int updateEssay(String essay, String userid) throws SQLException {
+        Connection DBConn = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
+        int rowCount = 0;
+        try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            String updateString;
+            stmt = DBConn.createStatement();
+
+            updateString = "UPDATE LinkedU.Students SET ESSAY = '"
+                    + essay + "' WHERE USERID = '" + userid + "'";
+            System.out.println(updateString);
+            rowCount += stmt.executeUpdate(updateString);
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (DBConn != null) {
+                DBConn.close();
+            }
+        }
+
+        return rowCount;
+
+    }
+
 }

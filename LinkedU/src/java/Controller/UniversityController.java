@@ -8,6 +8,7 @@ package Controller;
 import DAO.ImageDAO;
 import DAO.UniversityDAO;
 import Model.Account;
+import Model.Apply;
 import Model.University;
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ public class UniversityController implements Serializable {
     private ArrayList<University> featuredList;
     private SearchController search;
     private String major;
+    private ArrayList<Apply> appliedList;
 
     /**
      * Creates a new instance of UniversityController
@@ -242,6 +244,21 @@ public class UniversityController implements Serializable {
         this.featuredList = featuredList;
     }
 
+   /**
+     * @return the appliedList
+     */
+    public ArrayList<Apply> getAppliedList() {
+        System.out.println(accountModel.getAccountType());
+           appliedList = UniversityDAO.getApply(account.getLoginModel().getUserID()); 
+        return appliedList;
+    }
+
+    /**
+     * @param appliedList the appliedList to set
+     */
+    public void setAppliedList(ArrayList<Apply> appliedList) {
+        this.appliedList = appliedList;
+    }
     public String getMajor() {
         return major;
     }

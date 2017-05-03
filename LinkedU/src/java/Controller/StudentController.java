@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -106,14 +107,26 @@ public class StudentController implements Serializable {
         return "myProfile.xhtml?faces-redirect=true";
     }
 
-    public String gotoUpdateMixtape() {
-        return "myProfile.xhtml?faces-redirect=true";
+       
+    public void gotoUpdateMixtape() throws SQLException {
+        FacesContext context = FacesContext.getCurrentInstance(); 
+        int update = StudentDAO.updateMixtape(myProfileModel.getMixtape(),account.getLoginModel().getUserID());
+         if (update != 0) {
+            context.addMessage(null, new FacesMessage("Successful",  "Mixtape Updated") );
+        } else {
+            context.addMessage(null, new FacesMessage("Failed", "Mixtape update failed"));
+        }
     }
-
-    public String gotoUpdateEssay() {
-        return "myProfile.xhtml?faces-redirect=true";
+    
+    public void gotoUpdateEssay() throws SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        int update = StudentDAO.updateEssay(myProfileModel.getEssay(),account.getLoginModel().getUserID());
+                 if (update != 0) {
+            context.addMessage(null, new FacesMessage("Successful",  "Essay Updated") );
+        } else {
+            context.addMessage(null, new FacesMessage("Failed", "Essay update failed"));
+        }
     }
-
     public String updateFinished() throws SQLException {
         /*DATA VALIDATION*/
 

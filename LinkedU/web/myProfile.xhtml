@@ -20,6 +20,7 @@
                     <h:commandLink action="#{accountController.logout()}" value="Logout"/>
                 </h:form>
                 <h:form id="fileUpload1" prependId="false"     enctype="multipart/form-data" rendered="#{accountController.isStudent()}">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
                     <p:fieldset legend="#{studentController.myProfileModel.firstName}" style="margin-bottom:20px">
                         <h:panelGrid columns="1" cellpadding="5">
                             <p:fileUpload id="profileimage1"  value="#{studentController.resume}" mode="simple" skinSimple="true"/>
@@ -42,16 +43,13 @@
                             <h:panelGroup><b><h:outputText value="Desired Majors:"/></b></h:panelGroup> <h:outputText value="#{studentController.myProfileModel.getMajorsString()}" />
                         </h:panelGrid>
                         <br/>
-                        <h:panelGrid columns="2">
-                            <h3>Mixtape</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateMixtape()}" />
+                        <h:panelGrid columns="2"><h:panelGroup>
+                                <h3>Mixtape</h3> <p:inputText id="mixtape" value="#{studentController.myProfileModel.mixtape}" label="mixtape"/><p:commandButton value="Update" actionListener="#{studentController.gotoUpdateMixtape()}" update="growl"/></h:panelGroup>
                         </h:panelGrid>
-                        ((to be added))    
-
                         <br/>
-                        <h:panelGrid columns="2">
-                            <h3>Essay</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateEssay()}" />
-                        </h:panelGrid>
-                        ((to be added))   
+                        <h:panelGrid columns="2"><h:panelGroup>
+                                <h3>Essay</h3> <h:inputTextarea cols="30" rows="10" id="essay" value="#{studentController.myProfileModel.essay}" label="essay"/><p:commandButton value="Update" actionListener="#{studentController.gotoUpdateEssay()}" update="growl"/></h:panelGroup>
+                         </h:panelGrid>   
                     </p:fieldset>
                 </h:form>
                 <h:form id="fileUpload2" prependId="false"     enctype="multipart/form-data" rendered="#{accountController.isUniversity()}">

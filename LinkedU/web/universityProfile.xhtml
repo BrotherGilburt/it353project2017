@@ -15,8 +15,11 @@
         <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-
-                <h:form >
+                <h:form>
+                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
+                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                </h:form>
+                <h:form>
                     <p:fieldset legend="#{universityController.viewUniversityModel.name}">
                         <h:panelGrid columns="1" cellpadding="5">
                             <h:outputLink value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" target="_blank" >
@@ -33,15 +36,15 @@
                             <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.viewUniversityModel.majorsString}"/> 
                         </h:panelGrid>
 
-                        <h:panelGroup rendered="#{accountController.isStudent()}">
+                     <!--   <h:panelGroup rendered="#{accountController.isStudent()}">
                         <h3>Apply for Admission</h3>
                         <h:panelGrid columns="2" cellpadding="5">
                             ((MAJOR SELECT TO BE ADDED))
                             <p:commandButton value="Apply!" action="#{applyController.loadApplicationFromProfile()}">
-                                <!--PASS PARAMETERS TO METHOD IN CONTROLLER OR OTHERWISE SET MAJOR/UNIVERSITY IN APPLICATION-->
-                            </p:commandButton>
+                          PASS PARAMETERS TO METHOD IN CONTROLLER OR OTHERWISE SET MAJOR/UNIVERSITY IN APPLICATION
+                        </p:commandButton>
                         </h:panelGrid>
-                        </h:panelGroup>
+                        </h:panelGroup> -->
                             <br/><br/>
                         <h3>Search the university using <h1> Google Maps</h1></h3>
                         <p:commandButton id="map" action="googlemap.xhtml?faces-redirect=true" value="Click to search"/> 

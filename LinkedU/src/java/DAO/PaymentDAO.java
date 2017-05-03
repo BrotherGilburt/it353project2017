@@ -25,8 +25,7 @@ import java.util.List;
  * @author Sivanu Happy
  */
 public class PaymentDAO {
-
-    public static boolean isUserID(String userID) {
+     public static boolean isUserID(String userID) {
         boolean found = true;
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";

@@ -117,7 +117,7 @@ public class SearchController {
             studentsList = StudentDAO.getStudentsByMajor(searchText);
         }
 
-        return "studentSearch.xhtml";
+        return "studentSearch.xhtml?faces-redirect=true";
     }
 
     /**
@@ -131,7 +131,7 @@ public class SearchController {
         } else if (searchFilter.equals("available major")) {
             universitiesList = UniversityDAO.getUniversitiesByMajor(searchText);
         }
-        return "universitySearch.xhtml";
+        return "universitySearch.xhtml?faces-redirect=true";
     }
 
     public boolean isACTFilter() {

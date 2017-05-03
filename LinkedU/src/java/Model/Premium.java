@@ -36,7 +36,7 @@ public class Premium {
     public Premium() {
          if (account == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
-           account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
+            account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
         }
     }
 

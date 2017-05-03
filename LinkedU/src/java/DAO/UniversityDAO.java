@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Model.Apply;
 import Model.Premium;
 import Model.University;
 import java.sql.Connection;
@@ -411,6 +412,48 @@ public class UniversityDAO {
             System.err.println(e.getMessage());
         }
         return featuredList;
+    }
+    
+    public static ArrayList getApply(String userName) {
+        Apply record = null;
+        ArrayList<Apply> applyList = null;
+        Connection DBConn = null;
+        try {
+            DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+            // if doing the above in Oracle: DBHelper.loadDriver("oracle.jdbc.driver.OracleDriver");
+            String myDB = "jdbc:derby://localhost:1527/LINKEDU";
+            // if doing the above in Oracle:  String myDB = "jdbc:oracle:thin:@oracle.itk.ilstu.edu:1521:ora478";
+            DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+            Statement stmt = DBConn.createStatement();
+            String getString = "select * from LINKEDU.APPLYINFO WHERE UNIVERSITY IN "
+                    + "(select name from  LINKEDU.UNIVERSITIES where USERID = "
+                    + "'" + userName + "')";
+            System.out.println(getString);
+            ResultSet rs = stmt.executeQuery(getString);
+            while (rs.next()) {
+                if (applyList == null) {
+                    applyList = new ArrayList();
+                }
+                record = new Apply();
+                applyList.add(record);
+                record.setFirstname(rs.getString("FIRSTNAME"));
+                record.setMajor(rs.getString("MAJOR"));
+                record.setExam(rs.getString("EXAM"));
+                record.setScore(rs.getInt("SCORE"));
+                record.setEmail(rs.getString("EMAIL"));
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return applyList;
     }
 
 }

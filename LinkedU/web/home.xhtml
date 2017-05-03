@@ -66,6 +66,27 @@
                             <h:outputText value="#{aRow.zip}"/>
                         </p:column>
                     </p:dataTable>
+                    <br/><br/>
+                    <p:dataTable id="preTableID1" value="#{universityController.appliedList}" rendered="#{not empty universityController.appliedList}"  var="aRow1" style="margin-bottom:0">
+                        <f:facet name="header">
+                            Application Received
+                        </f:facet>
+                        <p:column headerText="First Name">
+                            <h:outputText value="#{aRow1.firstname}"/>
+                        </p:column>
+                        <p:column headerText="Majors">
+                            <h:outputText value="#{aRow1.major}"/>
+                        </p:column>
+                        <p:column headerText="Exam">
+                            <h:outputText value="#{aRow1.exam}"/>
+                        </p:column>
+                        <p:column headerText="Score">
+                            <h:outputText value="#{aRow1.score}"/>
+                        </p:column>
+                        <p:column headerText="Email">
+                            <h:outputText value="#{aRow1.email}"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>

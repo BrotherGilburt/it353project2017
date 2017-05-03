@@ -7,12 +7,11 @@ drop table LinkedU.Universities;
 drop table LinkedU.Premium;
 drop table LinkedU.USERIMAGE;
 drop table LinkedU.PasswordReset;
-drop table LinkedU.USERIMAGE;
+drop table LinkedU.Studentdoc;
 
 -- Old Tables (no longer in use)
 drop table LinkedU.Users;
 drop table LinkedU.StudentProfile;
-drop table userimage;
 
 create table LinkedU.LoginInfo (
 UserID                    VARCHAR(25) NOT NULL,
@@ -104,6 +103,18 @@ insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, 
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
 ('asriren','Anusha','Srirenganathan Malarvizhi', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', './Resources/default_student.png', 'none', 'none');
 
+
+
+CREATE TABLE LinkedU.STUDENTDOC(
+USERID VARCHAR(25) NOT NULL,
+RESUME BLOB);
+
+insert into LinkedU.studentdoc values('pdkaufm',null);
+insert into LinkedU.studentdoc values('kssuth1',null);
+insert into LinkedU.studentdoc values('stiwar1',null);
+insert into LinkedU.studentdoc values('asriren',null);
+
+
 create table LinkedU.Universities(
 UserID				varchar(25) not null,
 Premium				boolean not null,
@@ -121,14 +132,6 @@ insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, St
 insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, State, Zip, Image) values
 ('test', FALSE, 'University of Illinois', 'Dance;Computer Science;English;Biology;Chemistry;Music;Astronomy;Physics;Psychology;Art;Mathematics', '1337 Example St', 'Champaign', 'IL', '61820', './Resources/default_university.png');
 
-CREATE TABLE LINKEDU.PREMIUM(
-UserID varchar(25) not null,
-PremiumStatus varchar(1) not null,
-PaymentType varchar(1) not null,
-Amount decimal not null,
-Subdate DATE,
-Expdate DATE
-);
 --Admin account (Password: 123)
 insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values
 ('admin','asriren@ilstu.edu','Administrator','Q?','A');
@@ -140,9 +143,23 @@ CREATE TABLE LinkedU.USERIMAGE(
 USERID VARCHAR(25) NOT NULL,
 PROFILEPIC BLOB);
 
-CREATE TABLE LinkedU.STUDENTDOC(
-USERID VARCHAR(25) NOT NULL,
-RESUME BLOB);
+insert into LinkedU.userimage values('pdkaufm',null);
+insert into LinkedU.userimage values('kssuth1',null);
+insert into LinkedU.userimage values('stiwar1',null);
+insert into LinkedU.userimage values('asriren',null);
+insert into LinkedU.userimage values('blim',null);
+insert into LinkedU.userimage values('test',null);
+insert into LinkedU.userimage values('admin',null);
+
+CREATE TABLE LINKEDU.PREMIUM(
+UserID varchar(25) not null,
+PremiumStatus varchar(1) not null,
+PaymentType varchar(1) not null,
+Amount decimal not null,
+Subdate DATE,
+Expdate DATE
+);
+
 
 create table LinkedU.PasswordReset (
 Email                          VARCHAR(35) NOT NULL,
