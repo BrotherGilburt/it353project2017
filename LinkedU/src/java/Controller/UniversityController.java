@@ -98,6 +98,7 @@ public class UniversityController implements Serializable {
         FacesContext facesContext2 = FacesContext.getCurrentInstance();
         Map<String, String> params = facesContext2.getExternalContext().getRequestParameterMap();
         name = params.get("name");
+
         ArrayList<University> list = search.getUniversitiesList();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getName().equals(name)) {  

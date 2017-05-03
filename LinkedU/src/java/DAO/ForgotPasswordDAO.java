@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Model.Account;
 import Model.ForgotPassword;
 import Model.Login;
 import java.sql.Connection;
@@ -54,7 +55,7 @@ public class ForgotPasswordDAO {
         return rowCount;
     }
     
-    public static Login findUserID(ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
+    public static Login findUserID(Account accountModel) throws ClassNotFoundException, SQLException {
         Login record = new Login();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
         String myDB = "jdbc:derby://localhost:1527/LinkedU";
@@ -62,7 +63,7 @@ public class ForgotPasswordDAO {
 
         try {
             Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.LoginInfo WHERE email='" + forgotPasswordModel.getEmail() + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Accounts WHERE email='" + accountModel.getEmail() + "'");
 
             if (rs.next()) {
                 record.setUserID(rs.getString("userid"));
@@ -129,5 +130,37 @@ public class ForgotPasswordDAO {
             System.err.println(e.getMessage());
         }
         return rowCount;
+    }
+    
+    public static ForgotPassword findGenString(ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
+        ForgotPassword record = new ForgotPassword();
+        DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
+        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
+
+        try {
+            Statement stmt = DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.PasswordReset WHERE email='" +
+                    forgotPasswordModel.getEmail() + " AND gen_string='" +
+                    forgotPasswordModel.getGenString() + "'");
+
+            if (rs.next()) {
+                record.setEmail(rs.getString("email"));
+                record.setGenString(rs.getString("gen_string"));
+            } else {
+                record = null;
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        try {
+            DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return record;
     }
 }

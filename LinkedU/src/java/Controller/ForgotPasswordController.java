@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import DAO.AccountDB;
 import DAO.ForgotPasswordDAO;
+import Model.Account;
 import Model.ForgotPassword;
 import Model.Login;
 import java.io.Serializable;
@@ -96,12 +96,11 @@ public class ForgotPasswordController implements Serializable {
     }
 
     public String sendEmail() throws ClassNotFoundException, SQLException {
-        Login loginModel = new Login();
-        Login check = AccountDB.getLogin(loginModel);
+        Account accountModel = new Account();
+        accountModel.setEmail(forgotPasswordModel.getEmail());
+        Login check = ForgotPasswordDAO.findUserID(accountModel);
 
-        if (check == null) {
-            errorMessage = "Email could not be found!";
-        } else {
+        if (check != null) {
             errorMessage = "";
             // Recipient's email ID needs to be mentioned.
             String to = forgotPasswordModel.getEmail();
@@ -164,6 +163,8 @@ public class ForgotPasswordController implements Serializable {
 
             //Insert info into database
             ForgotPasswordDAO.setGenString(forgotPasswordModel);
+        } else {
+            errorMessage = "Email could not be found!";
         }
         return "forgotPassword.xhtml?faces-redirect=true";
     }
@@ -187,5 +188,15 @@ public class ForgotPasswordController implements Serializable {
             errorMessage = "Password and Confirm Password do not match!";
         }
         return "newPassword.xhtml?faces-redirect=true";
+    }
+    
+    public String urlOK() throws ClassNotFoundException, SQLException {
+        ForgotPassword check = ForgotPasswordDAO.findGenString(forgotPasswordModel);
+        if (check != null) {
+            //Reset password page
+        } else {
+            //Incorrect URL page
+        }
+        return "";
     }
 }
