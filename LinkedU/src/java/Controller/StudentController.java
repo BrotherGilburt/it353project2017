@@ -10,6 +10,8 @@ import DAO.StudentDAO;
 import Model.Account;
 import Model.Login;
 import Model.Student;
+import Utility.EmailForMoreInfo;
+import Utility.EmailForSchedule;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -23,7 +25,7 @@ import org.primefaces.model.UploadedFile;
 
 /**
  *
- * @author IT353S710
+ * @author IT353S718
  */
 @ManagedBean
 @SessionScoped
@@ -37,11 +39,15 @@ public class StudentController implements Serializable {
     private String errorMessage;
     private UploadedFile resume;
     private Account accountModel;
+    private StudentDAO stuDAO;
+    private Student student;
+    private String message;
+
     /**
      * Creates a new instance of StudentProfileController
      */
     public StudentController() {
-        if(accountModel == null){
+        if (accountModel == null) {
             accountModel = new Account();
         }
         if (account == null) {
@@ -58,12 +64,15 @@ public class StudentController implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             search = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{searchController}", SearchController.class);
         }
+         stuDAO = new StudentDAO();
     }
 
     public String loadMyProfile() {
         myProfileModel = StudentDAO.getProfile(account.getLoginModel().getUserID());
-        if (myProfileModel == null) myProfileModel = new Student(account.getLoginModel().getUserID());
-        
+        if (myProfileModel == null) {
+            myProfileModel = new Student(account.getLoginModel().getUserID());
+        }
+
         return "myProfile.xhtml?faces-redirect=true";
     }
 
@@ -80,7 +89,7 @@ public class StudentController implements Serializable {
                 break;
             }
         }
-        
+
         return "studentProfile.xhtml?faces-redirect=true";
     }
 
@@ -88,7 +97,7 @@ public class StudentController implements Serializable {
 
         return "updateStudentProfile.xhtml?faces-redirect=true";
     }
-    
+
     public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
         String userid = account.getLoginModel().getUserID();
@@ -96,20 +105,20 @@ public class StudentController implements Serializable {
         int update = ImageDAO.updateImage(userid, image);
         return "myProfile.xhtml?faces-redirect=true";
     }
-    
+
     public String gotoUpdateMixtape() {
         return "myProfile.xhtml?faces-redirect=true";
     }
-    
+
     public String gotoUpdateEssay() {
         return "myProfile.xhtml?faces-redirect=true";
     }
 
     public String updateFinished() throws SQLException {
         /*DATA VALIDATION*/
-        
+
         StudentDAO.updateStudent(myProfileModel);
-        
+
         return "myProfile.xhtml?faces-redirect=true";
     }
 
@@ -117,7 +126,6 @@ public class StudentController implements Serializable {
         boolean status = false;
 
         //save image
-        
         if (status) { //successful upload
             myProfileModel.setImage(myProfileModel.getUserID() + "_profile.jpg");
         } else { //failed/no upload
@@ -186,4 +194,58 @@ public class StudentController implements Serializable {
         this.accountModel = accountModel;
     }
 
+    /**
+     * @return the stuDAO
+     */
+    public StudentDAO getStuDAO() {
+        return stuDAO;
+    }
+
+    /**
+     * @return the student
+     */
+    public Student getStudent() {
+        return student;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    public void schedule() {
+
+         EmailForSchedule email = new EmailForSchedule();
+        boolean emailStatus = false;
+     System.out.println(viewStudentModel.getEmail());
+        viewStudentModel.setEmail(stuDAO.emailByID(viewStudentModel.getUserID()));
+       System.out.println(viewStudentModel.getEmail());
+
+       
+
+        emailStatus = email.sendEmail(viewStudentModel);
+        if (emailStatus) {
+            message = "An email has been sent to the student to schedule an appointment!!";
+        } else {
+            System.out.println("not sent");
+        }
+
+    }
+
+    public void moreInfo() {
+
+        viewStudentModel.setEmail(stuDAO.emailByID(viewStudentModel.getUserID()));
+        System.out.println(stuDAO.emailByID(viewStudentModel.getUserID()));
+        EmailForMoreInfo info = new EmailForMoreInfo();
+        boolean estatus = false;
+        estatus = info.sendEmail(viewStudentModel);
+        if (estatus) {
+            message = "Email sent!";
+        } else {
+            message = "error!";
+        }
+
+    }
 }

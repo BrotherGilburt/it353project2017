@@ -6,15 +6,19 @@
 package Controller;
 
 import DAO.ApplydaoImpl;
+import DAO.StudentDAO;
 import javax.faces.bean.SessionScoped;
 import Model.Apply;
 import java.io.IOException;
 import org.primefaces.event.FlowEvent;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.mail.Part;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @SessionScoped
@@ -22,11 +26,16 @@ public class ApplyController implements Serializable {
 
 
     private ArrayList<String> majorsList;
+    private AccountController account;
     private String response;
     private Apply apply;
-
+    private UploadedFile resume;
+    private String uploadStatus;
     public ApplyController() {
-
+         if (account == null) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            account = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{accountController}", AccountController.class);
+        }
         apply = new Apply();
         majorsList = new ArrayList();
     }
@@ -177,10 +186,66 @@ public class ApplyController implements Serializable {
         ApplydaoImpl applyDAO = new ApplydaoImpl();
         int status = applyDAO.createProfile(apply);
         if (status == 1) {
-            return "response.xhtml";
+            return "uploadResume.xhtml?faces-redirect=true";
         } else {
             return "error.xhtml";
         }
+    }
+    public String uploadResume() throws IOException, ClassNotFoundException, SQLException{
+        FacesContext context = FacesContext.getCurrentInstance();  
+        resume = getResume();
+        String userid = account.getLoginModel().getUserID();
+        System.out.println(userid);
+        int update = StudentDAO.updateResume(userid,resume);
+        System.out.println(update);
+        if(update !=0 ){
+            context.addMessage(null, new FacesMessage("Resume Uploaded:", "Success"));
+        }else{
+            context.addMessage(null, new FacesMessage("Resume Upload:",  "Failed") );
+        }
+        return "myProfile.xhtml?faces-redirect=true";
+    }
+
+    /**
+     * @return the resume
+     */
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+    /**
+     * @param resume the resume to set
+     */
+    public void setResume(UploadedFile resume) {
+        this.resume = resume;
+    }
+
+    /**
+     * @return the account
+     */
+    public AccountController getAccount() {
+        return account;
+    }
+
+    /**
+     * @param account the account to set
+     */
+    public void setAccount(AccountController account) {
+        this.account = account;
+    }
+
+    /**
+     * @return the uploadStatus
+     */
+    public String getUploadStatus() {
+        return uploadStatus;
+    }
+
+    /**
+     * @param uploadStatus the uploadStatus to set
+     */
+    public void setUploadStatus(String uploadStatus) {
+        this.uploadStatus = uploadStatus;
     }
 }
 

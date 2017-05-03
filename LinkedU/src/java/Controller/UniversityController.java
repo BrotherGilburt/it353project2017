@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.Part;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
@@ -56,6 +57,8 @@ public class UniversityController implements Serializable {
             FacesContext facesContext1 = FacesContext.getCurrentInstance();
             search = facesContext1.getApplication().evaluateExpressionGet(facesContext1, "#{searchController}", SearchController.class);
         }
+        
+        if (major == null) major = "";
     }
 
     /**
@@ -76,8 +79,8 @@ public class UniversityController implements Serializable {
         UploadedFile image = getResume();
         String userid = account.getLoginModel().getUserID();
         System.out.println(userid);
-        int update = ImageDAO.updateImage(userid, image);
-        return "universityProfile.xhtml?faces-redirect=true";
+        int update = ImageDAO.updateImage(account.getLoginModel().getUserID(), image);
+        return "myProfile.xhtml?faces-redirect=true";
     }
 
     public String loadMyProfile() {
@@ -85,7 +88,6 @@ public class UniversityController implements Serializable {
         if (myUniversityModel == null) {
             myUniversityModel = new University(account.getLoginModel().getUserID());
         }
-
         return "myProfile.xhtml?faces-redirect=true";
     }
 
@@ -95,11 +97,9 @@ public class UniversityController implements Serializable {
         String name = params.get("name");
 
         ArrayList<University> list = search.getUniversitiesList();
-
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().equals(name)) {
+            if (list.get(i).getName().equals(name)) {  
                 viewUniversityModel = list.get(i);
-
                 break;
             }
         }
