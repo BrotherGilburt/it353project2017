@@ -30,8 +30,9 @@ import javax.mail.internet.*;
 public class ForgotPasswordController implements Serializable {
 
     private ForgotPassword forgotPasswordModel;
-    private String errorMessage = "";
-    private String confirmMessage = "";
+    private String errorMessage;
+    private String confirmMessage;
+    private String messageType;
 
     /**
      * Creates a new instance of ForgotPasswordController
@@ -84,6 +85,20 @@ public class ForgotPasswordController implements Serializable {
      */
     public void setConfirmMessage(String confirmMessage) {
         this.confirmMessage = confirmMessage;
+    }
+
+    /**
+     * @return the messageType
+     */
+    public String getMessageType() {
+        return messageType;
+    }
+
+    /**
+     * @param messageType the messageType to set
+     */
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 
     public String genRandomString() {
@@ -201,6 +216,8 @@ public class ForgotPasswordController implements Serializable {
     }
 
     public String urlOK() throws ClassNotFoundException, SQLException {
+        errorMessage = "";
+        confirmMessage = "";
         String navi = null;
         ForgotPassword check = ForgotPasswordDAO.findGenString(forgotPasswordModel);
         if (check == null) {
