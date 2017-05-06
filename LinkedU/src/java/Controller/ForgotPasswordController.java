@@ -9,8 +9,10 @@ import DAO.ForgotPasswordDAO;
 import Model.Account;
 import Model.ForgotPassword;
 import Model.Login;
+import Model.TextSender;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -32,7 +34,10 @@ public class ForgotPasswordController implements Serializable {
     private ForgotPassword forgotPasswordModel;
     private String errorMessage;
     private String confirmMessage;
-    private String messageType;
+    private java.util.List<java.lang.String> cellPhoneCarriers;
+    private String cellPhoneCarrierChosen;
+    private String phone;
+    private String sentStatus;
 
     /**
      * Creates a new instance of ForgotPasswordController
@@ -86,20 +91,69 @@ public class ForgotPasswordController implements Serializable {
     public void setConfirmMessage(String confirmMessage) {
         this.confirmMessage = confirmMessage;
     }
+    
+    public List<String> getCellPhoneCarriers() {
+        cellPhoneCarriers = TextSender.getCarriers();
+        return cellPhoneCarriers;
+    }
 
-    /**
-     * @return the messageType
-     */
-    public String getMessageType() {
-        return messageType;
+    public void setCellPhoneCarriers(List<String> cellPhoneCarriers) {
+        this.cellPhoneCarriers = cellPhoneCarriers;
     }
 
     /**
-     * @param messageType the messageType to set
+     * @return the cellPhoneCarrierChosen
      */
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
+    public String getCellPhoneCarrierChosen() {
+        return cellPhoneCarrierChosen;
     }
+
+    /**
+     * @param cellPhoneCarrierChosen the cellPhoneCarrierChosen to set
+     */
+    public void setCellPhoneCarrierChosen(String cellPhoneCarrierChosen) {
+        this.cellPhoneCarrierChosen = cellPhoneCarrierChosen;
+    }
+
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void sendSMS() {
+        errorMessage = "";
+        confirmMessage = "";
+        forgotPasswordModel.setGenString(genRandomString());
+        TextSender.sendSMS(cellPhoneCarrierChosen, phone, 
+            "Click the link to reset your password. -> "
+            + "http://localhost:8080/LinkedU/faces/newPassword.xhtml?"
+            + "email=" + forgotPasswordModel.getEmail()
+            + "&genString=" + forgotPasswordModel.getGenString());
+            sentStatus = " Sent! (to " + phone + " on " + cellPhoneCarrierChosen + ")";
+    }
+
+    /**
+     * @return the sentStatus
+     */
+    public String getSentStatus() {
+        return sentStatus;
+    }
+
+    /**
+     * @param sentStatus the sentStatus to set
+     */
+    public void setSentStatus(String sentStatus) {
+        this.sentStatus = sentStatus;
+    }    
 
     public String genRandomString() {
         String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
