@@ -13,17 +13,18 @@
         <ui:composition template="./newTemplate.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:fieldset legend="Login" style="margin-bottom:20px">
-                        <p:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
-                        <h:panelGrid id = "panel" columns = "2" border = "0"
-                                     cellpadding = "10" cellspacing = "1">
-                            User ID:<p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID"/>
-                            Password: <p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
-                            </p:password>
-                            <h:panelGroup></h:panelGroup>
-                            <h:link value="Forgot Password?" outcome="forgotPassword.xhtml" />                
-                            <p:commandButton id="submitID" value="Log In" action="#{accountController.logIn()}"/>
-                        </h:panelGrid>
+                    <p:fieldset legend="Login" style="margin-bottom:20px; text-align: center;">
+                        <span style="display: inline-block">
+                            <p:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
+                            <h:panelGrid id = "panel" columns = "2" border = "0"
+                                         cellpadding = "10" cellspacing = "1">
+                                <h:panelGroup><b>User ID:</b></h:panelGroup> <p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID" />
+                                <h:panelGroup><b>Password:</b></h:panelGroup> <p:password id="pwd" value="#{accountController.loginModel.password}" label="Password" />
+                                <h:panelGroup></h:panelGroup>
+                                <h:link value="Forgot Password?" outcome="forgotPassword.xhtml" />                
+                                <p:commandButton id="submitID" value="Log In" action="#{accountController.logIn()}"/>
+                            </h:panelGrid>
+                        </span>
                     </p:fieldset>
                 </h:form>
             </ui:define>

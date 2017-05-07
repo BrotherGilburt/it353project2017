@@ -11,9 +11,12 @@
         <ui:composition template="./newTemplate.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <h3>Login Failed</h3>
-                    <p:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
-                    <p:commandButton id="submitID" value="Try again" action="#{accountController.gotoLogin()}"/>
+                    <p:fieldset legend="Login Failed" style="text-align: center">
+                        <h:panelGrid columns="1" cellpadding="5" style="display: inline-block">
+                            <h:panelGroup><b><p:outputLabel value="#{accountController.errorMessage}" style="color:red"/></b></h:panelGroup>
+                            <p:commandButton id="submitID" value="Try again" action="#{accountController.gotoLogin()}"/>
+                        </h:panelGrid>
+                    </p:fieldset>
                 </h:form>
             </ui:define>
         </ui:composition>

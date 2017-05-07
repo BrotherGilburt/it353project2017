@@ -16,7 +16,7 @@
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="University Search Results" style="margin-bottom:20px">
-                        <h:outputText value="#{searchController.tableDescription()}" />
+                        <h3><h:outputText value="#{searchController.tableDescription()}" /></h3>
                         <p:dataTable id="empTableID" value="#{searchController.universitiesList}" var="aRow">
                             <p:column headerText="University">
                                 <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">

@@ -38,7 +38,8 @@ public class StudentDAO {
      */
     public StudentDAO() {
     }
-     public String emailByID(String ID){
+
+    public String emailByID(String ID) {
         String retVal = null;
         Student record = new Student();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
@@ -47,14 +48,13 @@ public class StudentDAO {
 
         try {
             Statement stmt = DBConn.createStatement();
-            String query = "select email from LINKEDU.ACCOUNTS a join linkedu.students s  using(userid) where userid='"+ID+"'";
+            String query = "select email from LINKEDU.ACCOUNTS a join linkedu.students s  using(userid) where userid='" + ID + "'";
 
-            
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
                 retVal = rs.getString("email");
-                
-            } 
+
+            }
             rs.close();
             stmt.close();
         } catch (Exception e) {
@@ -69,8 +69,6 @@ public class StudentDAO {
 
         return retVal;
     }
-        
-    
 
     public static int createStudent(Student record) {
         try {
@@ -109,7 +107,7 @@ public class StudentDAO {
             pstmt.setString(11, record.getEssay());
             System.out.println("insert string =" + insertString);
             rowCount += pstmt.executeUpdate();
-            
+
             insertString = "INSERT INTO LinkedU.STUDENTDOC (USERID) VALUES (?)";
             pstmt = DBConn.prepareStatement(insertString);
             pstmt.setString(1, record.getUserID());
@@ -247,11 +245,26 @@ public class StudentDAO {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-            Statement stmt = DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM LinkedU.Students "
+            String[] words = searchText.split(" ");
+            StringBuilder prepared = new StringBuilder("SELECT * FROM LinkedU.Students WHERE upper(firstname) LIKE ? OR upper(lastname) LIKE ?");
+
+            for (int i = 1; i < words.length; i++) {
+                prepared.append(" AND (upper(firstname) LIKE ? OR upper(lastname) LIKE ?)");
+            }
+
+            PreparedStatement pstmt = DBConn.prepareStatement(prepared.toString());
+
+            for (int i = 0; i < words.length; i++) {
+                pstmt.setString((2 * i + 1), "%" + words[i].toUpperCase() + "%");
+                pstmt.setString((2 * i + 2), "%" + words[i].toUpperCase() + "%");
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            /*
+            ResultSet rs = pstmt.executeQuery("SELECT * FROM LinkedU.Students "
                     + "WHERE upper(firstname) LIKE '%" + searchText
                     + "%' OR upper(lastname) LIKE '%" + searchText + "%'");
-
+             */
             while (rs.next()) {
                 if (recordsList == null) {
                     recordsList = new ArrayList();
@@ -284,7 +297,7 @@ public class StudentDAO {
                 record.setEssay(rs.getString("Essay"));
             }
             rs.close();
-            stmt.close();
+            pstmt.close();
         } catch (Exception e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
@@ -469,9 +482,18 @@ public class StudentDAO {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE UPPER(Universities) LIKE ?");
+            String[] words = searchText.split(" ");
+            StringBuilder prepared = new StringBuilder("SELECT * FROM LinkedU.Students WHERE upper(universities) LIKE ?");
 
-            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+            for (int i = 1; i < words.length; i++) {
+                prepared.append(" OR upper(universities) LIKE ?");
+            }
+
+            PreparedStatement pstmt = DBConn.prepareStatement(prepared.toString());
+
+            for (int i = 0; i < words.length; i++) {
+                pstmt.setString(i + 1, "%" + words[i].toUpperCase() + "%");
+            }
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -524,9 +546,18 @@ public class StudentDAO {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Students WHERE UPPER(Majors) LIKE ?");
+            String[] words = searchText.split(" ");
+            StringBuilder prepared = new StringBuilder("SELECT * FROM LinkedU.Students WHERE UPPER(Majors) LIKE ?");
 
-            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+            for (int i = 1; i < words.length; i++) {
+                prepared.append(" OR upper(majors) LIKE ?");
+            }
+
+            PreparedStatement pstmt = DBConn.prepareStatement(prepared.toString());
+
+            for (int i = 0; i < words.length; i++) {
+                pstmt.setString(i + 1, "%" + words[i].toUpperCase() + "%");
+            }
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -571,8 +602,9 @@ public class StudentDAO {
         }
         return recordsList;
     }
-    public static int updateResume(String userid, UploadedFile resume) throws IOException, ClassNotFoundException, SQLException{
-    InputStream i = resume.getInputstream();
+
+    public static int updateResume(String userid, UploadedFile resume) throws IOException, ClassNotFoundException, SQLException {
+        InputStream i = resume.getInputstream();
         Connection DBConn = null;
         PreparedStatement pstmt = null;
         int rowCount = 0;

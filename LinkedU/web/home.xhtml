@@ -14,8 +14,8 @@
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
             <ui:define name="content">
-                <p:fieldset legend="Home" style="margin-bottom:20px">
-                    <h:form>
+                <p:fieldset legend="Home" style="margin-bottom:20px; text-align: center;">
+                    <h:form style="display: inline-block">
                         <h:panelGrid columns="6" cellpadding="5">
                             <h:panelGroup><b><p:outputLabel for="mode" value="Search" /></b></h:panelGroup>
                             <p:selectOneMenu id="mode" required="true" value="#{searchController.searchMode}">
@@ -34,8 +34,8 @@
                     </h:form>
                     <br/>
                     <br/>
-                    <h:form>
-                        <h3>Featured University!</h3>
+                    <h:form style="display: inline-block">
+                        <h1>Featured University</h1>
                         <p:dataTable id="preTableID" value="#{universityController.featuredList}"  var="aRow" style="margin-bottom:0">
                             <p:column headerText="University">
                                 <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">

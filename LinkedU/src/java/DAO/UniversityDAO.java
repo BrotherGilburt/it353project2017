@@ -280,9 +280,18 @@ public class UniversityDAO {
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
-            PreparedStatement pstmt = DBConn.prepareStatement("SELECT * FROM LinkedU.Universities WHERE upper(name) LIKE ?");
-
-            pstmt.setString(1, "%" + searchText.toUpperCase() + "%");
+            String[] words = searchText.split(" ");
+            StringBuilder prepared = new StringBuilder("SELECT * FROM LinkedU.Universities WHERE upper(name) LIKE ?");
+            
+            for (int i = 1; i < words.length; i++) {
+                prepared.append(" AND upper(name) LIKE ?");
+            }
+            
+            PreparedStatement pstmt = DBConn.prepareStatement(prepared.toString());
+            
+            for (int i = 0; i < words.length; i++) {
+                pstmt.setString((i+1), "%" + words[i].toUpperCase() + "%");
+            }
 
             ResultSet rs = pstmt.executeQuery();
 
