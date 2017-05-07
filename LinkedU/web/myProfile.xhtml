@@ -20,15 +20,15 @@
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:commandButton value="Submit" ajax="false" action="#{studentController.gotoUpdateImage}" />
                             <p:fileUpload id="profileimage1"  value="#{studentController.resume}" mode="simple" skinSimple="true"/>
-                            <h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGroup>
                             <h:outputLink value="DisplayImage?userid=#{studentController.myProfileModel.userID}" target="_blank" rendered="#{studentController.myProfileModel.isImage()}">
                                 <h:graphicImage value="DisplayImage?userid=#{studentController.myProfileModel.userID}" style="max-width: 200px; max-height: 200px" />
                             </h:outputLink>
                             <h:outputLink value="#{studentController.myProfileModel.getDefaultImage()}" target="_blank" rendered="#{studentController.myProfileModel.isNoImage()}">
                                 <h:graphicImage value="#{studentController.myProfileModel.getDefaultImage()}" style="max-width: 200px; max-height: 200px" />
                             </h:outputLink>
-                                </h:panelGroup>
-                        </h:panelGrid>
+                        </h:panelGroup>
                         <br/>
                         <h:panelGrid columns="2">
                             <h3>General Information</h3> <p:commandButton value="Update" action="#{studentController.gotoUpdateGeneral()}" />
@@ -63,15 +63,16 @@
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:commandButton value="Submit" ajax="false" action="#{universityController.gotoUpdateImage}" />
                             <p:fileUpload id="profileimage2"  value="#{universityController.resume}" mode="simple" skinSimple="true"/>
-                            <h:panelGroup>
-                                <h:outputLink value="DisplayImage?userid=#{universityController.myUniversityModel.userID}" target="_blank" rendered="#{universityController.myUniversityModel.isImage()}">
-                                    <h:graphicImage value="DisplayImage?userid=#{universityController.myUniversityModel.userID}" style="max-width: 200px; max-height: 200px" />
-                                </h:outputLink>
-                                <h:outputLink value="#{universityController.myUniversityModel.getDefaultImage()}" target="_blank" rendered="#{universityController.myUniversityModel.isNoImage()}">
-                                    <h:graphicImage value="#{universityController.myUniversityModel.getDefaultImage()}" style="max-width: 200px; max-height: 200px" />
-                                </h:outputLink>
-                            </h:panelGroup>
                         </h:panelGrid>
+                        <h:panelGroup>
+                            <h:outputLink value="DisplayImage?userid=#{universityController.myUniversityModel.userID}" target="_blank" rendered="#{universityController.myUniversityModel.isImage()}">
+                                <h:graphicImage value="DisplayImage?userid=#{universityController.myUniversityModel.userID}" style="max-width: 200px; max-height: 200px" />
+                            </h:outputLink>
+                            <h:outputLink value="#{universityController.myUniversityModel.getDefaultImage()}" target="_blank" rendered="#{universityController.myUniversityModel.isNoImage()}">
+                                <h:graphicImage value="#{universityController.myUniversityModel.getDefaultImage()}" style="max-width: 200px; max-height: 200px" />
+                            </h:outputLink>
+                        </h:panelGroup>
+
 
                         <h:panelGrid columns="2">
                             <h3>General Information</h3> <p:commandButton value="Update" action="#{universityController.gotoUpdate()}"/>
