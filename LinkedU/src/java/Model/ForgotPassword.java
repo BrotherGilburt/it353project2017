@@ -16,6 +16,14 @@ public class ForgotPassword {
     private String newPassword;
     private String confirmNewPassword;
     private String genString;
+    
+    public ForgotPassword() {
+        email = "";
+        userID = "";
+        newPassword = "";
+        confirmNewPassword = "";
+        genString = "";
+    }
 
     /**
      * @return the email

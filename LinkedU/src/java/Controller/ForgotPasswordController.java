@@ -17,7 +17,7 @@ import java.util.Properties;
 import java.util.Random;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.InternetAddress;
 import javax.mail.*;
@@ -28,7 +28,7 @@ import javax.mail.internet.*;
  * @author Keegan
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ForgotPasswordController implements Serializable {
 
     private ForgotPassword forgotPasswordModel;
@@ -36,6 +36,7 @@ public class ForgotPasswordController implements Serializable {
     private String cellPhoneCarrierChosen;
     private String phone;
     private String sentStatus;
+    private String passwordError;
 
     /**
      * Creates a new instance of ForgotPasswordController
@@ -59,7 +60,7 @@ public class ForgotPasswordController implements Serializable {
     public void setForgotPasswordModel(ForgotPassword forgotPasswordModel) {
         this.forgotPasswordModel = forgotPasswordModel;
     }
-    
+
     public List<String> getCellPhoneCarriers() {
         cellPhoneCarriers = TextSender.getCarriers();
         return cellPhoneCarriers;
@@ -109,8 +110,21 @@ public class ForgotPasswordController implements Serializable {
      */
     public void setSentStatus(String sentStatus) {
         this.sentStatus = sentStatus;
-    }    
+    }
 
+    /**
+     * @return the passwordError
+     */
+    public String getPasswordError() {
+        return passwordError;
+    }
+
+    /**
+     * @param passwordError the passwordError to set
+     */
+    public void setPasswordError(String passwordError) {
+        this.passwordError = passwordError;
+    }
     public String genRandomString() {
         String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder genString = new StringBuilder();
@@ -122,7 +136,7 @@ public class ForgotPasswordController implements Serializable {
         return genString.toString();
     }
 
-    public String sendEmail() throws ClassNotFoundException, SQLException {
+    public void sendEmail() throws ClassNotFoundException, SQLException {
         Account accountModel = new Account();
         accountModel.setEmail(forgotPasswordModel.getEmail());
         Login check = ForgotPasswordDAO.findUserID(accountModel, forgotPasswordModel);
@@ -190,28 +204,26 @@ public class ForgotPasswordController implements Serializable {
         } else {
             sentStatus = "Email could not be found!";
         }
-        return "forgotPassword.xhtml?faces-redirect=true";
     }
-    
-    public String sendSMS() throws ClassNotFoundException, SQLException {
+
+    public void sendSMS() throws ClassNotFoundException, SQLException {
         Account accountModel = new Account();
         accountModel.setEmail(forgotPasswordModel.getEmail());
         Login check = ForgotPasswordDAO.findUserID(accountModel, forgotPasswordModel);
         if (check != null) {
             forgotPasswordModel.setGenString(genRandomString());
-            TextSender.sendSMS(cellPhoneCarrierChosen, phone, 
-            "Click the link to reset your password. -> "
-            + "http://localhost:8080/LinkedU/faces/newPassword.xhtml?"
-            + "email=" + forgotPasswordModel.getEmail()
-            + "&genString=" + forgotPasswordModel.getGenString());
+            TextSender.sendSMS(cellPhoneCarrierChosen, phone,
+                    "Click the link to reset your password. -> "
+                    + "http://localhost:8080/LinkedU/faces/newPassword.xhtml?"
+                    + "email=" + forgotPasswordModel.getEmail()
+                    + "&genString=" + forgotPasswordModel.getGenString());
             sentStatus = " Sent! (to " + phone + " on " + cellPhoneCarrierChosen + ")";
         } else {
             sentStatus = "Email could not be found!";
         }
-        return "forgotPassword.xhtml?faces-redirect=true";
     }
 
-    public String changePassword() throws ClassNotFoundException, SQLException {
+    public void changePassword() throws ClassNotFoundException, SQLException {
         if (forgotPasswordModel.getNewPassword().equals(forgotPasswordModel.getConfirmNewPassword())) {
             forgotPasswordModel.setNewPassword(Login.generateHash(forgotPasswordModel.getNewPassword()));
 
@@ -221,19 +233,20 @@ public class ForgotPasswordController implements Serializable {
             if (check != null) {
                 int query = ForgotPasswordDAO.changePassword(forgotPasswordModel);
                 if (query == 0) {
-                    sentStatus = "Failed to change password.";
+                    passwordError = "Failed to change password.";
                 } else {
-                    sentStatus = "Password change successful!";
+                    passwordError = "Password change successful!";
                     ForgotPasswordDAO.deleteGenString(forgotPasswordModel);
-                    return "login.xhtml?faces-redirect=true";
+                    FacesContext fc = FacesContext.getCurrentInstance();
+                    ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+                    nav.performNavigation("login.xhtml?faces-redirect=true");
                 }
             } else {
-                sentStatus = "Password and Confirm Password do not match!";
+                    passwordError = "Email could not be found!";
             }
         } else {
-            sentStatus = "Email could not be found!";
+            passwordError = "Password and Confirm Password do not match!";
         }
-        return "newPassword.xhtml?faces-redirect=true";
     }
 
     public String urlOK() throws ClassNotFoundException, SQLException {
