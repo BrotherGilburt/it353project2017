@@ -48,10 +48,8 @@
                             <h:message for="email" style="color:red"/>
 
                             Account Type: <p:selectOneMenu id="account" required="true" value="#{accountController.accountModel.accountType}">
-                                <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" />
-                                <f:selectItem id="item1" itemLabel="Student" itemValue="Student" />
-                                <f:selectItem id="item2" itemLabel="University" itemValue="University" />
-                                <f:selectItem id="item3" itemLabel="Administrator" itemValue="Administrator" />
+                                <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" noSelectionOption="true" />
+                                <f:selectItems value="#{accountController.accountTypes}" />
                             </p:selectOneMenu>
                         </h:panelGrid>
                         <h:panelGrid id = "panel2" columns = "3">

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -45,6 +46,8 @@ public class AccountController implements Serializable {
 
     private boolean loginStatus;
     
+    private ArrayList<String> accountTypes;
+    
     private StudentController student;
     private UniversityController university;
 
@@ -68,6 +71,10 @@ public class AccountController implements Serializable {
         if (attempts <= 0) {
             attempts = 0;
         }
+        
+        accountTypes = new ArrayList();
+        accountTypes.add("Student");
+        accountTypes.add("University");
         
         loginStatus = false;
         confirm = "";
@@ -519,4 +526,12 @@ public class AccountController implements Serializable {
         return "index.xhtml";
     }
 
+    public ArrayList<String> getAccountTypes() {
+        return accountTypes;
+    }
+
+    public void setAccountTypes(ArrayList<String> accountTypes) {
+        this.accountTypes = accountTypes;
+    }
+    
 }
