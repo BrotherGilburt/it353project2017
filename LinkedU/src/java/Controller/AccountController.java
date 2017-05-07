@@ -304,7 +304,13 @@ public class AccountController implements Serializable {
             //AdminDAO.createAdmin(new Admin(loginModel.getUserID()))
 
         }
-
+        
+        try {
+            ImageDAO.insertNull(loginModel.getUserID());
+        } catch (Exception e) {
+            System.out.println("Image Database initialization failed.");
+        }
+                
         //Send confirmation Email.
         confirmationEmail(accountModel.getEmail());
 

@@ -8,12 +8,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import org.primefaces.model.UploadedFile;
+
 /**
  *
  * @author javaknowledge
  */
 public class ImageDAO {
-public static int updateImage(String userId, UploadedFile image) throws SQLException, IOException, ClassNotFoundException {
+
+    public static int updateImage(String userId, UploadedFile image) throws SQLException, IOException, ClassNotFoundException {
         InputStream i = image.getInputstream();
         Connection DBConn = null;
         PreparedStatement pstmt = null;
@@ -29,6 +31,36 @@ public static int updateImage(String userId, UploadedFile image) throws SQLExcep
             pstmt = DBConn.prepareStatement(updateString);
             pstmt.setBinaryStream(1, i);
             pstmt.setString(2, userId);
+            rowCount += pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        } finally {
+            if (DBConn != null) {
+                DBConn.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        }
+        return rowCount;
+    }
+
+        public static int insertNull(String userID) throws SQLException, IOException, ClassNotFoundException {
+        Connection DBConn = null;
+        PreparedStatement pstmt = null;
+        int rowCount = 0;
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
+        try {
+            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+            String updateString;
+            updateString = "INSERT INTO LINKEDU.USERIMAGE VALUES (?,?)";
+            System.out.println(updateString + userID + null);
+            pstmt = DBConn.prepareStatement(updateString);
+
+            pstmt.setString(1, userID);
+            pstmt.setBinaryStream(2, null);
             rowCount += pstmt.executeUpdate();
         } catch (Exception e) {
             System.err.println("ERROR: Problems with SQL select");

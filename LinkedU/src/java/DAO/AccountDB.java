@@ -75,13 +75,13 @@ public class AccountDB {
                 url = "http://www.stolenimages.co.uk/components/com_easyblog/themes/wireframe/images/placeholder-image.png";
             }
             System.out.println(url);
-            URL u = new URL(url);
+            /*URL u = new URL(url);
             InputStream i = u.openStream();
             insertString = "INSERT INTO LinkedU.USERIMAGE VALUES(?,?)";
             PreparedStatement pstmt = DBConn.prepareStatement(insertString);
             pstmt.setString(1, login.getUserID());
             pstmt.setBinaryStream(2,i);
-            rowCount += pstmt.executeUpdate();
+            rowCount += pstmt.executeUpdate();*/
             DBConn.close();
             stmt.close();
 

@@ -28,10 +28,10 @@ public class University {
         this.premium = false;
         this.name = "N/A";
         this.majors = new ArrayList();
-        this.street = "N/A";
-        this.city = "N/A";
-        this.state = "N/A";
-        this.zip = "N/A";
+        this.street = "";
+        this.city = "";
+        this.state = "";
+        this.zip = "";
         this.image = "./Resources/default_university.png";
     }
 
@@ -46,10 +46,26 @@ public class University {
      * @return formatted address
      */
     public String getFullAddress() {
-        if (street.equals("N/A") || city.equals("N/A") || state.equals("N/A") || zip.equals("N/A")) {
+        if (street.equals("") || city.equals("") || state.equals("") || zip.equals("")) {
             return "Not Provided";
         }
-        return street + ", " + city + ", " + state + " " + zip;
+        StringBuilder fullAddress = new StringBuilder();
+        if (!street.equals("")) {
+            fullAddress.append(street);
+            fullAddress.append(", ");
+        }
+        if (!city.equals("")) {
+            fullAddress.append(city);
+            fullAddress.append(", ");
+        }
+        if (!state.equals("")) {
+            fullAddress.append(state);
+            fullAddress.append(" ");
+        }
+        if (!zip.equals("")) {
+            fullAddress.append(zip);
+        }
+        return fullAddress.toString();
     }
 
     public String getMajorsString() {

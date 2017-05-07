@@ -202,6 +202,7 @@ public class UniversityController implements Serializable {
         ArrayList<University> list = UniversityDAO.getAllUniversities();
 
         for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals("N/A")) continue;
             if (!stringList.contains(list.get(i).getName())) {
                 stringList.add(list.get(i).getName());
             }

@@ -89,7 +89,7 @@ PSAT_NMSQT		integer not null,
 Universities	varchar(200) not null,
 Majors			varchar(200) not null,
 Image			varchar(50) not null,
-Mixtape			varchar(50) not null,
+Mixtape			varchar(100) not null,
 Essay			varchar(1500) not null
 );
 
@@ -113,7 +113,6 @@ insert into LinkedU.studentdoc values('pdkaufm',null);
 insert into LinkedU.studentdoc values('kssuth1',null);
 insert into LinkedU.studentdoc values('stiwar1',null);
 insert into LinkedU.studentdoc values('asriren',null);
-
 
 create table LinkedU.Universities(
 UserID				varchar(25) not null,
