@@ -50,15 +50,24 @@
                         <p:tab title="Majors">
                             <p:panel header="Majors Offered">
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Majors:" />
+                                    <h:panelGroup><b><h:outputText value="Majors:" /></b></h:panelGroup>
                                     <h:outputText id="majors" value="#{universityController.myUniversityModel.majorsString}" />
-
-                                    <h:inputText id="major" value="#{universityController.major}"/>
-                                    <p:commandButton value="Add Major">
-                                        <f:ajax listener="${universityController.addMajor()}" render="majors major" execute="major"/>
-                                    </p:commandButton> 
                                 </h:panelGrid>
                                 <br/>
+                                <h:panelGrid columns="3" columnClasses="label, value">
+                                    <p:inputText id="major" value="#{universityController.major}" />
+                                    <p:commandButton value="Add">
+                                        <f:ajax listener="${universityController.addMajor()}" render="majors major" execute="major"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Remove">
+                                        <f:ajax listener="${universityController.removeMajor()}" render="majors major" execute="major"/>
+                                    </p:commandButton> 
+                                </h:panelGrid>
+                                
+                                <p:commandButton value="Remove Last">
+                                    <f:ajax listener="${universityController.removeLastMajor()}" render="majors"/>
+                                </p:commandButton> 
+                                <br/><br/>
                                 <p:commandButton value="Submit" action="#{universityController.updateUniversity()}" />
                             </p:panel>
                         </p:tab>

@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author IT353S710
  */
 public class University {
+
     String userID;
     boolean premium; //denotes that university has payed extra to be featured on home page.
     String name;
@@ -33,35 +34,41 @@ public class University {
         this.zip = "N/A";
         this.image = "./Resources/default_university.png";
     }
-    
+
     public University(String userID) {
         this();
         this.userID = userID;
     }
-    
+
     /**
      * Formats the address into a single string.
+     *
      * @return formatted address
      */
     public String getFullAddress() {
-        if (street.equals("N/A") || city.equals("N/A") || state.equals("N/A") || zip.equals("N/A"))
+        if (street.equals("N/A") || city.equals("N/A") || state.equals("N/A") || zip.equals("N/A")) {
             return "Not Provided";
+        }
         return street + ", " + city + ", " + state + " " + zip;
     }
-    
+
     public String getMajorsString() {
-        if (majors.isEmpty()) return "N/A";
-        
+        if (majors.isEmpty()) {
+            return "N/A";
+        }
+
         StringBuilder list = new StringBuilder();
-        
+
         for (int i = 0; i < majors.size(); i++) {
             list.append(majors.get(i));
-            if (i + 1 < majors.size()) list.append(", ");
+            if (i + 1 < majors.size()) {
+                list.append(", ");
+            }
         }
-        
+
         return list.toString();
     }
-    
+
     public String getUserID() {
         return userID;
     }
@@ -134,9 +141,25 @@ public class University {
     public void setImage(String image) {
         this.image = image;
     }
-    
+
     public void addMajor(String major) {
+        for (int i = 0; i < majors.size(); i++) { //Return if duplicate found.
+            if (majors.get(i).equals(major)) {
+                return;
+            }
+        }
         majors.add(major);
     }
-    
+
+    public void removeMajor(String major) {
+        for (int i = 0; i < majors.size(); i++) {
+            if (majors.get(i).equals(major)) {
+                majors.remove(i);
+            }
+        }
+    }
+
+    public void removeLastMajor() {
+        majors.remove(majors.size() - 1);
+    }
 }

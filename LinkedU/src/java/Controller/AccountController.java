@@ -501,7 +501,7 @@ public class AccountController implements Serializable {
         if (accountModel.getAccountType().equals("Student")) {
             returnStrings = "Apply";
         } else if (accountModel.getAccountType().equals("University")) {
-            returnStrings = "Upgrade to Premium";
+            returnStrings = "Premium";
         }
         return returnStrings;
     }
