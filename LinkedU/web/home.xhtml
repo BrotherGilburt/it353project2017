@@ -14,7 +14,6 @@
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
             <ui:define name="content">
-                <br/>
                 <p:fieldset legend="Home" style="margin-bottom:20px">
                     <h:form>
                         <h:panelGrid columns="6" cellpadding="5">
@@ -36,7 +35,7 @@
                     <br/>
                     <br/>
                     <h:form>
-                        <h1>Featured Universities</h1>
+                        <h3>Featured University!</h3>
                         <p:dataTable id="preTableID" value="#{universityController.featuredList}"  var="aRow" style="margin-bottom:0">
                             <p:column headerText="University">
                                 <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">

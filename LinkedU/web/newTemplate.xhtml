@@ -25,18 +25,18 @@
 
         <div class="main"> <!--id="content"-->
             <h:form>
-                <h:panelGrid columns= "3" cellpadding="5" rendered="#{accountController.getLoginStatus()}">
-                    <h:panelGroup>Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink></h:panelGroup>
-                    <h:panelGroup>&#9;</h:panelGroup>
-                    <h:panelGroup><p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink></h:panelGroup>
+                <h:panelGrid columns= "2" cellpadding="10" rendered="#{accountController.getLoginStatus()}">
+                    <h:panelGroup><h3>Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>.</h3></h:panelGroup>
+                    <h:panelGroup><h3><p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink></h3></h:panelGroup>
                 </h:panelGrid>
-                <h:panelGrid columns= "4" cellpadding="5">
+                <h:panelGrid columns= "4" cellpadding="5" rendered="#{accountController.getLoginStatus()}">
                     <p:commandButton value="Home" action="home.xhtml?faces-redirect=true" />
                     <p:commandButton value="#{accountController.status}" action="#{accountController.homeLink()}" />
                     <p:commandButton value="Compare Universities" action="compareuniversity.xhtml?faces-redirect=true" rendered="#{accountController.isStudent()}"/>
                     <p:commandButton value="Logout" action="#{accountController.logOut()}" />
                 </h:panelGrid>
             </h:form>
+            <br/>
             <ui:insert name="content">Content</ui:insert>
         </div>
 

@@ -13,11 +13,10 @@
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
-
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="Student Search Results" style="margin-bottom:20px">
-                        <h:outputText value="#{searchController.tableDescription()}" />
+                        <h3><h:outputText value="#{searchController.tableDescription()}" /></h3>
                         <p:dataTable id="empTableID" value="#{searchController.studentsList}" var="aRow">
                             <p:column headerText="ACT Score" rendered="#{searchController.isACTFilter()}">
                                 <h:outputText value="#{aRow.ACTString}"/>

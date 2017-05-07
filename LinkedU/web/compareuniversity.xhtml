@@ -16,30 +16,34 @@
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="Compare Universities">
-                    <h:panelGrid columns="2" cellpadding="5" style="width: 100%">
-                        <p:panel header="Select a University to compare" style="margin-bottom:10px;">
-                            <p:outputLabel for="University1" value="University1: " />
-                            <p:selectOneMenu id="University1" value="#{universityController.selectedUniv}" style="width:250px" required="true" onchange="submit()" valueChangeListener="#{universityController.localeChanged}">
-                                <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{universityController.getAllUniversityNames()}" />
-                            </p:selectOneMenu> <br/>
-                            Full Address: <h:outputText id = "fullName1" value = "#{universityController.nameUniv.fullAddress}"/><br/>
-                            Majors: <h:outputText id = "majors1" value = "#{universityController.nameUniv.majorsString}"/><br/>
-                            Premium Holder: <h:outputText id ="premium1" value = "#{universityController.nameUniv.premium}"/>
-
-                        </p:panel>
-                        <p:panel header="Select another University to compare" style="margin-bottom:10px;">
-                            <p:outputLabel for="University2" value="University2: " />
-                            <p:selectOneMenu id="University2" value="#{universityController.selectedUniv2}" style="width:250px" required="true" onchange="submit()" valueChangeListener="#{universityController.localeChanged2}">
-                                <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{universityController.getAllUniversityNames()}" />
-                            </p:selectOneMenu> <br/>
-                            Full Address: <h:outputText id = "fullName2" value = "#{universityController.nameUniv2.fullAddress}"/><br/>
-                            Majors: <h:outputText id = "majors2" value = "#{universityController.nameUniv2.majorsString}"/><br/>
-                            Premium Holder: <h:outputText id ="premium2" value = "#{universityController.nameUniv2.premium}"/>
-                        </p:panel>
-                    </h:panelGrid>
-                        </p:fieldset>
+                        <h3>Please select two universities to compare.</h3>
+                        <h:panelGrid columns="2" cellpadding="5" style="width: 100%">
+                            <p:panel header="1. University" style="margin-bottom:10px;">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <p:outputLabel for="University1"><b>University Name:</b></p:outputLabel>
+                                    <p:selectOneMenu id="University1" value="#{universityController.selectedUniv}" style="width:200px" required="true" onchange="submit()" valueChangeListener="#{universityController.localeChanged}">
+                                        <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{universityController.getAllUniversityNames()}" />
+                                    </p:selectOneMenu>
+                                    <p:outputLabel><b>Full Address:</b></p:outputLabel><h:outputText id = "fullName1" value = "#{universityController.nameUniv.fullAddress}"/>
+                                    <p:outputLabel><b>Majors:</b></p:outputLabel> <h:outputText id = "majors1" value = "#{universityController.nameUniv.majorsString}"/>
+                                    <p:outputLabel><b>Premium Holder:</b></p:outputLabel><h:outputText id ="premium1" value = "#{universityController.nameUniv.premium}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                            <p:panel header="2. University" style="margin-bottom:10px;">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <p:outputLabel for="University2"><b>University Name:</b></p:outputLabel>
+                                    <h:panelGroup><p:selectOneMenu id="University2" value="#{universityController.selectedUniv2}" style="width:200px" required="true" onchange="submit()" valueChangeListener="#{universityController.localeChanged2}">
+                                        <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{universityController.getAllUniversityNames()}" />
+                                    </p:selectOneMenu></h:panelGroup>
+                                    <p:outputLabel><b>Full Address:</b></p:outputLabel><h:outputText id = "fullName2" value = "#{universityController.nameUniv2.fullAddress}"/>
+                                    <p:outputLabel><b>Majors:</b></p:outputLabel><h:outputText id = "majors2" value = "#{universityController.nameUniv2.majorsString}"/>
+                                    <p:outputLabel><b>Premium Holder:</b></p:outputLabel><h:outputText id ="premium2" value = "#{universityController.nameUniv2.premium}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+                    </p:fieldset>
                 </h:form>
             </ui:define>
         </ui:composition>

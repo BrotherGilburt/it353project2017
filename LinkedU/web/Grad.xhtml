@@ -19,36 +19,30 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
-
             <ui:define name="content">
-                <h:form>
-                    <p:panel styleClass="customTitleBar">
-                        <h1>Please provide the information about your choice of university add majors </h1> 
-                    </p:panel>
-                    <br/><br/>
-                    <p:growl id="msgs" showDetail="true" />
+                <p:fieldset legend="Apply for Admission">
+                    <h:form>
+                        <h3>Please select a university a major to apply for.</h3> 
+                        <br/>
+                        <p:growl id="msgs" showDetail="true" />
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:outputLabel for="University" value="University: " />
+                                <p:selectOneMenu id="University" value="#{applyController.apply.university}" style="width:150px" required="true">
+                                    <p:ajax listener="#{applyController.onUniversityChange()}" update="Majors" />
+                                    <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{universityController.getAllUniversityNames()}" />
+                                </p:selectOneMenu>
 
-                    <p:panel header="Select a University and Majors" style="margin-bottom:10px;">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="University" value="University: " />
-                            <p:selectOneMenu id="University" value="#{applyController.apply.university}" style="width:150px" required="true">
-                                <p:ajax listener="#{applyController.onUniversityChange()}" update="Majors" />
-                                <f:selectItem itemLabel="Select University" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{universityController.getAllUniversityNames()}" />
-                            </p:selectOneMenu>
+                                <p:outputLabel for="Majors" value="Major: " />
+                                <p:selectOneMenu id="Majors" value="#{applyController.apply.major}" style="width:150px" required="true">
+                                    <f:selectItem itemLabel="Select Majors" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{applyController.majorsList}" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
 
-                            <p:outputLabel for="Majors" value="Major: " />
-                            <p:selectOneMenu id="Majors" value="#{applyController.apply.major}" style="width:150px" required="true">
-                                <f:selectItem itemLabel="Select Majors" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{applyController.majorsList}" />
-                            </p:selectOneMenu>
-                        </h:panelGrid>
-
-                        <p:separator />
-                        <p:commandButton value="Submit and Continue to Apply" update="msgs" icon="ui-icon-check" action="Apply.xhtml?faces-redirect=true" />
-                    </p:panel>
-
-                </h:form>
+                            <p:commandButton value="Submit and Continue to Apply" update="msgs" icon="ui-icon-check" action="Apply.xhtml?faces-redirect=true" />
+                    </h:form>
+                </p:fieldset>
             </ui:define>
         </ui:composition>
     </h:body>

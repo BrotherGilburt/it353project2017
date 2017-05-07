@@ -68,6 +68,8 @@ public class AccountController implements Serializable {
         if (attempts <= 0) {
             attempts = 0;
         }
+        
+        loginStatus = false;
         confirm = "";
     }
 
@@ -299,6 +301,8 @@ public class AccountController implements Serializable {
         //Send confirmation Email.
         confirmationEmail(accountModel.getEmail());
 
+        loginStatus = true;
+        
         return "home.xhtml?faces-redirect=true";
     }
 

@@ -13,7 +13,6 @@
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
-
             <ui:define name="content">
                 <h:form id="fileUpload1" prependId="false"     enctype="multipart/form-data" rendered="#{accountController.isStudent()}">
                     <p:growl id="growl" showDetail="true" sticky="true" />
