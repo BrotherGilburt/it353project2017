@@ -14,6 +14,7 @@ import org.primefaces.event.FlowEvent;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -31,6 +32,10 @@ public class ApplyController implements Serializable {
     private Apply apply;
     private UploadedFile resume;
     private String uploadStatus;
+    private String majorSelect;
+    
+    
+    
     public ApplyController() {
          if (account == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -62,9 +67,15 @@ public class ApplyController implements Serializable {
      */
     public String loadApplicationFromProfile() {
         
-        //TO BE COMPLETED.
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
+        String name = params.get("name");
         
-        return "error.xhtml";
+        apply = new Apply(name, majorSelect);
+        
+        majorSelect= new String();
+        
+        return "Apply.xhtml?faces-redirect=true";
     }
     
     public ArrayList<String> getMajorsList() {
@@ -247,104 +258,13 @@ public class ApplyController implements Serializable {
     public void setUploadStatus(String uploadStatus) {
         this.uploadStatus = uploadStatus;
     }
+
+    public String getMajorSelect() {
+        return majorSelect;
+    }
+
+    public void setMajorSelect(String majorSelect) {
+        this.majorSelect = majorSelect;
+    }
+    
 }
-
-
-    //OLD CODE
-
-    //-- dropdown start
-    /*private Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();*/
- /*private String university;
-    private String major;
- /*private Map<String, String> universities;
-    private Map<String, String> majors;*/
-
-/*@PostConstruct
-    public void init() {
-        universities = new HashMap<String, String>();
-        universities.put("Princeton University", "Princeton University");
-        universities.put("Harvard University", "Harvard University");
-        universities.put("University of Chicago", "University of Chicago");
-        universities.put("Illinois State University", "Illinois State University");
-        universities.put("Stanford University", "Stanford University");
-
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("Art and Archaeology", "Art and Archaeology");
-        map.put("Chemical and Biological Engineering", "Chemical and Biological Engineering");
-        map.put("Economics", "Economics");
-        map.put("Computer Science", "Computer Science");
-        data.put("Princeton University", map);
-
-        map = new HashMap<String, String>();
-        map.put("Applied mathematics", "Applied mathematics");
-        map.put("Business economics", "Business economics");
-        map.put("Computational Science and Engineering", "Computational Science and Engineering");
-        data.put("Harvard University", map);
-
-        map = new HashMap<String, String>();
-        map.put("Biological Sciences Division", "Biological Sciences Division");
-        map.put("Humanities Division", "Humanities Division");
-        map.put("Physical Sciences Division", "Physical Sciences Division");
-        map.put("Computer Science Division", "Computer Science Division");
-        data.put("University of Chicago", map);
-
-        map = new HashMap<String, String>();
-        map.put("Anthropology - Applied Community & Economic Development", "Anthropology - Applied Community & Economic Development");
-        map.put("Biological Sciences - Biomathematics", "Biological Sciences - Biomathematics");
-        map.put("Chemistry - Master of Chemistry Education", "Chemistry - Master of Chemistry Education");
-        map.put("Information Systems - Internet Application Development", "Information Systems - Internet Application Development");
-        data.put("Illinois State University", map);
-
-        map = new HashMap<String, String>();
-        map.put("Computational and Mathematical Engineering ", "Computational and Mathematical Engineering ");
-        map.put("Chemistry  ", "Chemistry  ");
-        map.put("Music ", "Music ");
-        map.put("Economics ", "Economics ");
-        map.put("Computer Science ", "Computer Science");
-        data.put("Stanford University", map);
-    }*/
-
- /*public Map<String, Map<String, String>> getData() {
-        return data;
-    }
-
-    public void setData(Map<String, Map<String, String>> data) {
-        this.data = data;
-    }
-    public String getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(String university) {
-        this.university = university;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    /*public Map<String, String> getUniversities() {
-    return universities;
-    }
-    public void setUniversities(Map<String, String> universities) {
-    this.universities = universities;
-    }
-    public Map<String, String> getMajors() {
-    return majors;
-    }
-    public void setMajors(Map<String, String> majors) {
-    this.majors = majors;
-    }*/
-
-
-    /*public void onUniversityChange() {
-        if (apply.getUniversity() != null && !apply.getUniversity().equals("")) {
-            majors = data.get(apply.getUniversity());
-        } else {
-            majors = new HashMap<String, String>();
-        }
-    }*/

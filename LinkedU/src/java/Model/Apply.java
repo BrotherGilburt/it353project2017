@@ -47,6 +47,16 @@ public class Apply {
     
     private String major;
 
+    public Apply() {
+        
+    }
+    
+    public Apply(String university, String major) {
+        this();
+        this.university = university;
+        this.major = major;
+    }
+    
     public String getUniversity() {
         return university;
     }
@@ -63,8 +73,6 @@ public class Apply {
         this.major = major;
     }
     
-    
-
     public String getSex() {
         return sex;
     }
