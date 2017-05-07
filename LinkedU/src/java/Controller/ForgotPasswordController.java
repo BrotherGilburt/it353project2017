@@ -44,7 +44,6 @@ public class ForgotPasswordController implements Serializable {
         if (forgotPasswordModel == null) {
             forgotPasswordModel = new ForgotPassword();
         }
-        sentStatus = "";
     }
 
     /**
@@ -213,7 +212,6 @@ public class ForgotPasswordController implements Serializable {
     }
 
     public String changePassword() throws ClassNotFoundException, SQLException {
-        sentStatus = "";
         if (forgotPasswordModel.getNewPassword().equals(forgotPasswordModel.getConfirmNewPassword())) {
             forgotPasswordModel.setNewPassword(Login.generateHash(forgotPasswordModel.getNewPassword()));
 
