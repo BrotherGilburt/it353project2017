@@ -13,6 +13,7 @@
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"></ui:define>
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="#{accountController.loginModel.userID}" style="margin-bottom:20px">

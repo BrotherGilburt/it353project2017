@@ -63,7 +63,7 @@ public class UniversityDAO {
             pstmt.setString(6, record.getCity());
             pstmt.setString(7, record.getState());
             pstmt.setString(8, record.getZip());
-            pstmt.setString(9, record.getImage());
+            pstmt.setBoolean(9, record.getImage());
             System.out.println("insert string =" + insertString);
 
             rowCount += pstmt.executeUpdate();
@@ -104,8 +104,8 @@ public class UniversityDAO {
                     + "', city='" + record.getCity()
                     + "', state='" + record.getState()
                     + "', zip='" + record.getZip()
-                    + "', image='" + record.getImage()
-                    + "' WHERE userid='" + record.getUserID() + "'";
+                    + "', image=" + record.getImage()
+                    + " WHERE userid='" + record.getUserID() + "'";
 
             rowCount += stmt.executeUpdate(insertString);
             System.out.println("update string =" + insertString);
@@ -150,7 +150,7 @@ public class UniversityDAO {
                 record.setCity(rs.getString("city"));
                 record.setState(rs.getString("state"));
                 record.setZip(rs.getString("zip"));
-                record.setImage(rs.getString("image"));
+                record.setImage(rs.getBoolean("image"));
             } else {
                 record = null;
             }
@@ -200,7 +200,7 @@ public class UniversityDAO {
                 record.setCity(rs.getString("city"));
                 record.setState(rs.getString("state"));
                 record.setZip(rs.getString("zip"));
-                record.setImage(rs.getString("image"));
+                record.setImage(rs.getBoolean("image"));
             } else {
                 record = null;
             }
@@ -251,7 +251,7 @@ public class UniversityDAO {
                 record.setCity(rs.getString("city"));
                 record.setState(rs.getString("state"));
                 record.setZip(rs.getString("zip"));
-                record.setImage(rs.getString("image"));
+                record.setImage(rs.getBoolean("image"));
             }
             rs.close();
             stmt.close();
@@ -313,7 +313,7 @@ public class UniversityDAO {
                 record.setCity(rs.getString("city"));
                 record.setState(rs.getString("state"));
                 record.setZip(rs.getString("zip"));
-                record.setImage(rs.getString("image"));
+                record.setImage(rs.getBoolean("image"));
             }
             rs.close();
             pstmt.close();
@@ -360,7 +360,7 @@ public class UniversityDAO {
                 record.setCity(rs.getString("city"));
                 record.setState(rs.getString("state"));
                 record.setZip(rs.getString("zip"));
-                record.setImage(rs.getString("image"));
+                record.setImage(rs.getBoolean("image"));
             }
             rs.close();
             pstmt.close();

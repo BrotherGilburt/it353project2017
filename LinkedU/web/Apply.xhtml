@@ -6,7 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>LinkedU - Application</title>
         <f:metadata>
 
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
@@ -14,6 +13,7 @@
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Application</title></ui:define>
             <ui:define name="content">
                 <h:form>
                     <h1>Apply for Admission</h1>

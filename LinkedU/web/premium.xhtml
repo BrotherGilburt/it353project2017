@@ -4,11 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>Subscribe for premium</title>
-    </h:head>
+    <h:head></h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Premium</title></ui:define>
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="Premium" style="margin-bottom:20px">

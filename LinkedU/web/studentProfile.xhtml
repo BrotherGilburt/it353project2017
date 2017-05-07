@@ -6,20 +6,22 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>LinkedU - Student Profile</title>
         <f:metadata>
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Student Profile</title></ui:define>
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="#{studentController.viewStudentModel.getFullName()}" style="margin-bottom:20px">
-                        <!--<p:graphicImage value="#{studentController.viewStudentModel.image}"  style="max-width: 200px; max-height: 200px;"/>-->
                         <h:panelGrid columns="1" cellpadding="5">
-                            <h:outputLink value="DisplayImage?userid=#{studentController.viewStudentModel.userID}" target="_blank" >
-                                <h:graphicImage value="DisplayImage?userid=#{studentController.viewStudentModel.userID}" width="200" height="200"></h:graphicImage>
+                            <h:outputLink value="DisplayImage?userid=#{studentController.viewStudentModel.userID}" target="_blank" rendered="#{studentController.myProfileModel.isImage()}">
+                                <h:graphicImage value="DisplayImage?userid=#{studentController.viewStudentModel.userID}" style="max-width: 200px; max-height: 200px" />
+                            </h:outputLink>
+                            <h:outputLink value="#{studentController.viewStudentModel.getDefaultImage()}" target="_blank" rendered="#{studentController.myProfileModel.isNoImage()}">
+                                <h:graphicImage value="#{studentController.viewStudentModel.getDefaultImage()}" style="max-width: 200px; max-height: 200px" />
                             </h:outputLink>
                         </h:panelGrid>
 

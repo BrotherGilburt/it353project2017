@@ -100,6 +100,10 @@ public class StudentController implements Serializable {
 
     public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
+        
+        myProfileModel.setImage(true);
+        this.updateStudent();
+        
         String userid = account.getLoginModel().getUserID();
         System.out.println(userid);
         int update = ImageDAO.updateImage(userid, image);
@@ -127,11 +131,13 @@ public class StudentController implements Serializable {
         }
     }
     public String updateFinished() throws SQLException {
-        /*DATA VALIDATION*/
-
-        StudentDAO.updateStudent(myProfileModel);
+        this.updateStudent();
 
         return "myProfile.xhtml?faces-redirect=true";
+    }
+    
+    public void updateStudent() throws SQLException {
+        StudentDAO.updateStudent(myProfileModel);
     }
 
     public String uploadImage() throws IOException {
@@ -139,7 +145,7 @@ public class StudentController implements Serializable {
 
         //save image
         if (status) { //successful upload
-            myProfileModel.setImage(myProfileModel.getUserID() + "_profile.jpg");
+            myProfileModel.setImage(true); //myProfileModel.getUserID() + "_profile.jpg");
         } else { //failed/no upload
             //Error Message?
         }

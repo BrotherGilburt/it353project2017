@@ -6,28 +6,28 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>LinkedU - Home</title>
         <f:metadata>
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Home</title></ui:define>
             <ui:define name="content">
-        <br/>
-        <h:form>
-            <h:panelGrid columns="6" cellpadding="5">
-                <p:outputLabel for="mode" value="Search for:" />
-                <p:selectOneMenu id="mode" required="true" value="#{adminController.premiumModel.premiumStatus}">
-                    <f:selectItem id="premium" itemLabel="Premium" itemValue="P" />
-                    <f:selectItem id="Showcase" itemLabel="Showcase" itemValue="S" />
-                </p:selectOneMenu>
-                <p:commandButton value="Search" action="#{adminController.search}" />
-            </h:panelGrid>
-        </h:form>
-        <br/>
+                <br/>
+                <h:form>
+                    <h:panelGrid columns="6" cellpadding="5">
+                        <p:outputLabel for="mode" value="Search for:" />
+                        <p:selectOneMenu id="mode" required="true" value="#{adminController.premiumModel.premiumStatus}">
+                            <f:selectItem id="premium" itemLabel="Premium" itemValue="P" />
+                            <f:selectItem id="Showcase" itemLabel="Showcase" itemValue="S" />
+                        </p:selectOneMenu>
+                        <p:commandButton value="Search" action="#{adminController.search}" />
+                    </h:panelGrid>
+                </h:form>
+                <br/>
             </ui:define>
-            </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 

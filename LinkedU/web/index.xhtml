@@ -3,10 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>LinkedU - Welcome</title>
 
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.logOut()}"/>
+        </f:metadata>
     </h:head>
 
     <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
@@ -15,6 +18,7 @@
 
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Welcome</title></ui:define>
             <ui:define name="content">
                 <p:fieldset legend="LinkedU" style="margin-bottom:20px; text-align: center;" class="main">
                     <h3>Welcome to LinkedU!</h3>

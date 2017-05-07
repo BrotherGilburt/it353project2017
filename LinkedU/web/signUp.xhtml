@@ -6,25 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>LinkedU - Sign Up</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{accountController.logOut()}"/>
+        </f:metadata>
     </h:head>
-    <!--<link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
-    <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/> 
-    <h:body>
-        <div id="indexHeader">
-            <h:form>
-                <h:commandLink action="home.xhtml?faces-redirect=true"><img src="Resources/images/LinkedULogo.jpg" width="400" height="90" alt="LinkedULogo"/></h:commandLink>
-            </h:form>                
-        </div>
-        <div id="WelcomeBanner">
-            <img src="Resources/images/login.png" width="500" height="300" alt="login"/>
-
-            <p><h1>Where Students find their dream Institution</h1><br/>
-                <h1>And..Educational Institutions find potential students</h1><br/></p>
-
-        </div>-->
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Sign Up</title></ui:define>
             <ui:define name="content">
                 <p:fieldset legend="Sign Up" style="margin-bottom:20px">
                     <h:form>

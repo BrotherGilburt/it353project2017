@@ -111,6 +111,10 @@ public class UniversityController implements Serializable {
     public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
         String userid = account.getLoginModel().getUserID();
+        
+        myUniversityModel.setImage(true);
+        this.updateUniversity();
+        
         System.out.println(userid);
         int update = ImageDAO.updateImage(account.getLoginModel().getUserID(), image);
         return "myProfile.xhtml?faces-redirect=true";

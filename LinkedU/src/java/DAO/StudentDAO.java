@@ -102,7 +102,7 @@ public class StudentDAO {
             }
             pstmt.setString(7, universities);
             pstmt.setString(8, majors);
-            pstmt.setString(9, record.getImage());
+            pstmt.setBoolean(9, record.getImage());
             pstmt.setString(10, record.getMixtape());
             pstmt.setString(11, record.getEssay());
             System.out.println("insert string =" + insertString);
@@ -159,8 +159,8 @@ public class StudentDAO {
                     + record.getSAT() + ", PSAT_NMSQT="
                     + record.getPSAT_NMSQT() + ", Universities='"
                     + universities.toString() + "', Majors='"
-                    + majors.toString() + "', Image='"
-                    + record.getImage() + "', Mixtape='"
+                    + majors.toString() + "', Image="
+                    + record.getImage() + ", Mixtape='"
                     + record.getMixtape() + "', Essay='"
                     + record.getEssay() + "'"
                     + " WHERE userid = '" + record.getUserID() + "'";
@@ -215,7 +215,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList<String>());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             } else {
@@ -292,7 +292,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList<String>());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }
@@ -347,7 +347,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }
@@ -402,7 +402,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }
@@ -457,7 +457,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }
@@ -521,7 +521,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }
@@ -585,7 +585,7 @@ public class StudentDAO {
                     record.setMajors(new ArrayList());
                 }
 
-                record.setImage(rs.getString("Image"));
+                record.setImage(rs.getBoolean("Image"));
                 record.setMixtape(rs.getString("Mixtape"));
                 record.setEssay(rs.getString("Essay"));
             }

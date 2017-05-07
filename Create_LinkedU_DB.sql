@@ -88,20 +88,20 @@ SAT				integer not null,
 PSAT_NMSQT		integer not null,
 Universities	varchar(200) not null,
 Majors			varchar(200) not null,
-Image			varchar(50) not null,
+Image			boolean not null,
 Mixtape			varchar(100) not null,
 Essay			varchar(1500) not null
 );
 
 --Student Accounts
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('pdkaufm', 'Perry','Kaufman', 19, 999, 999, 'Illinois State University;', 'Computer Science;English;Physics', './Resources/default_student.png', 'none', 'none');
+('pdkaufm', 'Perry','Kaufman', 19, 999, 999, 'Illinois State University;', 'Computer Science;English;Physics', false, 'none', 'none');
 insert into LinkedU.Students(UserID, FirstName, LastName,  ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('kssuth1','Keegan','Sutherland', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', './Resources/default_student.png', 'none', 'none');
+('kssuth1','Keegan','Sutherland', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, 'none', 'none');
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('stiwar1','Shivangi','Tiwari', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', './Resources/default_student.png', 'none', 'none');
+('stiwar1','Shivangi','Tiwari', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, 'none', 'none');
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('asriren','Anusha','Srirenganathan Malarvizhi', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', './Resources/default_student.png', 'none', 'none');
+('asriren','Anusha','Srirenganathan Malarvizhi', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, 'none', 'none');
 
 
 
@@ -127,9 +127,9 @@ Image           	varchar(50) not null
 );
 
 insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, State, Zip, Image) values
-('blim', TRUE, 'Illinois State University', 'Computer Science;English;Biology;Chemistry;Music;Physics;Psychology;Mathematics', '100 N University St', 'Normal', 'IL', '61761', './Resources/default_university.png');
+('blim', TRUE, 'Illinois State University', 'Computer Science;English;Biology;Chemistry;Music;Physics;Psychology;Mathematics', '100 N University St', 'Normal', 'IL', '61761', false);
 insert into LinkedU.Universities(UserID, Premium, Name, Majors, Street, City, State, Zip, Image) values
-('test', FALSE, 'University of Illinois', 'Dance;Computer Science;English;Biology;Chemistry;Music;Astronomy;Physics;Psychology;Art;Mathematics', '1337 Example St', 'Champaign', 'IL', '61820', './Resources/default_university.png');
+('test', FALSE, 'University of Illinois', 'Dance;Computer Science;English;Biology;Chemistry;Music;Astronomy;Physics;Psychology;Art;Mathematics', '1337 Example St', 'Champaign', 'IL', '61820', false);
 
 --Admin account (Password: 123)
 insert into LinkedU.Accounts(UserID, Email, AccountType, SecurityQuestion, SecurityAnswer) values

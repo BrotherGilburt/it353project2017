@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class University {
 
+    private final static String DEFAULT_IMAGE = "./Resources/default_university.png";
     String userID;
     boolean premium; //denotes that university has payed extra to be featured on home page.
     String name;
@@ -21,7 +22,7 @@ public class University {
     String city;
     String state;
     String zip;
-    String image;
+    boolean image;
 
     public University() {
         this.userID = "";
@@ -32,7 +33,7 @@ public class University {
         this.city = "";
         this.state = "";
         this.zip = "";
-        this.image = "./Resources/default_university.png";
+        this.image = false;
     }
 
     public University(String userID) {
@@ -150,11 +151,11 @@ public class University {
         this.zip = zip;
     }
 
-    public String getImage() {
+    public boolean getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(boolean image) {
         this.image = image;
     }
 
@@ -177,5 +178,17 @@ public class University {
 
     public void removeLastMajor() {
         majors.remove(majors.size() - 1);
+    }
+    
+    public boolean isImage() {
+        return image;
+    }
+    
+    public boolean isNoImage() {
+        return !image;
+    }
+
+    public String getDefaultImage() {
+        return DEFAULT_IMAGE;
     }
 }

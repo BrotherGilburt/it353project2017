@@ -11,7 +11,6 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>LinkedU - Application</title>
         <f:metadata>
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn()}"/>
             <f:event type="preRenderView" listener="#{applyController.setUp()}"/>
@@ -19,6 +18,7 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Application</title></ui:define>
             <ui:define name="content">
                 <p:fieldset legend="Apply for Admission">
                     <h:form>

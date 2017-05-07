@@ -6,13 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>Compare Universities</title>
         <f:metadata>      
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>Compare Universities</title></ui:define>
             <ui:define name="content">
                 <h:form>
                     <p:fieldset legend="Compare Universities">

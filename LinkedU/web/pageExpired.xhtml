@@ -5,11 +5,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>LinkedU - Page Expired</title>
-    </h:head>
+    <h:head></h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - Page Expired</title></ui:define>
             <ui:define name="content">
                 <p:fieldset legend="Reset Password" style="margin-bottom:20px">
                         <h:outputText value="The password reset page you are trying to access has expired. 

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Student {
 
-    private final String defaultImage = "./Resources/default_student.png";
+    private final static String DEFAULT_IMAGE = "./Resources/default_student.png";
     private final String defaultMixtape = "none";
     private final String defaultEssay = "none";
 
@@ -25,7 +25,7 @@ public class Student {
     private int PSAT_NMSQT;
     private ArrayList<String> majors;
     private ArrayList<String> universities;
-    private String image;
+    private boolean image;
     private String mixtape;
     private String essay;
     private String email;
@@ -43,7 +43,7 @@ public class Student {
         PSAT_NMSQT = -1;
         majors = new ArrayList<String>();
         universities = new ArrayList<String>();
-        image = defaultImage;
+        image = false;
         mixtape = defaultMixtape;
         essay = defaultEssay;
     }
@@ -54,8 +54,9 @@ public class Student {
     }
 
     public String getFullName() {
-        if (firstName.equals("")&&lastName.equals(""))
+        if (firstName.equals("") && lastName.equals("")) {
             return "Name Not Provided";
+        }
         return firstName + " " + lastName;
     }
 
@@ -160,11 +161,11 @@ public class Student {
         this.universities = Universities;
     }
 
-    public String getImage() {
+    public boolean getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(boolean image) {
         this.image = image;
     }
 
@@ -214,4 +215,17 @@ public class Student {
         this.email = email;
     }
 
+    public boolean isImage() {
+        return image;
+    }
+
+    public boolean isNoImage() {
+        return !image;
+    }
+
+    public String getDefaultImage() {
+        return DEFAULT_IMAGE;
+    }
+    
+    
 }

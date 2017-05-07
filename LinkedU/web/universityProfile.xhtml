@@ -6,19 +6,22 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>LinkedU - University Profile</title>
         <f:metadata>
             <f:event type="preRenderView" listener="#{accountController.isLoggedOn}"/>
         </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="head"><title>LinkedU - University Profile</title></ui:define>
             <ui:define name="content">
                 <p:fieldset legend="#{universityController.viewUniversityModel.name}">
                     <h:form>
                         <h:panelGrid columns="1" cellpadding="5">
-                            <h:outputLink value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" target="_blank" >
-                                <h:graphicImage value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" width="200" height="200"/>
+                            <h:outputLink value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" target="_blank" rendered="#{universityController.viewUniversityModel.isImage()}">
+                                <h:graphicImage value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" style="max-width: 200px; max-height: 200px"/>
+                            </h:outputLink>
+                            <h:outputLink value="#{universityController.viewUniversityModel.getDefaultImage()}" target="_blank" rendered="#{universityController.viewUniversityModel.isNoImage()}">
+                                <h:graphicImage value="#{universityController.viewUniversityModel.getDefaultImage()}" style="max-width: 200px; max-height: 200px"/>
                             </h:outputLink>
                         </h:panelGrid>
 
@@ -31,6 +34,7 @@
                             <h:panelGroup><b><p:outputLabel value="Majors" for="majors" /></b></h:panelGroup> <h:outputText id="majors" value="#{universityController.viewUniversityModel.majorsString}"/> 
                         </h:panelGrid>
                     </h:form>
+                    <br/>
                     <h:form>
                         <h:panelGroup rendered="#{accountController.isStudent()}">
                             <h3>Apply for Admission</h3>
@@ -47,34 +51,23 @@
                     </h:form>
                     <h:form>
                         <br/><br/>
-                        <h3>Search the university using Google Maps</h3>
-                        <p:commandButton id="map" action="googlemap.xhtml?faces-redirect=true" value="Click to search"/> 
-                        <br/><br/>
-
-                        <h:panelGroup rendered="#{accountController.isStudent()}">
-                            <h3>   Schedule and appointment with the advisor:              </h3>
-                            <h:panelGrid>
-                                <p:commandButton id="schedule" type="Button" value="Click to Schedule an Appointment" action="#{studentController.schedule()}" onclick="PF('dlg1').show();"/> 
-                                <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
-                                    <h:outputText value="An email has been sent to schedule an appointment!" />
-                                </p:dialog>
-                                <br/><br/>
+                            <h:panelGrid columns ="3" cellpadding="5">
+                                <p:commandButton id="map" action="googlemap.xhtml?faces-redirect=true" value="Google Maps"/> 
+                                <h:panelGroup rendered="#{accountController.isStudent()}">
+                                    <p:commandButton id="schedule" type="Button" value="Schedule an Appointment" action="#{studentController.schedule()}" onclick="PF('dlg1').show();"/> 
+                                    <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
+                                        <h:outputText value="An email has been sent to schedule an appointment!" />
+                                    </p:dialog>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{accountController.isStudent()}">
+                                    <p:commandButton id="request" type="Button" value="Click to request more information" action="#{studentController.moreInfo()}" onclick="PF('dlg1').show();"/> 
+                                    <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
+                                        <h:outputText value="An email has been sent to request more information.!" />
+                                    </p:dialog>
+                                </h:panelGroup>
                             </h:panelGrid>
-                        </h:panelGroup>
-
-
-                        <h:panelGroup>
-                            <h:panelGrid>
-                                <h3> Request for more information about the university by sending a an email..!!</h3>
-                                <p:commandButton id="request" type="Button" value="Click to request more information" action="#{studentController.moreInfo()}" onclick="PF('dlg1').show();"/> 
-                                <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
-                                    <h:outputText value="An email has been sent to request more information.!" />
-                                </p:dialog>
-                            </h:panelGrid>
-                        </h:panelGroup>
                     </h:form>
                 </p:fieldset>
-
             </ui:define>
         </ui:composition>
     </h:body>
