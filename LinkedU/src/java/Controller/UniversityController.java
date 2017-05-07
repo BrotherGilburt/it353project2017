@@ -162,10 +162,22 @@ public class UniversityController implements Serializable {
     }
     
     public void addMajor() {
-        //Should check for duplicate...
+        if(major.equals("")) return;
+        
         myUniversityModel.addMajor(major);
         
         major = "";
+    }
+    
+    public void removeMajor() {
+        
+        myUniversityModel.removeMajor(major);
+        
+        major = "";
+    }
+    
+    public void removeLastMajor() {
+        myUniversityModel.removeLastMajor();
     }
     
     public String gotoUpdate() {

@@ -17,13 +17,11 @@
 
         <div id="top">
             <ui:insert name="top">
-                <!--<div id="indexHeader">-->
                 <h:form><h:commandLink action="home.xhtml?faces-redirect=true"><img src="Resources/images/LinkedULogo.png" width="400" height="100" alt="LinkedULogo"  /></h:commandLink></h:form>
-                <!--</div>-->
             </ui:insert>
         </div>
 
-        <div class="main"> <!--id="content"-->
+        <div class="main">
             <h:form>
                 <h:panelGrid columns= "2" cellpadding="10" rendered="#{accountController.getLoginStatus()}">
                     <h:panelGroup><h3>Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>.</h3></h:panelGroup>
@@ -42,9 +40,7 @@
 
         <div id="bottom">
             <ui:insert name="bottom">
-                <!--<div id="footer">-->
                     <p><b>&copy; LinkedU Inc.</b></p>
-                <!--</div>-->
             </ui:insert>
         </div>
 

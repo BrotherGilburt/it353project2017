@@ -37,17 +37,20 @@
 
                         </h:panelGrid>
                         <br/>
-                        <h3> Schedule and appointment with this Student:</h3>
-                        <p:commandButton id="schedule" type="Button" value="Click to Schedule Appointment" action="#{studentController.schedule()}" onclick="PF('dlg1').show();"/> 
-                        <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
-                            <h:outputText value="An email has been sent to schedule an appointment!" />
-                        </p:dialog> <br/><br/>
-                        <h3> Request for more information about the student by sending a an email..!!</h3>
-                        <p:commandButton id="request" type="Button" value="Click to request more information" action="#{studentController.moreInfo()}" onclick="PF('dlg1').show();"/> 
-                        <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
-                            <h:outputText value="An email has been sent to request more information.!" />
-                        </p:dialog>
-
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{accountController.isUniversity()}">
+                            <h:panelGroup>
+                                <p:commandButton id="schedule" type="Button" value="Schedule Appointment" action="#{studentController.schedule()}" onclick="PF('dlg1').show();"/> 
+                                <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
+                                    <h:outputText value="An email has been sent to schedule an appointment!" />
+                                </p:dialog>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:commandButton id="request" type="Button" value="Request more information" action="#{studentController.moreInfo()}" onclick="PF('dlg1').show();"/> 
+                                <p:dialog header="Email Sent!!!" widgetVar="dlg1" minHeight="40">
+                                    <h:outputText value="An email has been sent to request more information!" />
+                                </p:dialog>
+                            </h:panelGroup>
+                        </h:panelGrid>
                     </p:fieldset>
                 </h:form>
             </ui:define>
