@@ -10,6 +10,7 @@ package Model;
  * @author Keegan
  */
 public class TextSender {
+
     public static java.util.List<java.lang.String> getCarriers() {
 
         java.util.List<java.lang.String> tempList = getCarriers_1();
@@ -31,4 +32,5 @@ public class TextSender {
         edu.ilstu.it.TextSender port = service.getTextSenderPort();
         port.sendSMS(arg0, arg1, arg2);
     }
+
 }
