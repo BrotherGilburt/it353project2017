@@ -15,10 +15,7 @@
         <ui:composition template="./newTemplate.xhtml">
             <ui:define name="content">
                 <h:form>
-                     <p:commandLink id="homePage" action="home.xhtml?faces-redirect=true">Go to Home Page
-                    </p:commandLink>
-                </h:form>
-                <h:form>
+                    <p:fieldset legend="Compare Universities">
                     <h:panelGrid columns="2" cellpadding="5" style="width: 100%">
                         <p:panel header="Select a University to compare" style="margin-bottom:10px;">
                             <p:outputLabel for="University1" value="University1: " />
@@ -42,6 +39,7 @@
                             Premium Holder: <h:outputText id ="premium2" value = "#{universityController.nameUniv2.premium}"/>
                         </p:panel>
                     </h:panelGrid>
+                        </p:fieldset>
                 </h:form>
             </ui:define>
         </ui:composition>

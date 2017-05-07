@@ -18,24 +18,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -57,6 +43,8 @@ public class AccountController implements Serializable {
     private String confirm;
     private UploadedFile resume;
 
+    private boolean loginStatus;
+    
     private StudentController student;
     private UniversityController university;
 
@@ -142,6 +130,7 @@ public class AccountController implements Serializable {
     }
 
     public void reset() {
+        loginStatus=false;
         loginModel = new Login();
         accountModel = new Account();
         errorMessage = "";
@@ -198,6 +187,9 @@ public class AccountController implements Serializable {
         } else {
             returnString = "home.xhtml?faces-redirect=true";
         }
+        
+        loginStatus = true;
+        
         return returnString;
     }
 
@@ -239,6 +231,10 @@ public class AccountController implements Serializable {
         return true;
     }
 
+    public boolean getLoginStatus() {
+        return loginStatus;
+    }
+    
     /**
      * Redirects to home page if not logged in.
      *
@@ -492,9 +488,9 @@ public class AccountController implements Serializable {
     public String getStatus() {
         String returnStrings = "";
         if (accountModel.getAccountType().equals("Student")) {
-            returnStrings = "Students - Apply for Universities";
+            returnStrings = "Apply";
         } else if (accountModel.getAccountType().equals("University")) {
-            returnStrings = "Universities - Subscribe for Premium";
+            returnStrings = "Upgrade to Premium";
         }
         return returnStrings;
     }

@@ -15,10 +15,6 @@
         <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
-                </h:form>
                 <h:form id="fileUpload1" prependId="false"     enctype="multipart/form-data" rendered="#{accountController.isStudent()}">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <p:fieldset legend="#{studentController.myProfileModel.firstName}" style="margin-bottom:20px">

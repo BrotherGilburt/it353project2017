@@ -12,44 +12,40 @@
         </f:metadata>
     </h:head>
     <h:body>
-          <ui:composition template="./newTemplate.xhtml">
+        <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-               <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                <h:form>
+                    <p:fieldset legend="Showcase Search Results" style="margin-bottom:20px">
+                        <p:dataTable id="preTableID" value="#{adminController.premiumList}" selection="#{adminController.selectedPremium}" var="aRow" rowKey="#{aRow.userId}" style="margin-bottom:0">
+
+                            <p:column headerText="User Id">
+                                <h:outputText value="#{aRow.userId}"/>
+                            </p:column>
+                            <p:column headerText="Premium Status">
+                                <h:outputText value="#{aRow.premiumStatus}"/>
+                            </p:column>
+                            <p:column headerText="Payment Type">
+                                <h:outputText value="#{aRow.paymentType}"/>
+                            </p:column>
+                            <p:column headerText="Amount">
+                                <h:outputText value="#{aRow.amount}"/>
+                            </p:column>
+                            <p:column headerText="Subscription Date">
+                                <h:outputText value="#{aRow.subdate}"/>
+                            </p:column>
+                            <p:column headerText="Expiry Date">
+                                <h:outputText value="#{aRow.expdate}"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton   action="#{adminController.checkExpire}" value="Check for Expired Subscription"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                    </p:fieldset>
                 </h:form>
-        <h:form>
-            <p:fieldset legend="Showcase Search Results" style="margin-bottom:20px">
-                <p:dataTable id="preTableID" value="#{adminController.premiumList}" selection="#{adminController.selectedPremium}" var="aRow" rowKey="#{aRow.userId}" style="margin-bottom:0">
-                   
-                    <p:column headerText="User Id">
-                        <h:outputText value="#{aRow.userId}"/>
-                    </p:column>
-                    <p:column headerText="Premium Status">
-                        <h:outputText value="#{aRow.premiumStatus}"/>
-                    </p:column>
-                    <p:column headerText="Payment Type">
-                        <h:outputText value="#{aRow.paymentType}"/>
-                    </p:column>
-                    <p:column headerText="Amount">
-                        <h:outputText value="#{aRow.amount}"/>
-                    </p:column>
-                    <p:column headerText="Subscription Date">
-                        <h:outputText value="#{aRow.subdate}"/>
-                    </p:column>
-                    <p:column headerText="Expiry Date">
-                        <h:outputText value="#{aRow.expdate}"/>
-                    </p:column>
-                    <f:facet name="footer">
-                        <p:commandButton   action="#{adminController.checkExpire}" value="Check for Expired Subscription"/>
-                    </f:facet>
-                </p:dataTable>
-       
-            </p:fieldset>
-        </h:form>
             </ui:define>
-          </ui:composition>
+        </ui:composition>
 
     </h:body>
 </html>

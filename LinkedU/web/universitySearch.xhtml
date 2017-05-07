@@ -12,29 +12,25 @@
         </f:metadata>
     </h:head>
     <h:body>
-           <ui:composition template="./newTemplate.xhtml">
+        <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-                    <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                <h:form>
+                    <p:fieldset legend="University Search Results" style="margin-bottom:20px">
+                        <h:outputText value="#{searchController.tableDescription()}" />
+                        <p:dataTable id="empTableID" value="#{searchController.universitiesList}" var="aRow">
+                            <p:column headerText="University">
+                                <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">
+                                    <f:param name="name" value="#{aRow.name}" />
+                                </h:commandLink>
+                            </p:column>
+                            <p:column headerText="Majors">
+                                <h:outputText value="#{aRow.majorsString}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
                 </h:form>
-        <h:form>
-            <p:fieldset legend="University Search Results" style="margin-bottom:20px">
-                <h:outputText value="#{searchController.tableDescription()}" />
-                <p:dataTable id="empTableID" value="#{searchController.universitiesList}" var="aRow">
-                    <p:column headerText="University">
-                        <h:commandLink value="#{aRow.name}" action="#{universityController.loadProfile()}">
-                            <f:param name="name" value="#{aRow.name}" />
-                        </h:commandLink>
-                    </p:column>
-                    <p:column headerText="Majors">
-                        <h:outputText value="#{aRow.majorsString}"/>
-                    </p:column>
-                </p:dataTable>
-            </p:fieldset>
-        </h:form>
             </ui:define>
-           </ui:composition>
+        </ui:composition>
     </h:body>
 </html>

@@ -16,10 +16,6 @@
 
             <ui:define name="content">
                 <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
-                </h:form>
-                <h:form>
                     <p:fieldset legend="Premium Search Results" style="margin-bottom:20px">
                         <p:dataTable id="preTableID" value="#{adminController.premiumList}" selection="#{adminController.selectedPremium}" var="aRow" rowKey="#{aRow.userId}" style="margin-bottom:0">
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>

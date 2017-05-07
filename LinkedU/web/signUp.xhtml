@@ -7,21 +7,20 @@
     <h:head>
         <title>LinkedU - Sign Up</title>
     </h:head>
-     <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
-  <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/> 
+    <link href="Resources/css/IndexPage.css" rel="stylesheet" type="text/css"/> 
+    <link href="Resources/css/default.css" rel="stylesheet" type="text/css"/> 
     <h:body>
-         <div id="indexHeader">
-        
-         <img src="Resources/images/LinkedULogo.jpg" width="400" height="90" alt="LinkedULogo"/>
-       
-                          
-     </div>
-          <div id="WelcomeBanner">
-              <img src="Resources/images/login.png" width="500" height="300" alt="login"/>
+        <div id="indexHeader">
+            <h:form>
+                <h:commandLink action="home.xhtml?faces-redirect=true"><img src="Resources/images/LinkedULogo.jpg" width="400" height="90" alt="LinkedULogo"/></h:commandLink>
+            </h:form>                
+        </div>
+        <div id="WelcomeBanner">
+            <img src="Resources/images/login.png" width="500" height="300" alt="login"/>
 
             <p><h1>Where Students find their dream Institution</h1><br/>
                 <h1>And..Educational Institutions find potential students</h1><br/></p>
-            
+
         </div>
         <p:fieldset legend="Sign Up" style="margin-bottom:20px">
             <h:form>
@@ -29,36 +28,36 @@
                 <br/> <h:outputLabel value="#{accountController.errorMessage}" style="color:red"/>
                 <h:panelGrid id = "panel" columns = "3">
                     User ID: <p:inputText id="uid" value="#{accountController.loginModel.userID}" label="UserID">
-                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                            <h:message for="uid" style="color:red"/>
+                        <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                    <h:message for="uid" style="color:red"/>
 
                     Password: <p:password id="pwd" value="#{accountController.loginModel.password}" label="Password">
-                                <f:validateLength minimum="2" maximum="25"/></p:password>
-                            <h:message for="pwd" style="color:red"/>
+                        <f:validateLength minimum="2" maximum="25"/></p:password>
+                    <h:message for="pwd" style="color:red"/>
 
                     Confirm Password: <p:password id="cpwd" value="#{accountController.confirm}" label="ConfirmPassword">
-                                <f:validateLength minimum="2" maximum="25"/></p:password>
-                            <h:message for="cpwd" style="color:red"/>
+                        <f:validateLength minimum="2" maximum="25"/></p:password>
+                    <h:message for="cpwd" style="color:red"/>
 
                     Email: <p:inputText id="email" value="#{accountController.accountModel.email}" label="Email">
-                                <f:validateLength minimum="2" maximum="25"/></p:inputText>
-                            <h:message for="email" style="color:red"/>
+                        <f:validateLength minimum="2" maximum="25"/></p:inputText>
+                    <h:message for="email" style="color:red"/>
 
                     Account Type: <p:selectOneMenu id="account" required="true" value="#{accountController.accountModel.accountType}">
-                                <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" />
-                                <f:selectItem id="item1" itemLabel="Student" itemValue="Student" />
-                                <f:selectItem id="item2" itemLabel="University" itemValue="University" />
-                                <f:selectItem id="item3" itemLabel="Administrator" itemValue="Administrator" />
-                            </p:selectOneMenu>
+                        <f:selectItem id="item0" itemLabel="Please select one" itemValue="0" />
+                        <f:selectItem id="item1" itemLabel="Student" itemValue="Student" />
+                        <f:selectItem id="item2" itemLabel="University" itemValue="University" />
+                        <f:selectItem id="item3" itemLabel="Administrator" itemValue="Administrator" />
+                    </p:selectOneMenu>
                 </h:panelGrid>
-                    <h:panelGrid id = "panel2" columns = "3">
+                <h:panelGrid id = "panel2" columns = "3">
                     Security Question: <p:inputTextarea id="sq" value="#{accountController.accountModel.securityQuestion}" label="SecurityQuestion">
-                                <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
-                            <h:message for="sq" style="color:red"/>
+                        <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
+                    <h:message for="sq" style="color:red"/>
 
                     Security Answer: <p:inputTextarea id="sa" value="#{accountController.accountModel.securityAnswer}" label="SecurityAnswer">
-                                <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
-                            <h:message for="sa" style="color:red"/>
+                        <f:validateLength minimum="2" maximum="50"/></p:inputTextarea>
+                    <h:message for="sa" style="color:red"/>
                     <h:commandButton id="submitID" value="Sign Up" action="#{accountController.signUp()}"/>
                 </h:panelGrid>
             </h:form>

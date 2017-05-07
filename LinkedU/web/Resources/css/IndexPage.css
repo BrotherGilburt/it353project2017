@@ -23,20 +23,18 @@ body{
     font-family: sans-serif;
 }
 
-#indexHeader{
+#indexHeader {
     margin-bottom: 20px;
-    padding-top:5px;
-    height:120px; 
     background-color:#045491;
+    height: 120px;
+    padding: 10px !important;
 }
 
 #footer{
-  
     padding-top:5px;
     height:50px; 
     background-color:#000000;
     color: #fff;
-    
 }
 
 #WelcomeBanner{
@@ -47,7 +45,7 @@ body{
     width:40%;
     height:450px;    
     background-color:white;
-    background: url("#{resource['images/linkedUBanner.png']}");   
+    background: url("#{resource['images/linkedUBanner.png']}");
     background-size: 100%;
     opacity:0.8;
     font-family: sans-serif;

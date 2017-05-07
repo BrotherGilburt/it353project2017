@@ -15,16 +15,11 @@
         <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
-                </h:form>
-
                 <p:fieldset legend="#{universityController.viewUniversityModel.name}">
                     <h:form>
                         <h:panelGrid columns="1" cellpadding="5">
                             <h:outputLink value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" target="_blank" >
-                                <h:graphicImage value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" width="200" height="200"></h:graphicImage>
+                                <h:graphicImage value="DisplayImage?userid=#{universityController.viewUniversityModel.userID}" width="200" height="200"/>
                             </h:outputLink>
                         </h:panelGrid>
 

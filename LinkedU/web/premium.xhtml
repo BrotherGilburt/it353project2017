@@ -11,13 +11,9 @@
         <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
-                 <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
-                </h:form>
                 <h:form>
-                    <p:fieldset legend="Choose your plan" style="margin-bottom:20px">
-
+                    <p:fieldset legend="Premium" style="margin-bottom:20px">
+                        <p><b>Choose your plan!</b></p>
                         <h:panelGrid columns="2">
                             <h3>Weekly plan</h3> <p:commandButton value="Select Plan" action="#{premiumController.selectWeek()}"/>
                         </h:panelGrid>

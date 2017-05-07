@@ -12,31 +12,23 @@
         </f:metadata>
     </h:head>
     <h:body>
-         <ui:composition template="./newTemplate.xhtml">
+        <ui:composition template="./newTemplate.xhtml">
 
             <ui:define name="content">
                 <h:form>
-                    Hello <p:commandLink id="accountPage" action="account.xhtml?faces-redirect=true">#{accountController.loginModel.userID}</p:commandLink>. <p:commandLink action="#{accountController.gotoMyProfile()}">Your profile</p:commandLink>
-                    <h:commandLink action="#{accountController.logout()}" value="Logout"/>
+                    <p:fieldset legend="#{accountController.loginModel.userID}" style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:panelGroup><b><h:outputText value="Account Type:"/></b></h:panelGroup>            <h:outputText value="#{accountController.accountModel.accountType}"/>
+                            <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup>                <h:outputText value="#{accountController.accountModel.userID}"/>
+                            <h:panelGroup><b><h:outputText value="Email:"/></b></h:panelGroup>                  <h:outputText value="#{accountController.accountModel.email}"/>
+                            <h:panelGroup><b><h:outputText value="Security Questions:"/></b></h:panelGroup>     <h:outputText value="#{accountController.accountModel.securityQuestion}"/>
+                            <h:panelGroup><b><h:outputText value="Security Answer:"/></b></h:panelGroup>        <h:outputText value="#{accountController.accountModel.securityAnswer}"/>
+                        </h:panelGrid>
+                        <p:commandButton id="update" value="Update" action="#{accountController.gotoUpdate()}"/>
+                    </p:fieldset>
                 </h:form>
-        <h:form>
-            <p:fieldset legend="#{accountController.loginModel.userID}" style="margin-bottom:20px">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:panelGroup><b><h:outputText value="Account Type:"/></b></h:panelGroup>            <h:outputText value="#{accountController.accountModel.accountType}"/>
-                    <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup>                <h:outputText value="#{accountController.accountModel.userID}"/>
-                    <h:panelGroup><b><h:outputText value="Email:"/></b></h:panelGroup>                  <h:outputText value="#{accountController.accountModel.email}"/>
-                    <h:panelGroup><b><h:outputText value="Security Questions:"/></b></h:panelGroup>     <h:outputText value="#{accountController.accountModel.securityQuestion}"/>
-                    <h:panelGroup><b><h:outputText value="Security Answer:"/></b></h:panelGroup>        <h:outputText value="#{accountController.accountModel.securityAnswer}"/>
-                </h:panelGrid>
-                <h:panelGrid columns="3" cellpadding="5">
-                    <p:commandButton id="home" value="Home" action="home.xhtml" />
-                    <p:commandButton id="update" value="Update" action="#{accountController.gotoUpdate()}"/>
-                    <p:commandButton id="logout" value="Log Out" action="#{accountController.logOut()}"/>
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 
