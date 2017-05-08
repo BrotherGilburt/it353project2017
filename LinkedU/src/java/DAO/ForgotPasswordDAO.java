@@ -30,7 +30,7 @@ public class ForgotPasswordDAO {
     public ForgotPasswordDAO() {
     }
 
-    public static int setGenString(ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
+    public static int setGenStringDB(ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {

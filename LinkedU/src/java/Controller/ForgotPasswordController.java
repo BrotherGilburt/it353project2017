@@ -184,7 +184,7 @@ public class ForgotPasswordController implements Serializable {
                 // Send the actual HTML message, as big as you like
                 forgotPasswordModel.setGenString(genRandomString());
                 message.setContent("<p>Click the link to reset your password. -> "
-                        + "http://localhost:8080/LinkedU/faces/newPassword.xhtml?"
+                        + "http://gfish2.it.ilstu.edu/kssuth1_Sp2017_LinkedU/faces/newPassword.xhtml?"
                         + "email=" + forgotPasswordModel.getEmail()
                         + "&genString=" + forgotPasswordModel.getGenString()
                         + "</p>",
@@ -200,7 +200,7 @@ public class ForgotPasswordController implements Serializable {
             }
 
             //Insert info into database
-            ForgotPasswordDAO.setGenString(forgotPasswordModel);
+            ForgotPasswordDAO.setGenStringDB(forgotPasswordModel);
         } else {
             sentStatus = "Email could not be found!";
         }
@@ -212,9 +212,11 @@ public class ForgotPasswordController implements Serializable {
         Login check = ForgotPasswordDAO.findUserID(accountModel, forgotPasswordModel);
         if (check != null) {
             forgotPasswordModel.setGenString(genRandomString());
+            //Insert info into database
+            ForgotPasswordDAO.setGenStringDB(forgotPasswordModel);
             TextSender.sendSMS(cellPhoneCarrierChosen, phone,
                     "Click the link to reset your password. -> "
-                    + "http://localhost:8080/LinkedU/faces/newPassword.xhtml?"
+                    + "http://gfish2.it.ilstu.edu/kssuth1_Sp2017_LinkedU/faces/newPassword.xhtml?"
                     + "email=" + forgotPasswordModel.getEmail()
                     + "&genString=" + forgotPasswordModel.getGenString());
             sentStatus = " Sent! (to " + phone + " on " + cellPhoneCarrierChosen + ")";
