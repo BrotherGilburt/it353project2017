@@ -292,6 +292,7 @@ public class AccountController implements Serializable {
         }
 
         loginModel.saltPassword();
+        accountModel.setUserID(loginModel.getUserID());
 
         //Insert information into database.
         AccountDB.createAccount(accountModel, loginModel);
@@ -311,7 +312,7 @@ public class AccountController implements Serializable {
             System.out.println("Image Database initialization failed.");
         }
                 
-        //Send confirmation Email.
+        //Send confirmation Email. ((disabled))
         confirmationEmail(accountModel.getEmail());
 
         loginStatus = true;
