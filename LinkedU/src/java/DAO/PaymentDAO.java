@@ -6,7 +6,6 @@
 package DAO;
 
 import Model.Premium;
-import Model.University;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,7 +27,7 @@ public class PaymentDAO {
      public static boolean isUserID(String userID) {
         boolean found = true;
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -87,7 +86,7 @@ public class PaymentDAO {
 
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             String insertString = "INSERT INTO LINKEDU.PREMIUM  VALUES(?,?,?,?,?,?)";
             PreparedStatement ps = DBConn.prepareStatement(insertString);

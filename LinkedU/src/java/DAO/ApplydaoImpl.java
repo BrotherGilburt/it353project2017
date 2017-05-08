@@ -27,7 +27,7 @@ public class ApplydaoImpl implements ApplyDAO {
         }
          int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
               String insertString;
             Statement stmt = DBConn.createStatement();

@@ -6,7 +6,6 @@
 package DAO;
 
 import Model.Apply;
-import Model.Premium;
 import Model.University;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -50,7 +48,7 @@ public class UniversityDAO {
             for (int i = 0; i < record.getMajors().size(); i++) {
                 majorsList.append(record.getMajors().get(i)).append(";");
             }
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString = "INSERT INTO LINKEDU.UNIVERSITIES VALUES(?,?,?,?,?,?,?,?,?)";
@@ -85,7 +83,7 @@ public class UniversityDAO {
 
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             StringBuilder majorsList = new StringBuilder();
@@ -127,7 +125,7 @@ public class UniversityDAO {
     public static University getUniversityByID(String userID) {
         University record = new University();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -177,7 +175,7 @@ public class UniversityDAO {
     public static University getUniversityByName(String name) {
         University record = new University();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -226,7 +224,7 @@ public class UniversityDAO {
     public static ArrayList<University> getAllUniversities() {
         ArrayList<University> recordsList = new ArrayList<University>();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -276,7 +274,7 @@ public class UniversityDAO {
     public static ArrayList<University> getUniversitiesByNameContaining(String searchText) {
         ArrayList<University> recordsList = new ArrayList();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -332,7 +330,7 @@ public class UniversityDAO {
     public static ArrayList<University> getUniversitiesByMajor(String searchText) {
         ArrayList<University> recordsList = new ArrayList();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {

@@ -7,24 +7,17 @@ package DAO;
 
 import Model.Login;
 import Model.Account;
-import Model.Student;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -44,7 +37,7 @@ public class AccountDB {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString;
@@ -95,7 +88,7 @@ public class AccountDB {
     public static Login getLogin(Login login) {
         Login record = new Login();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -125,7 +118,7 @@ public class AccountDB {
     public static Account getAccount(String userID) {
         Account record = new Account();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -168,7 +161,7 @@ public class AccountDB {
 
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String updateString;
@@ -202,7 +195,7 @@ public class AccountDB {
     public static boolean isUserID(String userID) {
         boolean found = true;
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {

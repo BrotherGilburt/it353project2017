@@ -1,6 +1,5 @@
 package DAO;
 
-import Model.Account;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -22,7 +21,7 @@ public class ImageDAO {
         int rowCount = 0;
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             String updateString;
             updateString = "UPDATE LINKEDU.USERIMAGE SET "
@@ -52,7 +51,7 @@ public class ImageDAO {
         int rowCount = 0;
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             String updateString;
             updateString = "INSERT INTO LINKEDU.USERIMAGE VALUES (?,?)";

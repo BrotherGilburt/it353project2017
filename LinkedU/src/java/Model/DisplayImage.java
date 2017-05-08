@@ -1,6 +1,5 @@
 package Model;
 
-import DAO.ImageDAO;
 import java.sql.*;
 import java.io.*;
 import javax.servlet.*;
@@ -27,7 +26,7 @@ public class DisplayImage extends HttpServlet {
             String id = request.getParameter("userid");
             System.out.println("inside servlet–>" + id );
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             stmt = DBConn.createStatement();
             strSql = "select profilepic from LINKEDU.USERIMAGE where userid='" + id + "' ";

@@ -34,7 +34,7 @@ public class ForgotPasswordDAO {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString;
@@ -58,7 +58,7 @@ public class ForgotPasswordDAO {
     public static Login findUserID(Account accountModel, ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
         Login record = new Login();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
@@ -89,7 +89,7 @@ public class ForgotPasswordDAO {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String updateString;
@@ -113,7 +113,7 @@ public class ForgotPasswordDAO {
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         int rowCount = 0;
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkedU";// connection string
+            String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String updateString;
@@ -135,7 +135,7 @@ public class ForgotPasswordDAO {
     public static ForgotPassword findGenString(ForgotPassword forgotPasswordModel) throws ClassNotFoundException, SQLException {
         ForgotPassword record = new ForgotPassword();
         DBHelper.loadDriver("org.apache.derby.jdbc.ClientDriver");
-        String myDB = "jdbc:derby://localhost:1527/LinkedU";
+        String myDB = "jdbc:derby://gfish2.it.ilstu.edu:1527/kssuth1_Sp2017_LinkedU";
         Connection DBConn = DBHelper.connect2DB(myDB, "itkstu", "student");
 
         try {
