@@ -27,17 +27,30 @@
 
                         <h3>General Information</h3>
                         <h:panelGrid columns="2" columnClasses="label, label" cellpadding="5">
-                            <h:panelGroup><b><h:outputText value="Name:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getFullName()}" />
-                            <h:panelGroup><b><h:outputText value="User ID:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.userID}" />
+                            <h:panelGroup><b><h:outputText value="Name: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getFullName()}" />
+                            <h:panelGroup><b><h:outputText value="User ID: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.userID}" />
 
-                            <h:panelGroup><b><h:outputText value="ACT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getACTString()}" />
-                            <h:panelGroup><b><h:outputText value="SAT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getSATString()}" />
-                            <h:panelGroup><b><h:outputText value="PSAT/NMSQT Score:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getPSAT_NMSQTString()}" />
+                            <h:panelGroup><b><h:outputText value="ACT Score: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getACTString()}" />
+                            <h:panelGroup><b><h:outputText value="SAT Score: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getSATString()}" />
+                            <h:panelGroup><b><h:outputText value="PSAT/NMSQT Score: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getPSAT_NMSQTString()}" />
 
-                            <h:panelGroup><b><h:outputText value="Desired Universities:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getUniversitiesString()}" />
-                            <h:panelGroup><b><h:outputText value="Desired Majors:"/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getMajorsString()}" />
+                            <h:panelGroup><b><h:outputText value="Desired Universities: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getUniversitiesString()}" />
+                            <h:panelGroup><b><h:outputText value="Desired Majors: "/></b></h:panelGroup> <h:outputText value="#{studentController.viewStudentModel.getMajorsString()}" />
 
                         </h:panelGrid>
+                        <h:panelGroup rendered="#{studentController.viewStudentModel.checkIfMixtape()}">
+                            <br/>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h3>Mixtape:</h3>
+                                <h:outputLink value="#{studentController.viewStudentModel.mixtape}"> #{studentController.viewStudentModel.mixtape}</h:outputLink>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{studentController.viewStudentModel.checkIfEssay()}">
+                            <br/>
+                            <h3>Essay: </h3>
+                            <h:outputText value="#{studentController.viewStudentModel.essay}"/>
+                        </h:panelGroup>
+                        <br/>
                         <br/>
                         <h:panelGrid columns="2" cellpadding="5" rendered="#{accountController.isUniversity()}">
                             <h:panelGroup>

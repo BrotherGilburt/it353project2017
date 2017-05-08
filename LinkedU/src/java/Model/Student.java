@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class Student {
 
-    private final static String DEFAULT_IMAGE = "./Resources/default_student.png";
-    private final String defaultMixtape = "none";
-    private final String defaultEssay = "none";
+    private final static String DEFAULT_IMAGE = "./Resources/images/default_student.png";
+    private final static String DEFAULT_MIXTAPE = "";
+    private final static String DEFAULT_ESSAY = "";
 
     private String userID;
     private String firstName;
@@ -30,10 +30,6 @@ public class Student {
     private String essay;
     private String email;
 
-    /* TO BE ADDED
-     IMAGE
-     ESSAY
-     MIXTAPES*/
     public Student() {
         userID = "";
         firstName = "";
@@ -41,11 +37,11 @@ public class Student {
         ACT = -1;
         SAT = -1;
         PSAT_NMSQT = -1;
-        majors = new ArrayList<String>();
-        universities = new ArrayList<String>();
+        majors = new ArrayList();
+        universities = new ArrayList();
         image = false;
-        mixtape = defaultMixtape;
-        essay = defaultEssay;
+        mixtape = DEFAULT_MIXTAPE;
+        essay = DEFAULT_ESSAY;
     }
 
     public Student(String userID) {
@@ -201,20 +197,16 @@ public class Student {
         this.lastName = lastName;
     }
 
-    /**
-     * @return the email
-     */
+    
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
+
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public boolean isImage() {
         return image;
     }
@@ -227,5 +219,11 @@ public class Student {
         return DEFAULT_IMAGE;
     }
     
+    public boolean checkIfMixtape() {
+        return !mixtape.equals(DEFAULT_MIXTAPE);
+    }
     
+    public boolean checkIfEssay() {
+        return !essay.equals(DEFAULT_ESSAY);
+    }
 }

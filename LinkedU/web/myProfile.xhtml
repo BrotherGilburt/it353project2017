@@ -14,11 +14,12 @@
         <ui:composition template="./newTemplate.xhtml">
             <ui:define name="head"><title>LinkedU - My Profile</title></ui:define>
             <ui:define name="content">
-                <h:form id="fileUpload1" prependId="false"     enctype="multipart/form-data" rendered="#{accountController.isStudent()}">
+                <h:form id="fileUpload1" prependId="false" enctype="multipart/form-data" rendered="#{accountController.isStudent()}">
                     <p:growl id="growl" showDetail="true" sticky="true" />
+                    
                     <p:fieldset legend="#{studentController.myProfileModel.fullName}" style="margin-bottom:20px">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:commandButton value="Submit" ajax="false" action="#{studentController.gotoUpdateImage}" />
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{studentController.myProfileModel.isNoImage()}">
+                            <p:commandButton value="Upload Image" ajax="false" action="#{studentController.updateImage}" />
                             <p:fileUpload id="profileimage1"  value="#{studentController.resume}" mode="simple" skinSimple="true"/>
                         </h:panelGrid>
                         <h:panelGroup>
@@ -45,13 +46,13 @@
                         <br/>
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:panelGroup><h3>Mixtape</h3></h:panelGroup>
-                            <p:commandButton value="Update" actionListener="#{studentController.gotoUpdateMixtape()}" update="growl"/>
+                            <p:commandButton value="Save" actionListener="#{studentController.gotoUpdateMixtape()}" update="growl"/>
                         </h:panelGrid>
                         <p:inputText id="mixtape" value="#{studentController.myProfileModel.mixtape}" label="mixtape"/>
                         <br/><br/>
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:panelGroup><h3>Essay</h3></h:panelGroup>
-                            <p:commandButton value="Update" actionListener="#{studentController.gotoUpdateEssay()}" update="growl"/>
+                            <p:commandButton value="Save" actionListener="#{studentController.gotoUpdateEssay()}" update="growl"/>
                         </h:panelGrid>
                         <h:inputTextarea cols="30" rows="10" id="essay" value="#{studentController.myProfileModel.essay}" label="essay"/>
                     </p:fieldset>
@@ -60,8 +61,8 @@
 
                 <h:form id="fileUpload2" prependId="false"     enctype="multipart/form-data" rendered="#{accountController.isUniversity()}">
                     <p:fieldset legend="#{universityController.myUniversityModel.name}">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:commandButton value="Submit" ajax="false" action="#{universityController.gotoUpdateImage}" />
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{universityController.myUniversityModel.isNoImage()}">
+                            <p:commandButton value="Upload Image" ajax="false" action="#{universityController.updateImage}" />
                             <p:fileUpload id="profileimage2"  value="#{universityController.resume}" mode="simple" skinSimple="true"/>
                         </h:panelGrid>
                         <h:panelGroup>

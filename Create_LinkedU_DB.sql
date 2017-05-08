@@ -95,13 +95,13 @@ Essay			varchar(1500) not null
 
 --Student Accounts
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('pdkaufm', 'Perry','Kaufman', 19, 999, 999, 'Illinois State University;', 'Computer Science;English;Physics', false, 'none', 'none');
+('pdkaufm', 'Perry','Kaufman', 19, 999, 999, 'Illinois State University;', 'Computer Science;English;Physics', false, '', '');
 insert into LinkedU.Students(UserID, FirstName, LastName,  ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('kssuth1','Keegan','Sutherland', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, 'none', 'none');
+('kssuth1','Keegan','Sutherland', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, '', '');
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('stiwar1','Shivangi','Tiwari', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, 'none', 'none');
+('stiwar1','Shivangi','Tiwari', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, '', '');
 insert into LinkedU.Students(UserID, FirstName, LastName, ACT, SAT, PSAT_NMSQT, Universities, Majors, Image, Mixtape, Essay) values
-('asriren','Anusha','Srirenganathan Malarvizhi', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, 'none', 'none');
+('asriren','Anusha','Srirenganathan Malarvizhi', 36, 1337, 1337, 'Illinois State University;', 'Computer Science;', false, '', '');
 
 
 

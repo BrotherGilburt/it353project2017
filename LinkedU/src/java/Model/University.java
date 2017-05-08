@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class University {
 
-    private final static String DEFAULT_IMAGE = "./Resources/default_university.png";
+    private final static String DEFAULT_IMAGE = "./Resources/images/default_university.png";
     String userID;
     boolean premium; //denotes that university has payed extra to be featured on home page.
     String name;

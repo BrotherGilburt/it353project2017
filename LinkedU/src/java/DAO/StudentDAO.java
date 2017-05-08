@@ -203,16 +203,16 @@ public class StudentDAO {
 
                 String uniList = rs.getString("Universities");
                 if (!uniList.equals("")) {
-                    record.setUniversities(new ArrayList<String>(Arrays.asList(uniList.split(";"))));
+                    record.setUniversities(new ArrayList(Arrays.asList(uniList.split(";"))));
                 } else {
-                    record.setUniversities(new ArrayList<String>());
+                    record.setUniversities(new ArrayList());
                 }
 
                 String majList = rs.getString("Majors");
                 if (!majList.equals("")) {
-                    record.setMajors(new ArrayList<String>(Arrays.asList(majList.split(";"))));
+                    record.setMajors(new ArrayList(Arrays.asList(majList.split(";"))));
                 } else {
-                    record.setMajors(new ArrayList<String>());
+                    record.setMajors(new ArrayList());
                 }
 
                 record.setImage(rs.getBoolean("Image"));
@@ -260,11 +260,7 @@ public class StudentDAO {
             }
 
             ResultSet rs = pstmt.executeQuery();
-            /*
-            ResultSet rs = pstmt.executeQuery("SELECT * FROM LinkedU.Students "
-                    + "WHERE upper(firstname) LIKE '%" + searchText
-                    + "%' OR upper(lastname) LIKE '%" + searchText + "%'");
-             */
+
             while (rs.next()) {
                 if (recordsList == null) {
                     recordsList = new ArrayList();

@@ -108,7 +108,7 @@ public class UniversityController implements Serializable {
         return ""; //address of university profile.
     }
 
-    public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
+    public String updateImage() throws SQLException, IOException, ClassNotFoundException {
         UploadedFile image = getResume();
         String userid = account.getLoginModel().getUserID();
         

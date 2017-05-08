@@ -64,7 +64,9 @@ public class StudentController implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             search = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{searchController}", SearchController.class);
         }
-         stuDAO = new StudentDAO();
+        stuDAO = new StudentDAO();
+
+        resume = null;
     }
 
     public String loadMyProfile() {
@@ -98,44 +100,44 @@ public class StudentController implements Serializable {
         return "updateStudentProfile.xhtml?faces-redirect=true";
     }
 
-    public String gotoUpdateImage() throws SQLException, IOException, ClassNotFoundException {
-        UploadedFile image = getResume();
-        
-        myProfileModel.setImage(true);
-        this.updateStudent();
-        
-        String userid = account.getLoginModel().getUserID();
-        System.out.println(userid);
-        int update = ImageDAO.updateImage(userid, image);
+    public String updateImage() throws SQLException, IOException, ClassNotFoundException {
+
+            myProfileModel.setImage(true);
+            this.updateStudent();
+
+            String userid = account.getLoginModel().getUserID();
+            System.out.println(userid);
+            int update = ImageDAO.updateImage(userid, resume);
+
         return "myProfile.xhtml?faces-redirect=true";
     }
 
-       
     public void gotoUpdateMixtape() throws SQLException {
-        FacesContext context = FacesContext.getCurrentInstance(); 
-        int update = StudentDAO.updateMixtape(myProfileModel.getMixtape(),account.getLoginModel().getUserID());
-         if (update != 0) {
-            context.addMessage(null, new FacesMessage("Successful",  "Mixtape Updated") );
+        FacesContext context = FacesContext.getCurrentInstance();
+        int update = StudentDAO.updateMixtape(myProfileModel.getMixtape(), account.getLoginModel().getUserID());
+        if (update != 0) {
+            context.addMessage(null, new FacesMessage("Successful", "Mixtape Updated"));
         } else {
             context.addMessage(null, new FacesMessage("Failed", "Mixtape update failed"));
         }
     }
-    
+
     public void gotoUpdateEssay() throws SQLException {
         FacesContext context = FacesContext.getCurrentInstance();
-        int update = StudentDAO.updateEssay(myProfileModel.getEssay(),account.getLoginModel().getUserID());
-                 if (update != 0) {
-            context.addMessage(null, new FacesMessage("Successful",  "Essay Updated") );
+        int update = StudentDAO.updateEssay(myProfileModel.getEssay(), account.getLoginModel().getUserID());
+        if (update != 0) {
+            context.addMessage(null, new FacesMessage("Successful", "Essay Updated"));
         } else {
             context.addMessage(null, new FacesMessage("Failed", "Essay update failed"));
         }
     }
+
     public String updateFinished() throws SQLException {
         this.updateStudent();
 
         return "myProfile.xhtml?faces-redirect=true";
     }
-    
+
     public void updateStudent() throws SQLException {
         StudentDAO.updateStudent(myProfileModel);
     }
@@ -234,14 +236,11 @@ public class StudentController implements Serializable {
     }
 
     public void schedule() {
-
-         EmailForSchedule email = new EmailForSchedule();
+        EmailForSchedule email = new EmailForSchedule();
         boolean emailStatus = false;
-     System.out.println(viewStudentModel.getEmail());
+        System.out.println(viewStudentModel.getEmail());
         viewStudentModel.setEmail(stuDAO.emailByID(viewStudentModel.getUserID()));
-       System.out.println(viewStudentModel.getEmail());
-
-       
+        System.out.println(viewStudentModel.getEmail());
 
         emailStatus = email.sendEmail(viewStudentModel);
         if (emailStatus) {
@@ -253,7 +252,6 @@ public class StudentController implements Serializable {
     }
 
     public void moreInfo() {
-
         viewStudentModel.setEmail(stuDAO.emailByID(viewStudentModel.getUserID()));
         System.out.println(stuDAO.emailByID(viewStudentModel.getUserID()));
         EmailForMoreInfo info = new EmailForMoreInfo();
@@ -264,6 +262,5 @@ public class StudentController implements Serializable {
         } else {
             message = "error!";
         }
-
     }
 }
